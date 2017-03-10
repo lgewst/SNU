@@ -21,7 +21,6 @@
  - 브라우저 지원 현황
     - Chrome: Default로 지원
     - Firefox 개발 진행 중
-    - 참고: https://www.chromestatus.com/feature/6676265876586496 
  - 데모
     - https://googlechrome.github.io/samples/presentation-api/   (정상 동작 확인)
     - https://storage.googleapis.com/presentation-api/index.html  (정상 동작 확인)
@@ -33,7 +32,6 @@
  - 브라우저 지원 현황
     - Chrome (56 버전부터 지원)
     - Firefox
-    - 참고: https://www.chromestatus.com/feature/5778318691401728
 
 ### LG Mindless 프레임워크
 - 사용자가 모바일 브라우저를 열어 주변 기기 화면에 출력된 URL을 입력하기만 하면 바로 기기간 연결 및 앱 실행 완료
