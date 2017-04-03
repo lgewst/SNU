@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<script src="socket.io-1.2.0.js"></script>
+<script src="mindless.js"></script>
+<script>
+window.addEventListener("load", function() {
+  MILE.init();
+  // When a user presses the enter key
+  document.querySelector("#input").addEventListener("keypress", function(e) {
+    if (e.keyCode == 13) {
+      sendMessage();
+    }
+  });
+  // When a user clicks the send button
+  document.querySelector("#button").addEventListener("click", function(e) {
+    sendMessage();
+  });
+});
+// send the message to other clients
+function sendMessage() {
+  var inputText = document.querySelector("#input").value;
+  if (inputText != "") {
+    MILE.send("chat", inputText);
+    document.querySelector("#input").value = "";
+  }
+}
+// receive the message from other client
+MILE.on("chat", function(data) {
+  document.querySelector("#content").innerHTML += "<li>[chat] " + data + "</li>";
+  console.log("[type]: chat, [data]: " + data);
+});
+</script>
+</head>
+<body>
+  <div id="content"></div>
+  <input id="input"><button id="button">Send</button>
+</body>
+</html>
