@@ -2,10 +2,10 @@
 
 ### 설명
 - Mindless Framework을 활용하기 위해서는 mindless.js 파일을 추가하고, 적절한 설정을 수행해야 합니다.
-  - MILE.setAppID(APPID);
+  - MILE.setAppID(APPID);
   - MILE.setAuthor(AUTHOR_NAME);
   - MILE.setVersion(VERSION);
-  - MILE.setAppURL(DEFAULT_LINK);
+  - MILE.setAppURL(DEFAULT_LINK);
 
 - 우측 상단에 debug 창을 띄우기 위해서는 다음 명령을 실행합니다.
   - MILE.showDebug(true);
