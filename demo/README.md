@@ -6,4 +6,4 @@
 
 ### 링크
 - 아래 링크를 통해 데모 실행 및 테스트가 가능합니다.
-  : http://mileurl.com/demo
+  - http://mileurl.com/demo
