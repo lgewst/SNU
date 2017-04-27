@@ -9,7 +9,7 @@
 1. Node.js를 설치합니다.
    - 다운 페이지: https://nodejs.org/ko/download/ 
 2. 'npm install express', 'npm install socket.io' 명령어 실행을 통해 관련 라이브러리를 설치합니다.
-3. node mindless 를 통해 MileNet을 실행합니다.
+3. 'node mindless' 명령어 실행을 통해 MileNet을 실행합니다.
    - mindless.js가 있는 디렉토리에서 해당 명령을 실행합니다.
 4. 해당 MileNet에 연결하기 위해서는 mindless.js의 웹 소켓 연결 주소 수정이 필요합니다.
     - 예시: socket = new io.connect("ws://MILENET URL?id=...);
