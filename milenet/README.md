@@ -11,7 +11,7 @@
 2. 'npm install express', 'npm install socket.io' 명령어 실행을 통해 관련 라이브러리를 설치합니다.
 3. 'node milenet' 명령어 실행을 통해 MileNet을 실행합니다.
    - milenet.js가 있는 디렉토리에서 해당 명령을 실행합니다.
-4. 해당 MileNet에 연결하기 위해서는 mindless.js의 웹 소켓 연결 주소 수정이 필요합니다.
+4. 해당 MileNet에 연결하기 위해서는 milenet.js의 웹 소켓 연결 주소 수정이 필요합니다.
     - 예시: socket = new io.connect("ws://MILENET URL?id=...);
 5. 웹 소켓 연결 주소에는 다음의 get parameters가 입력되어야 그에 따른 URL 발급이 가능합니다.
     - Get Parameters List: id, author, version, appurl
