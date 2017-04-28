@@ -27,27 +27,3 @@ body {
     font-family: bang;
     font-size: 64px;
 }
-@mile_url {
-    position: relative;
-    clear: both;
-    margin: auto;
-    text-align: center;
-    font-family: "Times New Roman";
-    border-style: groove;
-    border-left: 10px solid gray;
-    border-right: 10px solid gray;
-    background-color: lightgray;
-    margin-top: 20px;
-    margin-left: 25%;
-    font-size: 80px;
-    width: 50%;
-}
-#mile_status{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    width: auto;
-    height: auto;
-    font-size: 30px;
-    text-align: center;
-}

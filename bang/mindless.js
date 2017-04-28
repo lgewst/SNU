@@ -185,9 +185,3 @@ var MILE = {
 var script = document.createElement("script");
 script.src = "socket.io.js";
 document.head.appendChild(script);
-
-
-MILE.setAppID('asdf');
-MILE.setAuthor('adf');
-MILE.setVersion('1');
-MILE.setAppURL('bang');
