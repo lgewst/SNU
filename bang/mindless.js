@@ -183,11 +183,11 @@ var MILE = {
 };
 // load socket.io framework
 var script = document.createElement("script");
-script.src = "socket.io-1.2.0.js";
+script.src = "socket.io.js";
 document.head.appendChild(script);
 
+
 MILE.setAppID('asdf');
-MILE.setAuthor('zxcv');
+MILE.setAuthor('adf');
 MILE.setVersion('1');
 MILE.setAppURL('bang');
-
