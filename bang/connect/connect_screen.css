@@ -10,7 +10,7 @@ body {
 }
 @font-face {
     font-family: "bang";
-    src: url("Western Bang Bang.otf");
+    src: url("../font/Western Bang Bang.otf");
 }
 #content {
     clear: both;
