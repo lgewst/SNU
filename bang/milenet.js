@@ -1,15 +1,22 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var express = require('express');
 
 var connections = [];
 var mileNumbers = [];
 var mileurl = "";
 
+app.use(express.static('.'));
+// app.use(express.static('connect'));
+// app.use(app.router);
+
 // process /
 app.get('/', function (req, res) {
-  res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://mileurl.com/'</h3>");
+  // console.log(req);
+  res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
 });
+
 // process /admin
 app.get('/admin', function (req, res) {
   var output = "Connections: ";
@@ -22,12 +29,19 @@ app.get('/admin', function (req, res) {
   }
     res.send("<h3>" + output + "</h3> ");
 });
+
+// process /mobile
+app.get('/mobile', function (req, res) {
+  console.log('New connection');
+});
+
 // process websocket server
 io.on('connection', function(socket){
+  // console.log('here 111');
   // Step 1: generate mileurl
   var identifier = socket.handshake.query.id + socket.handshake.query.author + socket.handshake.query.version;
   if (mileNumbers[identifier]) {
-    mileurl = "http://mileurl.com?" + mileNumbers[identifier];
+    mileurl = "http://147.47.249.199:8001?" + mileNumbers[identifier];
   } else {
     while (true) {
       // generate random number (1000~9999)
@@ -45,10 +59,11 @@ io.on('connection', function(socket){
       // register the generated number only if it doesn't exist in mileNumbers
       if (pass) {
         mileNumbers[identifier] = number;
-        mileurl = "http://mileurl.com?" + mileNumbers[identifier];
+        mileurl = "http://147.47.249.199:8001?" + mileNumbers[identifier];
         // bind the mileurl to web server
         app.get("/"+number, function (req, res) {
           res.redirect(socket.handshake.query.appurl);
+          console.log('redirect');
         });
         break;
       }
@@ -96,4 +111,5 @@ io.on('connection', function(socket){
 // Start HTTP Server
 http.listen(8001, function(){
   console.log("listening on *: 8001");
+  console.log("Server running at http://147.47.249.199:8001");
 });
