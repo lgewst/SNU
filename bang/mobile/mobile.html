@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="mobile.css">
+<script src="../mindless.js"></script>
+<script src="http://code.jquery.com/jquery-2.2.4.min.js">
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js">
+var events = "beforecreate create beforechangebeforetransitionbeforeshow show transition change beforehide hide beforeload load";
+$(document).on("pagecreate", function(){
+    $("button").on("tap", funtion() {
+
+    });
+    var nextId = 0;
+    $("#collapsible").("tap", function() { //
+        nextId++;
+        var character = "A" + nextId ;
+        var job = "\?";
+        var life = 4;
+        var characteristics = "Characteristics sentence";
+        var mounted;
+        var playing;
+        var content = "<div id='player" + nextId + "' <h1> Player " + nextId + ": " + character + "</h1> <img src=''>  data-icon='carat-d'"></div>
+        $("otherPlayers").append(content).collapsible("refresh");
+    });
+});
+
+</script>
+</head>
+<body>
+<div data-role="page" id="background">
+    <div data-role="main" class="ui-content">
+        <div data-role="collapsible" data-collapsed="true" id="otherPlayers">
+            <h1> Other players </h1> 
+            <p> player 1 </p>
+            <!-- Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. -->
+            <!-- a href="" data-rol="dialog" -->
+        </div>
+        <div id="myInfo">
+            <p> STATS </p>
+            <div id="myJobCard"><img src=""></img></div>
+            <div id="myCharacterCard"><img src=""></img></div>
+            <div id="myJob"> JOB: </div>
+            <p> 
+        </div>
+        <div id="myCards">
+        </div>
+    </div>
+</div>
+<!--
+<div data-role="page" id="playerInfo">
+    Hi
+    -->
+    <!-- Show the information of other players. character card, character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. The player can see card information by touching the mounted card. -->
+<!--</div>
+<div data-role="page" id="cardInfo" data-transition="pop">
+    <div data-role="main" class="ui-content">-->
+        <!-- Show the card image and ok/cancel/help button when the card is selected-->
+        <!--<div id="cardImage" width="90%" height="60%"><img src="../cards/Character cards/bart cassidy.jpg"></div>
+        <form>
+            <button class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</button>
+            <button class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="back">Back</button>
+            <button class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</button>
+        </form>
+    </div>
+</div>
+<div data-role="popup" data-dialog="true" data-transition="pop" id="cardExplain">
+    --><!-- Show the explanation of the card when help is selected. -->
+    <!--blah blah blah
+</div>-->
+<!-- $(".page").hide(); $("#wine-page").show(); -->
+
+</body>
+</html>

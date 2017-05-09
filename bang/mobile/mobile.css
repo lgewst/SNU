@@ -1,0 +1,9 @@
+#players {
+    -moz-box-shadow: 2px 2px 2px 2px;
+    -webkit-box-shadow: 2px 2px 2px 2px;
+    box-shadow: 2px 2px 2px 2px;
+}
+
+button {
+    class="ui-btn ui-btn-inline ui-corner-all ui-btn-icon-left ui-nodisc-icon"
+}
