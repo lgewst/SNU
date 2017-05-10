@@ -22,7 +22,8 @@ app.get('/', function (req, res) {
     chatRoomId = Number(key);
   }
   // console.log(req.query);
-  res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
+  // res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
+  res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://localhost:8001/'</h3>");
   // res.sendFile(/*__dirname + */ "/connect/index.html");
   // if (req.query)
 });
@@ -54,7 +55,8 @@ io.on('connection', function(socket){
     console.log('here if');
 
     // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
-    mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
+    // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
+    mileurl = "http://localhost:8001/" + mileNumbers[identifier];
     console.log("http://147.47.249.199:8001?" + mileNumbers[identifier]);
 
   } else {
