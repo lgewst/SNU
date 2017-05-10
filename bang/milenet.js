@@ -76,11 +76,12 @@ io.on('connection', function(socket){
           break;
         }
       }
+
       // register the generated number only if it doesn't exist in mileNumbers
       if (pass) {
         mileNumbers[identifier] = number;
         // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
-        mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
+        mileurl = "localhost:8001/" + mileNumbers[identifier];
         // console.log(mileurl);
 
         // bind the mileurl to web server
@@ -194,7 +195,8 @@ socket2.on('connection',function(socket) {
 // Start HTTP Server
 http.listen(8001, function(){
   console.log("listening on *: 8001");
-  console.log("Server running at http://147.47.249.199:8001");
+  // console.log("Server running at http://147.47.249.199:8001");
+  console.log("Server running at localhost:8001");
 });
 /*
 //TODO
