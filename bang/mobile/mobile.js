@@ -1,4 +1,4 @@
-function Character(){
+function Player(){
     //variables
     this.characterCard;
     this.character;
@@ -7,9 +7,12 @@ function Character(){
     this.job;
     this.mission;
     this.life;
-    this.playingCardList; // list of name-image pair
     this.mountedCardList; // list of name-image pair
+    this.inHandCardList; // list of name-image pair
     //functions
+    Player.prototype.showPlayerInfo = function(){
+
+    }
 }
 
 
@@ -19,10 +22,7 @@ function CardInfo(){
     this.cardImage;
     this.cardInfo;
     //functions
-    this.showCardInfo = showCardInfo;
-}
-
-function showCardInfo(){
-    //pop up
+    CardInfo.prototype.showCardInfo = function(){
+    }
 }
 

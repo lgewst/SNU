@@ -16,13 +16,47 @@ window.addEventListener("load", function(){
         MILE.setVersion("0.1");
         MILE.setAppURL("http://localhost:8001/mobile/");
         MILE.showMileURL(true);
-        MILE.showDebug(true);
+        MILE.showDebug(false);
+        //MILE.showDebug(true);
         MILE.init();
         });
 </script>
 <script>
-$("#cardExplain").hide();
-$("#").on(function() {  //
+$(document).on("
+$(document).on("pagecreate", "#background", function(){
+        /* TODO
+        1. Ask server
+            - other player list(character names)
+            - my information(class Player)
+        2. Display information
+            - player list to collapsible list
+            - my information
+        3. Add event listener on each cards
+            - If the user tap on the card, make a popup with card image and buttons
+        4. Add event listener on each player names
+            - If the user tap on the name, ask server to give information about the player and make a popup
+         */
+        });
+$(document).on("pagecreate", "#playerInfo", function(){
+        /* TODO
+        1. Display information
+            - player information
+        2. Add event listener on each cards
+            - If the user tap on the card, make a popup with card image and buttons
+        */
+        });
+$(document).on("pagecreate", "#cardInfo", function(){
+        /* TODO
+        1. Display card image and buttons
+        2. Add event listener on each buttons
+            - If the user tap on the "Select" button, send the information to the server and close the popup
+            - If the user tap on the "Cancel" button, just close the popup
+            - If the user tap on the "Help" button, ask server to give information and make a popup
+        */
+        });
+$(document).on("pagecreate", "#cardExplain", function(){
+        });
+/*$("#").on(function() {  //
         alert("Click");
         nextId++;
         var character = "A" + nextId ;
@@ -33,7 +67,7 @@ $("#").on(function() {  //
         var playing;
         var content = "<p><a href='#' <div id='player" + nextId + "' data-icon='carat-d'> Player " + nextId + ": " + character + " <img src=''> </div></a></p>"
         $("#otherPlayers").append(content).collapsible("refresh");
-        });
+        });*/
 </script>
 </head>
 <body>
@@ -42,18 +76,13 @@ $("#").on(function() {  //
         <div data-role="collapsible" data-collapsed="true" id="otherPlayers">
             <h1>Other players </h1>
             <!-- Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. -->
-            <!-- a href="" data-rol="dialog" -->
         </div>
         <div class="Character" id="myInfo">
-            <p> STATS </p>
-        </div>
-        <div id="myMountedCards">
-        </div>
-        <div id="myPlayingCards">
+            <p> STATUS </p>
         </div>
     </div>
 </div>
-<div data-role="popup" id="playerInfo">
+<div data-role="page" id="playerInfo">
     <div id="information">
     </div>
     <div id="mountedCards">
@@ -67,17 +96,15 @@ $("#").on(function() {  //
         <!-- Show the card image and ok/cancel/help button when the card is selected-->
         <div id="cardImage" width="90%" height="60%"></div>
         <form>
-            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</button>
-            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</button>
-            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</button>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
+            <a href="#cardExplain" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
         </form>
     </div>
 </div>
 
-<div data-role="popup" data-dialog="true" data-transition="pop" id="cardExplain">
+<div data-role="popup" id="cardExplain">
     <!-- Show the explanation of the card when help is selected. -->
-    <p class="card_explain">blah blah blah</p>
 </div>
-<!-- $(".page").hide(); $("#wine-page").show(); -->
 </body>
 </html>
