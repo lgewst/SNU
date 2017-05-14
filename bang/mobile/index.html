@@ -6,38 +6,23 @@
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <link rel="stylesheet" type="text/css" href="mobile.css">
 <script src="../mindless.js"></script>
+<script src="mobile.js"></script>
 <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript">
+window.addEventListener("load", function(){
+        MILE.setAppID("connect");
+        MILE.setAuthor("snu");
+        MILE.setVersion("0.1");
+        MILE.setAppURL("http://localhost:8001/mobile/");
+        MILE.showMileURL(true);
+        MILE.showDebug(true);
+        MILE.init();
+        });
+</script>
 <script>
-
-$(document).on("pagebeforecreate",function(){
-        alert("Before page create");
-        });
-
-$(document).on("mobileinit", function(){
-        alert("Mobile init");
-        });
-$(function() {
-        $(document).bind("tap", function(event){
-            alert("Tap on the page");
-            });
-        });
-$("button").on("tap", funtion() {
-
-        });
-var myInfo;
-
-$(function() {  //on background page create
-        $(".job").text("JOB: " + job);
-        $(".mission").text("MISSION: " + mission);
-        var content = "<img src=''></img>";
-        for(){
-        $(".life").append(content).p("refresh"); 
-        }
-        $(".character").text("CHARACTER: " + character);
-        $(".character_goal").text(character_goal);
-        });
-$().(function() {  //
+$("#cardExplain").hide();
+$("#").on(function() {  //
         alert("Click");
         nextId++;
         var character = "A" + nextId ;
@@ -59,19 +44,8 @@ $().(function() {  //
             <!-- Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. -->
             <!-- a href="" data-rol="dialog" -->
         </div>
-        <div id="myInfo">
+        <div class="Character" id="myInfo">
             <p> STATS </p>
-            <div id="myInfoCard">
-                <img id="myJobCard" src=""></img>
-                <img id="myCharacterCard" src=""></img>
-            </div>
-            <div id="myInfo"> 
-                <p class="job">JOB: </p>
-                <p class="mission">MISSION: </p>
-                <p class="life">LIFE: </p>
-                <p class="character">CHARACTER: </p>
-                <p class="character_goal">sentence </p>
-            </div>
         </div>
         <div id="myMountedCards">
         </div>
@@ -95,7 +69,7 @@ $().(function() {  //
         <form>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</button>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</button>
-            <button class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</button>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</button>
         </form>
     </div>
 </div>
