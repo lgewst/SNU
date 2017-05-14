@@ -6,8 +6,8 @@ var express = require('express');
 var connections = [];
 var mileNumbers = [];
 var mileurl = "";
-// var chatRoomId = null;
-var socket2 = null;
+var chatRoomId = null;
+// var socket2 = null;
 
 app.use(express.static('.'));
 // app.use(express.static('connect'));
@@ -55,7 +55,6 @@ io.on('connection', function(socket){
     console.log('here if');
 
     // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
-    // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
     mileurl = "http://localhost:8001/" + mileNumbers[identifier];
     console.log("http://147.47.249.199:8001?" + mileNumbers[identifier]);
 
@@ -83,7 +82,7 @@ io.on('connection', function(socket){
       if (pass) {
         mileNumbers[identifier] = number;
         // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
-        mileurl = "localhost:8001/" + mileNumbers[identifier];
+        mileurl = "http://localhost:8001/" + mileNumbers[identifier];
         // console.log(mileurl);
 
         // bind the mileurl to web server
@@ -92,25 +91,20 @@ io.on('connection', function(socket){
           // console.log(mileurl);
           res.redirect(socket.handshake.query.appurl);
           console.log('redirect');
-
         });
-
         // console.log(String(mileNumbers[identifier]));
-
         break;
       }
     }
   }
-
-
-
   // Step 2: manage connection information
+  // TODO: connection should have ready attribute
   connections.push({socket: socket, id: socket.id.substring(0,5)});
   socket.emit('message', {type: "$mile_id", data: socket.id.substring(0,5)});
   console.log(socket.id.substring(0,5) + ' connected');
   // check whether it's primary or not
 
-  console.log('connections length is ... ' + String(connections.length));
+  // console.log('connections length is ... ' + String(connections.length));
 
   if (connections.length == 1) { // URL maker
     socket.emit('message', {type: "$mile_primary", data: mileurl});
@@ -123,6 +117,7 @@ io.on('connection', function(socket){
   socket.on('message', function(msg){
     console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id.substring(0,5) + ')');
     io.emit('message', msg);
+    // TODO: if msg.type == 'ready', modify connection info
   });
   // remove the socket and send the update to other clients
   socket.on('disconnect', function(){
@@ -147,63 +142,10 @@ io.on('connection', function(socket){
   }
 
 });
-/*
-socket2 = new io.connect("147.47.249.199:8001/mobile");
-socket2.on('connection',function(socket) {
-  // Step 2: manage connection information
-  connections.push({socket: socket, id: socket.id.substring(0,5)});
-  socket.emit('message', {type: "$mile_id", data: socket.id.substring(0,5)});
-  console.log(socket.id.substring(0,5) + ' connected');
-  // check whether it's primary or not
 
-  console.log('connections length is ... ' + String(connections.length));
-
-  if (connections.length == 1) { // URL maker
-    socket.emit('message', {type: "$mile_primary", data: mileurl});
-  } else if (connections.length > 1) { // URL follower
-    socket.emit('message', {type: "$mile_secondary", data: mileurl});
-    socket.broadcast.emit('message', {type: "$mile_join", data: socket.id.substring(0,5)}); // send the message except me
-    updateConnection();
-  }
-  // receive the message and send it to other clients
-  socket.on('message', function(msg){
-    console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id.substring(0,5) + ')');
-    io.emit('message', msg);
-  });
-  // remove the socket and send the update to other clients
-  socket.on('disconnect', function(){
-    console.log(socket.id.substring(0,5) + ' disconnected');
-    socket.broadcast.emit('message', {type: "$mile_leave", data: socket.id.substring(0,5)});
-    for (var i = 0; i < connections.length; i++) {
-      if (connections[i].id == socket.id.substring(0,5)) {
-        connections.splice(i, 1);
-      }
-    }
-    if (connections.length == 0)
-      mileNumbers = [];
-    updateConnection();
-  });
-  // send the connection status informatino to clients
-  function updateConnection() {
-    var conns = [];
-    for (var i = 0; i < connections.length; i++) {
-      conns[i] = connections[i].id;
-    }
-    io.emit('message', {type: "$mile_update", data: {connections: conns}});
-  }
-});
-
-*/
 // Start HTTP Server
 http.listen(8001, function(){
   console.log("listening on *: 8001");
   // console.log("Server running at http://147.47.249.199:8001");
   console.log("Server running at localhost:8001");
 });
-/*
-//TODO
-// load socket.io framework
-var script = document.createElement("script");
-script.src = "socket.io.js";
-document.head.appendChild(script);
-*/
