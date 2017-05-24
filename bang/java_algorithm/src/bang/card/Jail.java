@@ -7,8 +7,12 @@ import bang.Discard;
 import bang.HelpFunctions;
 import bang.Mounting;
 import bang.Player;
+import bang.userinterface.JavaUserInterface;
 
 public class Jail extends Card{
+	private HelpFunctions HelpFunctions = new HelpFunctions();
+	private JavaUserInterface userInterface = new JavaUserInterface();
+	
 	public Jail(String name, String suit, int value) {
 		super(name, suit, value);
 	}
@@ -17,12 +21,17 @@ public class Jail extends Card{
 		return targets(currentPlayer, players).size() > 0;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
-		Player targetPlayer = currentPlayer; //TODO
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+		ArrayList<Player> targets = targets(currentPlayer, players);
+		int index = userInterface.askTarget(targets); //TODO: ask target
+		if (index == -1)
+			return false;
+		Player targetPlayer = targets.get(index);
 		Mounting mounting = targetPlayer.getMounting();
 		if (mounting.hasCard("Jail"))
 			discard.add(mounting.remove(mounting.find("Jail")));
 		mounting.add(this);
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

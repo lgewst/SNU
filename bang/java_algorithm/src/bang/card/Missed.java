@@ -15,7 +15,8 @@ public class Missed extends Card{
 		return false;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+		return false;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

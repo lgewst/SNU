@@ -15,7 +15,7 @@ public class Sallon extends Card{
 		return true;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
 		discard.add(this);
 		for (Player player: players) {
 			int health = player.getHealth();
@@ -23,6 +23,7 @@ public class Sallon extends Card{
 				health = player.getMaxHealth();
 			player.setHealth(health);
 		}
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

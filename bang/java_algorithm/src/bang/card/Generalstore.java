@@ -6,8 +6,12 @@ import bang.Deck;
 import bang.Discard;
 import bang.HelpFunctions;
 import bang.Player;
+import bang.userinterface.JavaUserInterface;
 
 public class Generalstore extends Card{
+	private HelpFunctions HelpFunctions = new HelpFunctions();
+	private JavaUserInterface userInterface = new JavaUserInterface();
+	
 	public Generalstore(String name, String suit, int value) {
 		super(name, suit, value);
 	}
@@ -16,7 +20,7 @@ public class Generalstore extends Card{
 		return true;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
 		discard.add(this);
 		ArrayList<Card> cardList = new ArrayList<Card>();
 		int n = players.size();
@@ -25,10 +29,11 @@ public class Generalstore extends Card{
 		
 		Player t_player = currentPlayer;
 		for (int i = 0; i < n; i++) {
-			int index = -1;	//TODO: ask card
+			int index = userInterface.chooseGeneralStore(cardList);	//TODO: ask card
 			t_player.getHand().add(cardList.remove(index));
 			t_player = HelpFunctions.getNextPlayer(t_player, players);
 		}
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

@@ -15,7 +15,7 @@ public class Character {
 		return name;
 	}
 
-	public int getStartingHealth() {
+	public int getMaxHealth() {
 		if (name.equals("Paul Regret") || name.equals("El Gringo")) {
 			return 3;
 		} else {
