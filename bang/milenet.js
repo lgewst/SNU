@@ -2,30 +2,28 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
+var java = require('java');
+java.classpath.push('./java_algorithm/src/');
+// TODO: *.java files are need to be compiled into *.class
+// var bangUI = java.import('bang/userinterface/JavaUserInterface');
+var bangGame = java.import('bang/Game');
 
 var connections = [];
 var mileNumbers = [];
 var mileurl = "";
 var chatRoomId = null;
-// var socket2 = null;
+var gameStart = false;
+
+var readyCount = 0;
 
 app.use(express.static('.'));
-// app.use(express.static('connect'));
-// app.use(app.router);
 
 // process /
 app.get('/', function (req, res) {
-
-  // TODO: change current way into ?chatRoomId=number
-
-  for (var key in req.query) {
-    chatRoomId = Number(key);
-  }
   // console.log(req.query);
   // res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
   res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://localhost:8001/'</h3>");
   // res.sendFile(/*__dirname + */ "/connect/index.html");
-  // if (req.query)
 });
 
 // process /admin
@@ -46,34 +44,39 @@ app.get('/mobile', function (req, res) {
   console.log('New connection');
 });
 
+//TODO: Make gameStart true by using ready button
+//If Game starts, then initialize game.
+if(gameStart) {
+  bangGame.Game(connections.length);
+}
+
+
 // process websocket server
 io.on('connection', function(socket){
   // console.log('here 111');
   // Step 1: generate mileurl
   var identifier = socket.handshake.query.id + socket.handshake.query.author + socket.handshake.query.version;
   if (mileNumbers[identifier]) {
-    console.log('here if');
 
     // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
     mileurl = "http://localhost:8001/" + mileNumbers[identifier];
     console.log("http://147.47.249.199:8001?" + mileNumbers[identifier]);
 
   } else {
-    console.log('here else');
 
     while (true) {
       // generate random number (1000~9999)
       var number = parseInt(Math.random()*10000);
       if (number < 1000)
         continue;
+
       // check if the generated number exists in mileNumbers
+
       var pass = true;
       for (var i in mileNumbers) {
         if (number == mileNumbers[i]) {
           pass = false;
-
           console.log(String(mileNUmbers[i]));
-
           break;
         }
       }
@@ -83,28 +86,23 @@ io.on('connection', function(socket){
         mileNumbers[identifier] = number;
         // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
         mileurl = "http://localhost:8001/" + mileNumbers[identifier];
-        // console.log(mileurl);
 
         // bind the mileurl to web server
 
         app.get("/" + number, function(req, res){
-          // console.log(mileurl);
           res.redirect(socket.handshake.query.appurl);
           console.log('redirect');
         });
-        // console.log(String(mileNumbers[identifier]));
         break;
       }
     }
   }
   // Step 2: manage connection information
   // TODO: connection should have ready attribute
-  connections.push({socket: socket, id: socket.id.substring(0,5)});
+  connections.push({socket: socket, id: socket.id.substring(0,5), ready: false});
   socket.emit('message', {type: "$mile_id", data: socket.id.substring(0,5)});
   console.log(socket.id.substring(0,5) + ' connected');
   // check whether it's primary or not
-
-  // console.log('connections length is ... ' + String(connections.length));
 
   if (connections.length == 1) { // URL maker
     socket.emit('message', {type: "$mile_primary", data: mileurl});
@@ -132,6 +130,8 @@ io.on('connection', function(socket){
       mileNumbers = [];
     updateConnection();
   });
+
+
   // send the connection status informatino to clients
   function updateConnection() {
     var conns = [];
