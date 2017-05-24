@@ -99,23 +99,46 @@ io.on('connection', function(socket){
   }
   // Step 2: manage connection information
   // TODO: connection should have ready attribute
-  connections.push({socket: socket, id: socket.id.substring(0,5), ready: false});
+  // connections.push({socket: socket, id: socket.id.substring(0,5)});
+  connections.push({socket: socket, id: socket.id});
   socket.emit('message', {type: "$mile_id", data: socket.id.substring(0,5)});
   console.log(socket.id.substring(0,5) + ' connected');
   // check whether it's primary or not
 
   if (connections.length == 1) { // URL maker
     socket.emit('message', {type: "$mile_primary", data: mileurl});
-  } else if (connections.length > 1) { // URL follower
+  } else if (connections.length > 1 && connections.length <= 8) { // URL follower and Game user
     socket.emit('message', {type: "$mile_secondary", data: mileurl});
     socket.broadcast.emit('message', {type: "$mile_join", data: socket.id.substring(0,5)}); // send the message except me
     updateConnection();
+  } else if (connections.length > 8) {
+    //TODO: Game observer
+    updateConnection();
   }
+
+
+  //TODO: Handle user, observer different
+  if(connections.length > 4 && !gameStart) {
+    for (var i = 1; i <= 8; i++) {
+
+
+      if(i >= connections.length)
+        break;
+    }
+  }
+
   // receive the message and send it to other clients
   socket.on('message', function(msg){
     console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id.substring(0,5) + ')');
     io.emit('message', msg);
     // TODO: if msg.type == 'ready', modify connection info
+    if(msg.type == 'ready') {
+      if(socket.ready == null)
+        socket.ready = true;
+      else {
+        socket.ready = !socket.ready;
+      }
+    }
   });
   // remove the socket and send the update to other clients
   socket.on('disconnect', function(){
