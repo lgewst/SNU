@@ -7,19 +7,35 @@ import bang.Discard;
 import bang.EndofGameException;
 import bang.HelpFunctions;
 import bang.Player;
+import bang.userinterface.JavaUserInterface;
 
 public class Bang extends Card{
+	private JavaUserInterface userInterface = new JavaUserInterface();
+	private HelpFunctions HelpFunctions = new HelpFunctions();
+	
 	public Bang(String name, String suit, int value) {
 		super(name, suit, value);
 	}
 	
 	public boolean canPlay(Player currentPlayer, ArrayList<Player> players) {
-		return targets(currentPlayer, players).size() > 0;
+		return currentPlayer.isCanBang() && targets(currentPlayer, players).size() > 0;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+		ArrayList<Player> targets = targets(currentPlayer, players);
+		int index = userInterface.askTarget(targets);	//TODO
+		if (index == -1)
+			return false;
+		
+		currentPlayer.setCanBang(false);
+		if (currentPlayer.getMounting().hasGun()) {
+			Card gun = currentPlayer.getMounting().getGun();
+			if (gun.getName().equals("Volcanic"))
+				currentPlayer.setCanBang(true);
+		}
+		
 		discard.add(this);
-		Player targetPlayer = currentPlayer;	//TODO: ask target
+		Player targetPlayer = targets.get(index);
 		int miss_count = 1;
 
 		if (targetPlayer.getMounting().hasCard("Barrel")) {
@@ -28,9 +44,9 @@ public class Bang extends Card{
 				miss_count--;
 		}
 		
-		int index = -1;
+		index = -1;
 		while (miss_count > 0) {
-			index = -1; //TODO: ask miss
+			index = userInterface.respondMiss(targetPlayer);	//TODO
 			if (index == -1)
 				break;
 			discard.add(targetPlayer.getHand().remove(index));
@@ -39,6 +55,8 @@ public class Bang extends Card{
 		
 		if (miss_count != 0)
 			HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard);
+		
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

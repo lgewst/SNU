@@ -7,8 +7,12 @@ import bang.Discard;
 import bang.EndofGameException;
 import bang.HelpFunctions;
 import bang.Player;
+import bang.userinterface.JavaUserInterface;
 
 public class Duel extends Card{
+	private HelpFunctions HelpFunctions = new HelpFunctions();
+	private JavaUserInterface userInterface = new JavaUserInterface();
+	
 	public Duel(String name, String suit, int value) {
 		super(name, suit, value);
 	}
@@ -17,12 +21,16 @@ public class Duel extends Card{
 		return true;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+		ArrayList<Player> targets = targets(currentPlayer, players);
+		int index = userInterface.askTarget(targets);	//TODO: ask target
+		if (index == -1)
+			return false;
 		discard.add(this);
-		Player targetPlayer = currentPlayer;	//TODO: ask target
+		Player targetPlayer = targets.get(index);
 		
 		while(true) {
-			int index = -1;	//TODO: Ask Bang
+			index = userInterface.respondBang(currentPlayer);	//TODO: Ask Bang
 			
 			if (index == -1) {
 				HelpFunctions.damagePlayer(targetPlayer, currentPlayer, 1, players, deck, discard);
@@ -30,7 +38,7 @@ public class Duel extends Card{
 			}
 			discard.add(currentPlayer.getHand().remove(index));
 
-			index = -1;
+			index = userInterface.respondBang(targetPlayer);	//TODO: ask bang
 			
 			if (index == -1) {
 				HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard);
@@ -38,6 +46,7 @@ public class Duel extends Card{
 			}
 			discard.add(targetPlayer.getHand().remove(index));
 		}
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

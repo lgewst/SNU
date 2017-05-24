@@ -16,11 +16,12 @@ public class Scope extends Card{
 		return true;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
 		Mounting mounting = currentPlayer.getMounting();
-		if (mounting.hasCard("Barrel"))
-			discard.add(mounting.remove(mounting.find("Barrel")));
+		if (mounting.hasCard("Scope"))
+			discard.add(mounting.remove(mounting.find("Scope")));
 		mounting.add(this);
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

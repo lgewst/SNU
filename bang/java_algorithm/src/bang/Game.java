@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import bang.card.Card;
+import bang.userinterface.JavaUserInterface;
 import bang.card.BangDeck;
 
 public class Game {
@@ -12,6 +13,8 @@ public class Game {
 	private Deck deck;
 	private Discard discard;
 	private Player currentPlayer;
+	private HelpFunctions HelpFunctions = new HelpFunctions();
+	private JavaUserInterface userInterface = new JavaUserInterface();
 	
 	Game(int n) {
 		deck = new Deck(BangDeck.makeDeck());
@@ -82,14 +85,14 @@ public class Game {
 	private void phase2() throws EndofGameException {
 		while (true) {
 			Hand hand = currentPlayer.getHand();
-			int index = -1;	//TODO: from server;
+			int index = userInterface.askPlay(currentPlayer, players);	//TODO: ask play card
 			
 			if (index == -1)
 				break;
 			
 			Card playedCard = hand.peek(index);
-			hand.remove(index);
-			playedCard.play(currentPlayer, players, deck, discard);
+			if (playedCard.play(currentPlayer, players, deck, discard))
+				hand.remove(index);
 			
 			if (!players.contains(currentPlayer))
 				break;
@@ -99,9 +102,8 @@ public class Game {
 	private void phase3() {
 		Hand hand = currentPlayer.getHand();
 		while (hand.size() > currentPlayer.getHealth()) {
-			int index = 1;	// TODO: from server;
-			Card discarded = hand.remove(index);
-			discard.add(discarded);
+			int index = userInterface.askDiscard(currentPlayer);	// TODO: ask discard card
+			discard.add(hand.remove(index));
 		}
 	}
 	

@@ -7,8 +7,12 @@ import bang.Discard;
 import bang.EndofGameException;
 import bang.HelpFunctions;
 import bang.Player;
+import bang.userinterface.JavaUserInterface;
 
 public class Gatling extends Card{
+	private HelpFunctions HelpFunctions = new HelpFunctions();
+	private JavaUserInterface userInterface = new JavaUserInterface();
+	
 	public Gatling(String name, String suit, int value) {
 		super(name, suit, value);
 	}
@@ -17,7 +21,7 @@ public class Gatling extends Card{
 		return true;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
 		discard.add(this);
 		
 		for (Player player: HelpFunctions.getOthers(currentPlayer, players)) {
@@ -30,7 +34,7 @@ public class Gatling extends Card{
 			
 			int index = -1;
 			while (miss_count > 0) {
-				index = -1; //TODO: ask miss
+				index = userInterface.respondMiss(player); //TODO: ask miss
 				if (index == -1)
 					break;
 				discard.add(player.getHand().remove(index));
@@ -40,6 +44,7 @@ public class Gatling extends Card{
 			if (miss_count != 0)
 				HelpFunctions.damagePlayer(currentPlayer, player, 1, players, deck, discard);
 		}
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentplayer, ArrayList<Player> players) {

@@ -15,14 +15,15 @@ public class Beer extends Card{
 		return true;
 	}
 
-	public void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
 		discard.add(this);
 		int health = currentPlayer.getHealth();
 		if (players.size() > 2)
-			health += 2;
+			health ++;
 		if (health > currentPlayer.getMaxHealth())
 			health = currentPlayer.getMaxHealth();
 		currentPlayer.setHealth(health);
+		return true;
 	}
 
 	public ArrayList<Player> targets(Player currentPlayer, ArrayList<Player> players) {

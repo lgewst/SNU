@@ -15,7 +15,7 @@ public class Discard {
 		return discard.get(discard.size() - 1);
 	}
 
-	public Card remove() {
+	public Card pull() {
 		return discard.remove(discard.size() - 1);
 	}
 	
