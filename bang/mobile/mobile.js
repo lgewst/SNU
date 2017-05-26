@@ -11,11 +11,21 @@ function Player(){
     this.inHandCardList; // list of name-image pair
     //functions
     Player.prototype.showPlayerInfo = function(){
-
+        /* show information to the user
+         * add event listener to each card images*/
     }
 }
 
+function CardList(){
+    this.cardList;
 
+}
+
+function OtherPlayers(){
+    this.otherPlayersList;
+    OtherPlayers.prototype.showOtherPlayersList = function(){
+    }
+}
 
 function CardInfo(){
     //variables
