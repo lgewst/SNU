@@ -10,7 +10,7 @@ import bang.Player;
 public interface Playable {
 	public abstract boolean canPlay(Player currentplayer, ArrayList<Player> players);
 	
-	public abstract void play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException;
+	public abstract boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException;
 	
 	public abstract ArrayList<Player> targets(Player currentplayer, ArrayList<Player> players);
 }

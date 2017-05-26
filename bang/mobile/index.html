@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script src="https://unpkg.com/vue"></script>
+<script src="../semantic/dist/semantic.min.js"></script>
 <script type="text/javascript">
 window.addEventListener("load", function(){
         MILE.setAppID("connect");
@@ -127,18 +128,20 @@ $(document).on("pagecreate", "#cardExplain", function(){
     <div data-role="main" class="ui-content">
         <!-- Show the card image and ok/cancel/help button when the card is selected-->
         <div id="cardImage" width="90%" height="60%"></div>
-        <form>
+        <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
             <a href="#cardExplain" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
-        </form>
+        </div>
     </div>
 </div>
 
-<div data-role="popup" data-position-to="window" class="ui-content" id="cardExplain">
+<div data-role="page" data-dialog="true" id="cardExplain">
     <!-- Show the explanation of the card when help is selected. -->
-    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">close</a>
-    <p>Help popup </p>
+    <div data-role="popup" id="explanation" class="ui-content" style="top: 50%">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">close</a>
+        <p>Help popup </p>
+    </div>
 </div>
 </body>
 </html>

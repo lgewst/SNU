@@ -3,9 +3,12 @@ package bang;
 import java.util.ArrayList;
 
 import bang.card.Card;
+import bang.userinterface.JavaUserInterface;
 
 public class HelpFunctions {
-	public static Player getNextPlayer(Player currentPlayer, ArrayList<Player> players) {
+	private JavaUserInterface userInterface = new JavaUserInterface();
+	
+	public Player getNextPlayer(Player currentPlayer, ArrayList<Player> players) {
 		int index = players.indexOf(currentPlayer);
 		if (index == players.size() - 1)
 			index = 0;
@@ -14,7 +17,7 @@ public class HelpFunctions {
 		return players.get(index);
 	}
 
-	public static Card peekDeck(Deck deck, Discard discard) {
+	public Card peekDeck(Deck deck, Discard discard) {
 		Card card = null;
 		while(true) {
 			try {
@@ -22,16 +25,16 @@ public class HelpFunctions {
 				break;
 			} catch (EmptyDeckException e) {
 				while(!discard.isEmpty())
-					deck.add(discard.remove());
+					deck.add(discard.pull());
 				deck.suffle();
 			}
 		}
 		return card;
 	}
 
-	public static int getDistance(ArrayList<Player> players, Player viewer, Player viewee, int num) {
+	public int getDistance(ArrayList<Player> players, Player viewer, Player viewee) {
 		int distance = Math.abs(players.indexOf(viewer) - players.indexOf(viewee));
-		distance = Math.min(distance, num - distance);
+		distance = Math.min(distance, players.size() - distance);
 		
 		if (viewee.getMounting().hasCard("Mustang"))
 			distance++;
@@ -41,10 +44,10 @@ public class HelpFunctions {
 		return distance;
 	}
 	
-	public static ArrayList<Player> getPlayersWithinRange(ArrayList<Player> players, Player viewer, int range) {
+	public ArrayList<Player> getPlayersWithinRange(ArrayList<Player> players, Player viewer, int range) {
 		ArrayList<Player> targets = new ArrayList<Player>();
 		for (Player otherPlayer : getOthers(viewer, players)) {
-			int distance = getDistance(players, viewer, otherPlayer, players.size());
+			int distance = getDistance(players, viewer, otherPlayer);
 			if (distance <= range)
 				targets.add(otherPlayer);
 		}
@@ -52,7 +55,7 @@ public class HelpFunctions {
 	}
 	
 
-	public static boolean deadJob(ArrayList<Player> players, String job) {
+	public boolean deadJob(ArrayList<Player> players, String job) {
 		for (Player player: players) {
 		if (player.getJob().getJob().equals(job))
 			return false;
@@ -60,7 +63,7 @@ public class HelpFunctions {
 		return true;
 	}
 	
-	public static String getWinner(ArrayList<Player> players) {
+	public String getWinner(ArrayList<Player> players) {
 		if (deadJob(players, "Sheriff") && deadJob(players, "Outlaw") && deadJob(players, "deputy"))
 			return "Renegade";
 		else if(deadJob(players, "Sheriff"))
@@ -68,18 +71,18 @@ public class HelpFunctions {
 		return "Sheriff & Deputy";
 	}
 	
-	public static boolean isGameover(ArrayList<Player> players) {
+	public boolean isGameover(ArrayList<Player> players) {
 		return !deadJob(players, "Sheriff") || (deadJob(players, "Outlaw") && deadJob(players, "Renegade"));
 	}
 	
-	public static void discardAll(Player damagee, Discard discard) {
-		Hand hand = damagee.getHand();
+	public void discardAll(Player player, Discard discard) {
+		Hand hand = player.getHand();
 		while (hand.size() > 0) {
 			Card card = hand.remove(0);
 			discard.add(card);
 		}
 		
-		Mounting mounting = damagee.getMounting();
+		Mounting mounting = player.getMounting();
 		while (mounting.size() > 0) {
 			Card card = mounting.remove(0);
 			discard.add(card);
@@ -91,7 +94,7 @@ public class HelpFunctions {
 		}
 	}
 	
-	public static void deathPlayer(Player damager, Player damagee, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+	public void deathPlayer(Player damager, Player damagee, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
 		damagee.setHealth(0);
 		players.remove(damagee);
 		if (!isGameover(players)) {
@@ -100,7 +103,7 @@ public class HelpFunctions {
 				if (damager.getJob().getJob() == "Sheriff" && damagee.getJob().getJob() == "Deputy")
 					discardAll(damager, discard);
 				else if (damagee.getJob().getJob() == "Outlaw") {
-					damager.getHand().add(HelpFunctions.peekDeck(deck, discard));
+					damager.getHand().add(peekDeck(deck, discard));
 				}
 			}
 		} else {
@@ -108,11 +111,11 @@ public class HelpFunctions {
 		}
 	}
 	
-	public static void damagePlayer(Player damager, Player damagee, int damage, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+	public void damagePlayer(Player damager, Player damagee, int damage, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
 		int health = damagee.getHealth() - damage;
 		if (health <= 0 && players.size() > 2) {
 			while (health <= 0) {
-				int index = -1;	 // TODO: from server
+				int index = userInterface.respondBeer(damagee);	 // TODO: ask beer
 				
 				if (index == -1)
 					break;
@@ -127,7 +130,7 @@ public class HelpFunctions {
 			damagee.setHealth(health);
 	}
 	
-	public static ArrayList<Player> getOthers(Player currentPlayer, ArrayList<Player> players) {
+	public ArrayList<Player> getOthers(Player currentPlayer, ArrayList<Player> players) {
 		ArrayList<Player> targets = new ArrayList<Player>();
 		for(Player player: players) {
 			if (!player.equals(currentPlayer))

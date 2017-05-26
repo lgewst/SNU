@@ -1,12 +1,21 @@
-Game.java
-HelpFunctions.java
-Bang.java
-Catbalou.java
-Duel.java
-Gatling.java
-Generalstore.java
-Indians.java
-Jail.java
-Panic.java
+Game.java => play card, discard card
+HelpFunctions.java => play beer
+Bang.java => target player, play miss
+Catbalou.java => target player, target card
+Duel.java => target player, play bang
+Gatling.java => play miss
+Generalstore.java => select card
+Indians.java => play bang
+Jail.java => target player
+Panic.java => target player, target card
+
+askPlay, askDiscard, respondeBeer, respondMiss, respondBang, askTarget, askTargetCard(askOtherCard), selectGeneral
 
 장착 카드 처리: 똑같은 카드 장착 시, jail 여러개 ?
+
+캐릭터 추가
+pedro => chooseDiscard
+jesse => choosePlayer
+sid ke=> discardtwocardfor
+lucky => chooseDrawcard
+kit ka=> choosecardtoputback
