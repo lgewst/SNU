@@ -41,7 +41,6 @@ app.get('/admin', function (req, res) {
 });
 
 // process /mobile
-//TODO: Error
 app.get('/mobile', function (req, res) {
     console.log("You can't access here directly!");
     res.redirect("http://localhost:8001/admin");
@@ -56,6 +55,7 @@ app.get('/mobile', function (req, res) {
 // var spawn = require('child_process').spawn;
 // //var child = spawn('java', ['java_algorithm/src/bang/Test']);
 // var child = spawn('java', ['Test']);
+
 
 // process websocket server
 io.on('connection', function(socket){
@@ -94,11 +94,15 @@ io.on('connection', function(socket){
 
         // bind the mileurl to web server
         app.get("/" + number, function(req, res){
+            if(gameStart) {
+                console.log("You can't join while game is running");
+                res.redirect("http://localhost:8001/admin");
+            }
             if(connections.length < 8) {
                 console.log("Connections length is " + String(connections.length));
                 console.log('Redirect: User in');
                 // res.redirect(socket.handshake.query.appurl);
-                console.log(__dirname);
+                // res.sendFile(__dirname + "/cards/playing card(back).jpg");
                 res.sendFile(__dirname + "/mobile/mobile_index.html");
             } else {
                 //TODO: Make Observer html additional!
@@ -128,20 +132,40 @@ io.on('connection', function(socket){
   }
 
   else if (connections.length > 8) {
-    //TODO: Game observer
+    //TODO: To make Game observer html
     updateConnection();
   }
   // receive the message and send it to other clients
   socket.on('message', function(msg){
     console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id.substring(0,5) + ')');
-    io.emit('message', msg);
+
     // TODO: if msg.type == 'ready', modify connection info
     if(msg.type == 'ready') {
         for (var i = 0; i < connections.length; i++) {
           if (connections[i].id == socket.id.substring(0,5)) {
             connections[i].ready = !connections[i].ready;
+            console.log(String(connections[i].id) + " is now ready: " + connections[i].ready);
+            socket.emit('message', msg);
             break;
           }
+        }
+
+        //TODO: Setting gameStart Originally connections.length >= 5
+        if(connections.length >= 5 && connections.length <= 8) {
+            var tmpGameStart = true;
+            for (var i = 1; i < connections.length; i++) {
+                if(connections[i].ready == false) {
+                    tmpGameStart = false;
+                    break;
+                }
+            }
+            gameStart = tmpGameStart;
+            //TODO: Send msg to clients to make the buttons disable
+            if(gameStart) {
+                socket.broadcast.emit('message',{type: "game_start", data: "Game Start"});
+                socket.emit('message',{type: "game_start", data: "Game Start"});
+                console.log("Game Start!!!!!");
+            }
         }
     }
   });

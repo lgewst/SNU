@@ -18,11 +18,25 @@ window.addEventListener("load", function(){
         MILE.setVersion("0.1");
         MILE.setAppURL("http://localhost:8001/mobile/");
         MILE.showMileURL(true);
-        MILE.showDebug(false);
+        MILE.showDebug(true);
         MILE.init();
+        // ready
+        document.querySelector("#button").addEventListener("click", function(e) {
+          MILE.send("ready","Ready button!");
         });
+});
+MILE.on('ready', function(data, from) {
+  document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
+  console.log("From server considering ready: " + data);
+});
+MILE.on('game_start', function(data, from) {
+  document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
+  console.log("From server considering ready: " + data);
+});
+
 </script>
 <script>
+
 /*
    Before the game start, there should be ready page to check if the required number of players are connected to the server. If the player tap on the ready button, it will send the server ready signal. When all players connected to the server send the ready signal, server will start game and send the starting signal back.
  */
@@ -43,8 +57,8 @@ $(document).on("pagecreate", "#background", function(){
            $.getJSON(server address, function(data){
            $("#myInfo").showPlayerInfo(, function(data){
 
-           myInfo -> Player class 
-           want to parse JSON and fill in the 
+           myInfo -> Player class
+           want to parse JSON and fill in the
 
 
            });
@@ -65,7 +79,7 @@ $(document).on("pagecreate", "#background", function(){
 });
 $(document).on("pagecreate", "#playerInfo", function(){
         /* TODO
-           1. Ask server 
+           1. Ask server
            Display information
            - player information
            2. Add event listener on each cards
@@ -74,7 +88,7 @@ $(document).on("pagecreate", "#playerInfo", function(){
         });
 $(document).on("pagecreate", "#cardInfo", function(){
         $("#help").on("tap", function(){
-            $("#cardExplain").popup("open"); 
+            $("#cardExplain").popup("open");
             });
         /* TODO
            1. Display card image and buttons
@@ -99,6 +113,29 @@ $(document).on("pagecreate", "#cardExplain", function(){
   $("#otherPlayers").append(content).collapsible("refresh");
   });*/
 </script>
+<style>
+#content {
+  width: 400px;
+  height: 200px;
+  margin: 5px;
+  padding: 5px;
+  border: 1px #777 solid;
+  overflow-y: scroll;
+  font-family: sans-serif;
+  font-size: 13px;
+  list-style-type: none;
+}
+#content li:nth-child(even) {
+  background: #eee;
+}
+#button {
+  width: 100px;
+  height: 35px;
+  margin: 5px;
+  font-size: 14px;
+  margin-top: 0px;
+}
+</style>
 </head>
 <body>
 <div data-role="page" id="background">
@@ -110,6 +147,9 @@ $(document).on("pagecreate", "#cardExplain", function(){
         <div class="Player" id="myInfo">
             <p> STATUS </p>
         </div>
+        <!-- TODO: Ready Button -->
+        <button id="button">Ready</button>
+        <div id="content"></div>
     </div>
 </div>
 <div data-role="page" data-dialog="true" id="playerInfo">
