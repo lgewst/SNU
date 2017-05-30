@@ -23,6 +23,7 @@ app.get('/', function (req, res) {
   // console.log(req.query);
   // res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
   res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://localhost:8001/'</h3>");
+  console.log("This is main page");
   // res.sendFile(/*__dirname + */ "/connect/index.html");
 });
 
@@ -40,30 +41,32 @@ app.get('/admin', function (req, res) {
 });
 
 // process /mobile
+//TODO: Error
 app.get('/mobile', function (req, res) {
-  console.log('New connection');
+    console.log("You can't access here directly!");
+    res.redirect("http://localhost:8001/admin");
 });
 
 //TODO: Make gameStart true by using ready button
 //If Game starts, then initialize game.
-if(gameStart) {
-  bangGame.Game(connections.length);
-}
-
-var spawn = require('child_process').spawn;
-//var child = spawn('java', ['java_algorithm/src/bang/Test']);
-var child = spawn('java', ['Test']);
+// if(gameStart) {
+//   bangGame.Game(connections.length);
+// }
+//
+// var spawn = require('child_process').spawn;
+// //var child = spawn('java', ['java_algorithm/src/bang/Test']);
+// var child = spawn('java', ['Test']);
 
 // process websocket server
 io.on('connection', function(socket){
-  // console.log('here 111');
+
   // Step 1: generate mileurl
   var identifier = socket.handshake.query.id + socket.handshake.query.author + socket.handshake.query.version;
   if (mileNumbers[identifier]) {
 
     // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
     mileurl = "http://localhost:8001/" + mileNumbers[identifier];
-    console.log("http://147.47.249.199:8001?" + mileNumbers[identifier]);
+    // console.log("http://147.47.249.199:8001/" + mileNumbers[identifier]);
 
   } else {
 
@@ -79,7 +82,6 @@ io.on('connection', function(socket){
       for (var i in mileNumbers) {
         if (number == mileNumbers[i]) {
           pass = false;
-          console.log(String(mileNUmbers[i]));
           break;
         }
       }
@@ -91,19 +93,28 @@ io.on('connection', function(socket){
         mileurl = "http://localhost:8001/" + mileNumbers[identifier];
 
         // bind the mileurl to web server
-
         app.get("/" + number, function(req, res){
-          res.redirect(socket.handshake.query.appurl);
-          console.log('redirect');
+            if(connections.length < 8) {
+                console.log("Connections length is " + String(connections.length));
+                console.log('Redirect: User in');
+                // res.redirect(socket.handshake.query.appurl);
+                console.log(__dirname);
+                res.sendFile(__dirname + "/mobile/mobile_index.html");
+            } else {
+                //TODO: Make Observer html additional!
+                res.redirect("http://localhost:8001/admin");
+        }
         });
         break;
-      }
+    }
+
     }
   }
+
   // Step 2: manage connection information
   // TODO: connection should have ready attribute
   // connections.push({socket: socket, id: socket.id.substring(0,5)});
-  connections.push({socket: socket, id: socket.id});
+  connections.push({socket: socket, id: socket.id.substring(0,5), ready: false});
   socket.emit('message', {type: "$mile_id", data: socket.id.substring(0,5)});
   console.log(socket.id.substring(0,5) + ' connected');
   // check whether it's primary or not
@@ -114,33 +125,24 @@ io.on('connection', function(socket){
     socket.emit('message', {type: "$mile_secondary", data: mileurl});
     socket.broadcast.emit('message', {type: "$mile_join", data: socket.id.substring(0,5)}); // send the message except me
     updateConnection();
-  } else if (connections.length > 8) {
+  }
+
+  else if (connections.length > 8) {
     //TODO: Game observer
     updateConnection();
   }
-
-
-  //TODO: Handle user, observer different
-  if(connections.length > 4 && !gameStart) {
-    for (var i = 1; i <= 8; i++) {
-
-
-      if(i >= connections.length)
-        break;
-    }
-  }
-
   // receive the message and send it to other clients
   socket.on('message', function(msg){
     console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id.substring(0,5) + ')');
     io.emit('message', msg);
     // TODO: if msg.type == 'ready', modify connection info
     if(msg.type == 'ready') {
-      if(socket.ready == null)
-        socket.ready = true;
-      else {
-        socket.ready = !socket.ready;
-      }
+        for (var i = 0; i < connections.length; i++) {
+          if (connections[i].id == socket.id.substring(0,5)) {
+            connections[i].ready = !connections[i].ready;
+            break;
+          }
+        }
     }
   });
   // remove the socket and send the update to other clients
@@ -152,8 +154,9 @@ io.on('connection', function(socket){
         connections.splice(i, 1);
       }
     }
-    if (connections.length == 0)
+    if (connections.length == 0) {
       mileNumbers = [];
+    }
     updateConnection();
   });
 
@@ -161,6 +164,7 @@ io.on('connection', function(socket){
   // send the connection status informatino to clients
   function updateConnection() {
     var conns = [];
+    console.log("This is update, and connections length is " + connections.length);
     for (var i = 0; i < connections.length; i++) {
       conns[i] = connections[i].id;
     }
