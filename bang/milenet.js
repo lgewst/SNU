@@ -51,6 +51,7 @@ if(gameStart) {
 }
 
 var spawn = require('child_process').spawn;
+//var child = spawn('java', ['java_algorithm/src/bang/Test']);
 var child = spawn('java', ['Test']);
 
 // process websocket server
