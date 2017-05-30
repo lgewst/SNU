@@ -33,6 +33,10 @@ MILE.on('game_start', function(data, from) {
   document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
   console.log("From server considering ready: " + data);
 });
+MILE.on('bangCard', function(data, from) {
+  document.querySelector("#content").innerHTML += data + " width=\"50\" height=\"100\">";
+  // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
+});
 
 </script>
 <script>

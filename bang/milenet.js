@@ -151,7 +151,7 @@ io.on('connection', function(socket){
         }
 
         //TODO: Setting gameStart Originally connections.length >= 5
-        if(connections.length >= 5 && connections.length <= 8) {
+        if(connections.length >= 2 && connections.length <= 8) {
             var tmpGameStart = true;
             for (var i = 1; i < connections.length; i++) {
                 if(connections[i].ready == false) {
@@ -165,6 +165,12 @@ io.on('connection', function(socket){
                 socket.broadcast.emit('message',{type: "game_start", data: "Game Start"});
                 socket.emit('message',{type: "game_start", data: "Game Start"});
                 console.log("Game Start!!!!!");
+            }
+            //TODO: Try Something
+            if(gameStart) {
+                socket.broadcast.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
+                socket.emit('message',{type: "bangCard", data: "<img src=\"../cards/playing card(back).jpg\""});
+                console.log("Image ~~");
             }
         }
     }
