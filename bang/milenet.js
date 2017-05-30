@@ -50,6 +50,8 @@ if(gameStart) {
   bangGame.Game(connections.length);
 }
 
+var spawn = require('child_process').spawn;
+var child = spawn('java', ['Test']);
 
 // process websocket server
 io.on('connection', function(socket){
