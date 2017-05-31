@@ -65,6 +65,14 @@ app.get('/mobile', function (req, res) {
     res.redirect("http://localhost:8001/admin");
 });
 
+fs.watch('/*file_dir*/', function(event, filename) {
+    if(filename) {
+
+    } else {
+        console.log('File Error');
+    }
+});
+
 
 // process websocket server
 io.on('connection', function(socket){
@@ -170,22 +178,27 @@ io.on('connection', function(socket){
             gameStart = tmpGameStart;
             //TODO: Send msg to clients to make the buttons disable
             if(gameStart) {
-                socket.broadcast.emit('message',{type: "game_start", data: "Game Start"});
-                socket.emit('message',{type: "game_start", data: "Game Start"});
+                io.emit('message',{type: "game_start", data: "Game Start"});
                 console.log("Game Start!!!!!");
             }
             if(gameStart) {
-                //io.emit
-                socket.broadcast.emit('message',{type: "bangCard", data: "<img src=\"../cards/playing card(back).jpg"});
-                socket.emit('message',{type: "bangCard", data: "<img src=\"../cards/playing card(back).jpg\""});
-                console.log("Image ~~");
+                io.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
+                console.log("Sending: Image to Client");
 
-                fs.appendFile('in.txt', 'START Bang!!\n', function(err) {
+                // Initialize File txt
+                fs.writeFile('java2js.txt', 'START Bang!!\n', function(err) {
                   if(err) {
-                    return console.log("err");
+                    return console.log("Error while writing on file: java2js.txt");
+                    console.log("FILE INITIALIZED");
                   }
-                  console.log("FILE WRITE");
                 });
+                fs.writeFile('js2java.txt', 'START Bang!!\n', function(err) {
+                  if(err) {
+                    return console.log("Error while writing on file: js2java.txt");
+                  }
+                  console.log("FILE INITIALIZED");
+                });
+                //TODO: Bang Game.java running on child process
                 child = spawn('java', ['Test', connections.length - 1]);
             }
         }
