@@ -18,25 +18,61 @@ window.addEventListener("load", function(){
         MILE.setVersion("0.1");
         MILE.setAppURL("http://localhost:8001/mobile/");
         MILE.showMileURL(true);
-        MILE.showDebug(true);
+        MILE.showDebug(false);
         MILE.init();
         // ready
-        document.querySelector("#button").addEventListener("click", function(e) {
-          MILE.send("ready","Ready button!");
         });
-});
 MILE.on('ready', function(data, from) {
-  document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
-  console.log("From server considering ready: " + data);
-});
+        document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
+        console.log("From server considering ready: " + data);
+        });
 MILE.on('game_start', function(data, from) {
-  document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
-  console.log("From server considering ready: " + data);
-});
+        document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
+        console.log("From server considering ready: " + data);
+        $.mobile.changePage("#background");
+        });
+MILE.on('playerInfo', function(data, from) {
+        var info = JSON.parse(data);
+        var otherPlayers = info.otherPlayers; // str array
+        var job = info.job; // image, str(name), str(mission)
+        var character = info.character; // image, str(name), str(effect)
+        var life = info.life; // number
+        var mounted = info.mountedCards; // {image, cardName} array
+        var inHand = info.inHandCards; //array
+        var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
+        var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
+        var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
+        
+        var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
+        var charName = "<p id=\"charName\"> CHAR: " + character.name + "</p>";
+        var charEffect = "p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
+
+        for(i = 0; i < otherPlayers.length; i++){
+            var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
+            $('#otherPlayers').append(playerN);
+        }
+        $('#images').append(jobImage);     
+        $('#images').append(characterImage);
+        
+        $('#contents').append(jobName);
+        $('#contents').append(jobMission);
+        $('#contents').append(charName);
+        $('#contents').append(charEffect);
+        for(i = 0; i < mounted.length; i++){
+            var cardImageN = "<img src=\"" + mounted[i].image + "\" >";
+            var cardDiv = "<div id=\"" + mounted[i].name + "\">" + cardImageN + "</div>";
+            $('#mountedCards').append(cardDiv);
+        }
+        for(i = 0; i < inHand.length; i++){
+            var cardImageN = "<img src=\"" + inHand[i] + "\" >";
+            var cardDiv = "<div id=\"card" +  "i\">" + cardImageN + "</div>";
+            $('#inHandCards').append(cardDiv);
+        }
+        });
 MILE.on('bangCard', function(data, from) {
-  document.querySelector("#content").innerHTML += data + " width=\"50\" height=\"100\">";
-  // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
-});
+        document.querySelector("#content").innerHTML += data + " width=\"50\" height=\"100\">";
+        // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
+        });
 
 </script>
 <script>
@@ -45,29 +81,17 @@ MILE.on('bangCard', function(data, from) {
    Before the game start, there should be ready page to check if the required number of players are connected to the server. If the player tap on the ready button, it will send the server ready signal. When all players connected to the server send the ready signal, server will start game and send the starting signal back.
  */
 $("#cardExplain").hide();
+$(document).on("pagecreate", "#readyPage", function(){
+        $("#ready").on("tap", function(){
+            MILE.send("ready", "Ready button!");
+            });
+        });
 $(document).on("pagecreate", "#background", function(){
         // Send server request
-        alert("Background page created");
+        MILE.send("playerInfo", "Give me player information");
         $("#background").on("tap", function(){
             $.mobile.changePage("#cardInfo");
             });
-        var data;
-        var initRequest = {};
-        /*
-           $.post(server address, data);
-           $.getJSON(server address, function(data){
-           $("#otherPlayers").show
-           });
-           $.getJSON(server address, function(data){
-           $("#myInfo").showPlayerInfo(, function(data){
-
-           myInfo -> Player class
-           want to parse JSON and fill in the
-
-
-           });
-           });
-         */
         /* TODO
            1. Ask server
            - other player list(character names)
@@ -80,7 +104,7 @@ $(document).on("pagecreate", "#background", function(){
            4. Add event listener on each player names
            - If the user tap on the name, ask server to give information about the player and make a popup
          */
-});
+        });
 $(document).on("pagecreate", "#playerInfo", function(){
         /* TODO
            1. Ask server
@@ -117,43 +141,35 @@ $(document).on("pagecreate", "#cardExplain", function(){
   $("#otherPlayers").append(content).collapsible("refresh");
   });*/
 </script>
-<style>
-#content {
-  width: 400px;
-  height: 200px;
-  margin: 5px;
-  padding: 5px;
-  border: 1px #777 solid;
-  overflow-y: scroll;
-  font-family: sans-serif;
-  font-size: 13px;
-  list-style-type: none;
-}
-#content li:nth-child(even) {
-  background: #eee;
-}
-#button {
-  width: 100px;
-  height: 35px;
-  margin: 5px;
-  font-size: 14px;
-  margin-top: 0px;
-}
-</style>
 </head>
 <body>
+<div data-role="page" id="readyPage">
+    <div data-role="main" class="ui-content">
+        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="ready">Ready</a>
+    </div>
+</div>
 <div data-role="page" id="background">
     <div data-role="main" class="ui-content">
-        <div class="OtherPlayers" data-role="collapsible" data-collapsed="true" id="otherPlayers">
+        <div data-role="collapsible" data-collapsed="true" id="otherPlayers">
+
             <h1>Other players </h1>
             <!-- Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. -->
         </div>
-        <div class="Player" id="myInfo">
-            <p> STATUS </p>
+        <div id="myInfo">
+            <div id="status">
+                <p> STATUS </p>
+                <div id="images"></div>
+                <div id="contents"></div>
+            </div>
+            <div id="cards">
+                <div id="mountedCards">
+                    <p> Mounted </p>
+                </div>
+                <div id="inHandCards">
+                    <p> In Hand </p>
+                </div>
+            </div>
         </div>
-        <!-- TODO: Ready Button -->
-        <button id="button">Ready</button>
-        <div id="content"></div>
     </div>
 </div>
 <div data-role="page" data-dialog="true" id="playerInfo">

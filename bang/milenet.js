@@ -6,7 +6,7 @@ var java = require('java');
 java.classpath.push('./java_algorithm/src/');
 // TODO: *.java files are need to be compiled into *.class
 // var bangUI = java.import('bang/userinterface/JavaUserInterface');
-var bangGame = java.import('bang/Game');
+//var bangGame = java.import('bang/Game');
 
 var connections = [];
 var mileNumbers = [];
