@@ -202,7 +202,7 @@ io.on('connection', function(socket){
     } else if(msg.type == 'playerInfo') {
         for(var i=1; i < connections.length; i++) {
             if(connections[i].id == socket.id.substring(0,5)) {
-                socket.emit('message',{type: "playerInfo", data: JSON.parse(plyaers[i]}));
+                socket.emit('message',{type: "playerInfo", data: JSON.parse(players[i])});
                 console.log("Server to Client: playerInfo");
                 break;
             }
