@@ -52,10 +52,16 @@ app.get('/mobile', function (req, res) {
 //   bangGame.Game(connections.length);
 // }
 //
-// var spawn = require('child_process').spawn;
+var spawn = require('child_process').spawn;
 // //var child = spawn('java', ['java_algorithm/src/bang/Test']);
-// var child = spawn('java', ['Test']);
-
+var child;  // = spawn('java', ['Test']);
+var fs = require('fs');
+fs.writeFile('in.txt', 'ASDF', function(err) {
+  if(err) {
+    return console.log("err");
+  }
+  console.log("FILE WRITE");
+});
 
 // process websocket server
 io.on('connection', function(socket){
@@ -171,6 +177,8 @@ io.on('connection', function(socket){
                 socket.broadcast.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
                 socket.emit('message',{type: "bangCard", data: "<img src=\"../cards/playing card(back).jpg\""});
                 console.log("Image ~~");
+
+                child = spawn('java', ['Test']);
             }
         }
     }

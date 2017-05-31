@@ -8,16 +8,15 @@ public class Test {
 		try {
       ////////////////////////////////////////////////////////////////
       BufferedWriter out = new BufferedWriter(new FileWriter("out.txt"));
-      String s = "출력 파일에 저장될 이런 저런 문자열입니다.";
+      BufferedReader in = new BufferedReader(new FileReader("in.txt"));
+      String s;
 
+			s = in.readLine();
       out.write(s); out.newLine();
       out.write(s); out.newLine();
 
+			in.close();
       out.close();
-			while(true)
-			{
-
-			}
       ////////////////////////////////////////////////////////////////
     } catch (IOException e) {
         System.err.println(e); // 에러가 있다면 메시지 출력
