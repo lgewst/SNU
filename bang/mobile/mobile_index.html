@@ -23,11 +23,9 @@ window.addEventListener("load", function(){
         // ready
         });
 MILE.on('ready', function(data, from) {
-        document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
         console.log("From server considering ready: " + data);
         });
 MILE.on('game_start', function(data, from) {
-        document.querySelector("#content").innerHTML += "<li>[" + from + "] " + data + "</li>";
         console.log("From server considering ready: " + data);
         $.mobile.changePage("#background");
         });
@@ -36,7 +34,8 @@ MILE.on('playerInfo', function(data, from) {
         var otherPlayers = info.otherPlayers; // str array
         var job = info.job; // image, str(name), str(mission)
         var character = info.character; // image, str(name), str(effect)
-        var life = info.life; // number
+        var curLife = info.curLife; // number
+        var maxLife = info.maxLife;
         var mounted = info.mountedCards; // {image, cardName} array
         var inHand = info.inHandCards; //array
         var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
@@ -45,8 +44,8 @@ MILE.on('playerInfo', function(data, from) {
         
         var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
         var charName = "<p id=\"charName\"> CHAR: " + character.name + "</p>";
-        var charEffect = "p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
-
+        var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
+        var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
         for(i = 0; i < otherPlayers.length; i++){
             var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
             $('#otherPlayers').append(playerN);
@@ -60,38 +59,37 @@ MILE.on('playerInfo', function(data, from) {
         $('#contents').append(charEffect);
         for(i = 0; i < mounted.length; i++){
             var cardImageN = "<img src=\"" + mounted[i].image + "\" >";
-            var cardDiv = "<div id=\"" + mounted[i].name + "\">" + cardImageN + "</div>";
+            var cardDiv = "<div id=\"mountedCard" + i + "\">" + cardImageN + "</div>";
             $('#mountedCards').append(cardDiv);
         }
         for(i = 0; i < inHand.length; i++){
             var cardImageN = "<img src=\"" + inHand[i] + "\" >";
-            var cardDiv = "<div id=\"card" +  "i\">" + cardImageN + "</div>";
+            var cardDiv = "<div id=\"inHandCard" + i + "\">" + cardImageN + "</div>";
             $('#inHandCards').append(cardDiv);
         }
         });
 MILE.on('bangCard', function(data, from) {
-        document.querySelector("#content").innerHTML += data + " width=\"50\" height=\"100\">";
         // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
         });
 
 </script>
 <script>
-
-/*
-   Before the game start, there should be ready page to check if the required number of players are connected to the server. If the player tap on the ready button, it will send the server ready signal. When all players connected to the server send the ready signal, server will start game and send the starting signal back.
- */
-$("#cardExplain").hide();
 $(document).on("pagecreate", "#readyPage", function(){
         $("#ready").on("tap", function(){
-            MILE.send("ready", "Ready button!");
+            MILE.send("ready", "Client ready");
             });
         });
 $(document).on("pagecreate", "#background", function(){
         // Send server request
-        MILE.send("playerInfo", "Give me player information");
-        $("#background").on("tap", function(){
+        MILE.send("playerInfo", "Request basic information");
+        $('p:contains("player").on('tap', function(){
+            alert("tap on p");
+            });
+
+        /*$("#background").on("tap", function(){
             $.mobile.changePage("#cardInfo");
             });
+            */
         /* TODO
            1. Ask server
            - other player list(character names)
@@ -128,18 +126,6 @@ $(document).on("pagecreate", "#cardInfo", function(){
         });
 $(document).on("pagecreate", "#cardExplain", function(){
         });
-/*$("#").on(function() {  //
-  alert("Click");
-  nextId++;
-  var character = "A" + nextId ;
-  var job = "\?";
-  var life = 4;
-  var characteristics = "Characteristics sentence";
-  var mounted;
-  var playing;
-  var content = "<p><a href='#' <div id='player" + nextId + "' data-icon='carat-d'> Player " + nextId + ": " + character + " <img src=''> </div></a></p>"
-  $("#otherPlayers").append(content).collapsible("refresh");
-  });*/
 </script>
 </head>
 <body>
