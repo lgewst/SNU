@@ -3,10 +3,12 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
 var java = require('java');
-java.classpath.push('./java_algorithm/src/');
+var fs = require('fs');
+var spawn = require('child_process').spawn;
+//java.classpath.push('./java_algorithm/src/');
 // TODO: *.java files are need to be compiled into *.class
 // var bangUI = java.import('bang/userinterface/JavaUserInterface');
-var bangGame = java.import('bang/Game');
+//var bangGame = java.import('bang/Game');
 
 var connections = [];
 var mileNumbers = [];
@@ -15,6 +17,8 @@ var chatRoomId = null;
 var gameStart = false;
 
 var readyCount = 0;
+
+var child;
 
 app.use(express.static('.'));
 
@@ -52,16 +56,6 @@ app.get('/mobile', function (req, res) {
 //   bangGame.Game(connections.length);
 // }
 //
-var spawn = require('child_process').spawn;
-// //var child = spawn('java', ['java_algorithm/src/bang/Test']);
-var child;  // = spawn('java', ['Test']);
-var fs = require('fs');
-fs.writeFile('in.txt', 'ASDF', function(err) {
-  if(err) {
-    return console.log("err");
-  }
-  console.log("FILE WRITE");
-});
 
 // process websocket server
 io.on('connection', function(socket){
@@ -178,7 +172,13 @@ io.on('connection', function(socket){
                 socket.emit('message',{type: "bangCard", data: "<img src=\"../cards/playing card(back).jpg\""});
                 console.log("Image ~~");
 
-                child = spawn('java', ['Test']);
+                fs.writeFile('in.txt', 'START Bang!!', function(err) {
+                  if(err) {
+                    return console.log("err");
+                  }
+                  console.log("FILE WRITE");
+                });
+                child = spawn('java', ['Test', connections.length - 1]);
             }
         }
     }

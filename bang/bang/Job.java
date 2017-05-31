@@ -1,18 +1,18 @@
 package bang;
 
 public class Job {
-	public static String[] JOBS = {"Sheriff", "Outlaw", "Outlaw", "Renegade", "Deputy", "Outlaw", "Deputy", "Renegade"};
-	
+	public static String[] JOBS = {"Sheriff", "Outlaw", "Outlaw", "Renegade", "Deputy", "Outlaw", "Deputy"};
+
 	private String job;
 
 	public Job(String job) {
 		this.job = job;
 	}
-	
+
 	public String getJob() {
 		return job;
 	}
-	
+
 	public String getGoal() {
 		if(job == "Sheriff"){
 			return "Kill the outlaws and renegade";
@@ -22,7 +22,7 @@ public class Job {
 			return "Kill the outlaws and renegade";
 		} else if(job == "Renegade"){
 			return "Be the last one alive";
-		} else { 
+		} else {
 			throw new RuntimeException("Invalid job");
 		}
 	}

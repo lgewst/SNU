@@ -1,9 +1,8 @@
 package bang;
 
 public class Character {
-	public static String[] CHARACTERS = { "Calamity Janet", "Jourdonnais", "Paul Regret", "Kit Carlson", "Bart Cassidy", "Jesse Jones",
-			"Pedro Ramirez", "El Gringo", "Rose Doolan", "Suzy Lafayette", "Black Jack", "Sid Ketchum", "Slab the Killer", "Lucky Duke",
-			"Vulture Sam", "Willy the Kid" };
+	public static String[] CHARACTERS = { "Bart Cassidy", "Black Jack", "Calamity Janet", "El Gringo", "Jesse Jones", "Jourdonnais", "Kit Carlson", "Lucky Duke",
+			"Paul Regret", "Pedro Ramirez", "Rose Doolan", "Sid Ketchum", "Slab the Killer", "Suzy Lafayette", "Vulture Sam", "Willy the Kid" };
 
 	private String name;
 
