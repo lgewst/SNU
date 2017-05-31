@@ -8,7 +8,7 @@ public class Player {
 	private int health;
 	private Mounting mounting;
 	private boolean canBang;
-	
+
 	Player(Job job, Character character) {
 		this.job = job;
 		this.character = character;
@@ -18,30 +18,30 @@ public class Player {
 		this.mounting = new Mounting();
 		this.setCanBang(false);
 	}
-	
+
 	public Job getJob() {
 		return job;
 	}
-	
+
 	public Character getCharacter() {
 		return character;
 	}
-	
+
 	public Hand getHand() {
 		return hand;
 	}
-	
+
 	public int getMaxHealth() {
 		return maxHealth;
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	
+
 	public Mounting getMounting() {
 		return mounting;
 	}
@@ -52,5 +52,5 @@ public class Player {
 
 	public void setCanBang(boolean canBang) {
 		this.canBang = canBang;
-	}	
+	}
 }

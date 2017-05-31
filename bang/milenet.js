@@ -3,7 +3,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
 var java = require('java');
-java.classpath.push('./java_algorithm/src/');
+var fs = require('fs');
+var spawn = require('child_process').spawn;
+//java.classpath.push('./java_algorithm/src/');
 // TODO: *.java files are need to be compiled into *.class
 // var bangUI = java.import('bang/userinterface/JavaUserInterface');
 //var bangGame = java.import('bang/Game');
@@ -15,6 +17,8 @@ var chatRoomId = null;
 var gameStart = false;
 
 var readyCount = 0;
+
+var child;
 
 app.use(express.static('.'));
 
@@ -40,28 +44,35 @@ app.get('/admin', function (req, res) {
     res.send("<h3>" + output + "</h3> ");
 });
 
+// process /admin
+app.get('/observer', function (req, res) {
+  var output = "Here's observer";
+  output += "<br><br>Connections: ";
+  for (var i in connections) {
+    output += connections[i].id + " ";
+  }
+  output += "<br>mileNumbers: ";
+  for (var i in mileNumbers) {
+    output += mileNumbers[i] + " ";
+  }
+    res.send("<h3>" + output + "</h3> ");
+});
+
+
 // process /mobile
 app.get('/mobile', function (req, res) {
     console.log("You can't access here directly!");
     res.redirect("http://localhost:8001/admin");
 });
 
-//TODO: Make gameStart true by using ready button
-//If Game starts, then initialize game.
-// if(gameStart) {
-//   bangGame.Game(connections.length);
-// }
-//
-var spawn = require('child_process').spawn;
-// //var child = spawn('java', ['java_algorithm/src/bang/Test']);
-var child;  // = spawn('java', ['Test']);
-var fs = require('fs');
-fs.writeFile('in.txt', 'ASDF', function(err) {
-  if(err) {
-    return console.log("err");
-  }
-  console.log("FILE WRITE");
+fs.watch('/*file_dir*/', function(event, filename) {
+    if(filename) {
+
+    } else {
+        console.log('File Error');
+    }
 });
+
 
 // process websocket server
 io.on('connection', function(socket){
@@ -102,9 +113,9 @@ io.on('connection', function(socket){
         app.get("/" + number, function(req, res){
             if(gameStart) {
                 console.log("You can't join while game is running");
-                res.redirect("http://localhost:8001/admin");
+                res.redirect("http://localhost:8001/observer");
             }
-            if(connections.length < 8) {
+            else if(connections.length < 8) {
                 console.log("Connections length is " + String(connections.length));
                 console.log('Redirect: User in');
                 // res.redirect(socket.handshake.query.appurl);
@@ -112,12 +123,11 @@ io.on('connection', function(socket){
                 res.sendFile(__dirname + "/mobile/mobile_index.html");
             } else {
                 //TODO: Make Observer html additional!
-                res.redirect("http://localhost:8001/admin");
+                res.redirect("http://localhost:8001/observer");
         }
         });
         break;
     }
-
     }
   }
 
@@ -168,19 +178,35 @@ io.on('connection', function(socket){
             gameStart = tmpGameStart;
             //TODO: Send msg to clients to make the buttons disable
             if(gameStart) {
-                socket.broadcast.emit('message',{type: "game_start", data: "Game Start"});
-                socket.emit('message',{type: "game_start", data: "Game Start"});
+                io.emit('message',{type: "game_start", data: "Game Start"});
                 console.log("Game Start!!!!!");
             }
-            //TODO: Try Something
             if(gameStart) {
-                socket.broadcast.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
-                socket.emit('message',{type: "bangCard", data: "<img src=\"../cards/playing card(back).jpg\""});
-                console.log("Image ~~");
+                io.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
+                console.log("Sending: Image to Client");
 
-                child = spawn('java', ['Test']);
+                // Initialize File txt
+                fs.writeFile('java2js.txt', 'START Bang!!\n', function(err) {
+                  if(err) {
+                    return console.log("Error while writing on file: java2js.txt");
+                    console.log("FILE INITIALIZED");
+                  }
+                });
+                fs.writeFile('js2java.txt', 'START Bang!!\n', function(err) {
+                  if(err) {
+                    return console.log("Error while writing on file: js2java.txt");
+                  }
+                  console.log("FILE INITIALIZED");
+                });
+                //TODO: Bang Game.java running on child process
+                child = spawn('java', ['Test', connections.length - 1]);
             }
         }
+    } else if(msg.type == 'playerInfo') {
+        socket.emit('message',{type: "playerInfo", data: /*TODO json*/});
+        console.log("Server to Client: playerInfo");
+    } else if(msg.type == '') {
+
     }
   });
   // remove the socket and send the update to other clients
