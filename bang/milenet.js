@@ -15,8 +15,7 @@ var mileNumbers = [];
 var mileurl = "";
 var chatRoomId = null;
 var gameStart = false;
-
-var readyCount = 0;
+var plyaers = ['Connect'];
 
 var child;
 
@@ -64,15 +63,6 @@ app.get('/mobile', function (req, res) {
     console.log("You can't access here directly!");
     res.redirect("http://localhost:8001/admin");
 });
-
-fs.watch('/*file_dir*/', function(event, filename) {
-    if(filename) {
-
-    } else {
-        console.log('File Error');
-    }
-});
-
 
 // process websocket server
 io.on('connection', function(socket){
@@ -186,26 +176,40 @@ io.on('connection', function(socket){
                 console.log("Sending: Image to Client");
 
                 // Initialize File txt
-                fs.writeFile('java2js.txt', 'START Bang!!\n', function(err) {
+                fs.writeFile('java2js.txt', '', function(err) {
                   if(err) {
                     return console.log("Error while writing on file: java2js.txt");
-                    console.log("FILE INITIALIZED");
                   }
+                  console.log("FILE INITIALIZED");
                 });
-                fs.writeFile('js2java.txt', 'START Bang!!\n', function(err) {
+                fs.writeFile('js2java.txt', '', function(err) {
                   if(err) {
                     return console.log("Error while writing on file: js2java.txt");
                   }
                   console.log("FILE INITIALIZED");
                 });
+                fs.writeFile('players.txt', '', function(err) {
+                  if(err) {
+                    return console.log("Error while writing on file: js2java.txt");
+                  }
+                  console.log("FILE INITIALIZED");
+                });
+
                 //TODO: Bang Game.java running on child process
                 child = spawn('java', ['Test', connections.length - 1]);
             }
         }
     } else if(msg.type == 'playerInfo') {
-        socket.emit('message',{type: "playerInfo", data: /*TODO json*/});
-        console.log("Server to Client: playerInfo");
-    } else if(msg.type == '') {
+        for(var i=1; i < connections.length; i++) {
+            if(connections[i].id == socket.id.substring(0,5)) {
+                socket.emit('message',{type: "playerInfo", data: JSON.parse(plyaers[i]}));
+                console.log("Server to Client: playerInfo");
+                break;
+            }
+        }
+    } else if(msg.type == 'otherPlayer') {
+
+    } else if(msg.type == 'help') {
 
     }
   });
@@ -234,6 +238,33 @@ io.on('connection', function(socket){
     }
     io.emit('message', {type: "$mile_update", data: {connections: conns}});
   }
+
+  // //TODO:
+  // fs.watch('java2js.txt', function(event, filename) {
+  //     if(filename) {
+  //
+  //     } else {
+  //         console.log('File Error: ' + filename);
+  //     }
+  // });
+  // //TODO:
+  // fs.watch('js2java.txt', function(event, filename) {
+  //     if(filename) {
+  //
+  //     } else {
+  //         console.log('File Error: ' + filename);
+  //     }
+  // });
+  // //TODO: Get players information, read it, send msg
+  // fs.watch('players.txt', function(event, filename) {
+  //     if(filename) {
+  //        // socket.emit(playerInfo);
+  //        // socket.emit(otherPlayerInfo);
+  //     } else {
+  //         console.log('File Error: ' + filename);
+  //     }
+  // });
+
 
 });
 
