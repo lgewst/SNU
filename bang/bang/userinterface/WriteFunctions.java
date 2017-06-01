@@ -25,22 +25,17 @@ public class WriteFunctions{
 
   public void writePlayer(Player player, ArrayList<Player> otherPlayers) {
     JSONObject json = new JSONObject();
-    String s = "[";
+    JSONArray others = new JSONArray();
     for(Player other: otherPlayers)
-      s += "\"" + other.getCharacter().getName() + "\", ";
+      others.add(other.getCharacter().getName());
 
-    if (s.equals("["))
-      s = "[]";
-    else
-      s = s.substring(0, s.length() - 2) + "]";
-
-    json.put("otherPlayers", s);
+    json.put("otherPlayers", others);
     json.put("job", player.getJob().toJson());
     json.put("character", player.getCharacter().toJson());
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
     json.put("mountedCards", player.getMounting().toArray());
-    json.put("inHandCards", player.getHand().toArray());
+    json.put("inHandCards", player.getHand().toJSONArray());
 
     try {
       out = new BufferedWriter(new FileWriter("java2js.txt"));

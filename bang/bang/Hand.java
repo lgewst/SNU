@@ -2,6 +2,7 @@ package bang;
 
 import java.util.ArrayList;
 import bang.card.Card;
+import org.json.simple.*;
 
 public class Hand {
 	private ArrayList<Card> hand = new ArrayList<Card>();
@@ -27,13 +28,10 @@ public class Hand {
 		return hand.remove(index);
 	}
 
-	public String toArray() {
-		String s = "[";
+	public JSONArray toJSONArray() {
+		JSONArray temp = new JSONArray();
 		for(Card card: hand)
-			s += "\"" + card.getName() + "\", ";
-
-		if (s.equals("["))
-			return "[]";
-		return s.substring(0, s.length() - 2) + "]";
+			temp.add(card.getName());
+		return temp;
 	}
 }

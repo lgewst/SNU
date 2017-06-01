@@ -187,7 +187,7 @@ io.on('connection', function(socket){
                   }
                   console.log("FILE INITIALIZED");
                 });
-                fs.writeFile('js2java.txt', '', function(err) {
+                fs.writeFile('js2java.txt', 'D\t1', function(err) {
                   if(err) {
                     return console.log("Error while writing on file: js2java.txt");
                   }
