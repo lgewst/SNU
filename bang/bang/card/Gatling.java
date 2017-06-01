@@ -41,7 +41,7 @@ public class Gatling extends Card{
 			}
 
 			if (miss_count != 0)
-				HelpFunctions.damagePlayer(currentPlayer, player, 1, players, deck, discard, userinterface);
+				HelpFunctions.damagePlayer(currentPlayer, player, 1, players, deck, discard, userInterface);
 		}
 		return true;
 	}

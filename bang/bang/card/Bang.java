@@ -53,7 +53,7 @@ public class Bang extends Card{
 		}
 
 		if (miss_count != 0)
-			HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userinterface);
+			HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userInterface);
 
 		return true;
 	}

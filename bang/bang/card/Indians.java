@@ -35,7 +35,7 @@ public class Indians extends Card{
 			}
 
 			if (bang_count != 0)
-				HelpFunctions.damagePlayer(currentPlayer, player, 1, players, deck, discard, userinterface);
+				HelpFunctions.damagePlayer(currentPlayer, player, 1, players, deck, discard, userInterface);
 			}
 		return true;
 	}

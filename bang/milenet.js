@@ -15,15 +15,17 @@ var mileNumbers = [];
 var mileurl = "";
 var chatRoomId = null;
 var gameStart = false;
-var players = ['Connect'];
+var players = [];
+var forSync = false;
+
 
 var child;
 
 app.use(express.static('.'));
 
 // process /
-app.get('/', function (req, res) {
   // console.log(req.query);
+  app.get('/', function (req, res) {
   // res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
   res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://localhost:8001/'</h3>");
   console.log("This is main page");
@@ -166,10 +168,13 @@ io.on('connection', function(socket){
                 }
             }
             gameStart = tmpGameStart;
-            //TODO: Send msg to clients to make the buttons disable
+
             if(gameStart) {
+                setTimeout(() => {
+                    forSync = true;
+                }, 5050);
                 io.emit('message',{type: "game_start", data: "Game Start"});
-                console.log("Game Start!!!!!");
+                console.log("Game Start in 5 seconds");
             }
             if(gameStart) {
                 io.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
@@ -194,16 +199,15 @@ io.on('connection', function(socket){
                   }
                   console.log("FILE INITIALIZED");
                 });
-
-                //TODO: Bang Game.java running on child process
+                //TODO: Send msg to clients to make the buttons disable
                 child = spawn('java', ['Test', connections.length - 1]);
             }
         }
     } else if(msg.type == 'playerInfo') {
         for(var i=1; i < connections.length; i++) {
             if(connections[i].id == socket.id.substring(0,5)) {
-                //TODO
-                // socket.emit('message',{type: "playerInfo", data: JSON.parse(players[i])});
+                // TODO: each client
+                // socket.emit('message',{type: "playerInfo", data: JSON.parse(players[i-1])});
                 console.log("Server to Client: playerInfo");
                 break;
             }
@@ -259,6 +263,7 @@ io.on('connection', function(socket){
   // //TODO: Get players information, read it, send msg
   // fs.watch('players.txt', function(event, filename) {
   //     if(filename) {
+  //        // players.push();
   //        // socket.emit(playerInfo);
   //        // socket.emit(otherPlayerInfo);
   //     } else {

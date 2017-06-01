@@ -32,7 +32,7 @@ public class Duel extends Card{
 			index = userInterface.respondBang(currentPlayer);	//TODO: Ask Bang
 
 			if (index == -1) {
-				HelpFunctions.damagePlayer(targetPlayer, currentPlayer, 1, players, deck, discard, userinterface);
+				HelpFunctions.damagePlayer(targetPlayer, currentPlayer, 1, players, deck, discard, userInterface);
 				break;
 			}
 			discard.add(currentPlayer.getHand().remove(index));
@@ -40,7 +40,7 @@ public class Duel extends Card{
 			index = userInterface.respondBang(targetPlayer);	//TODO: ask bang
 
 			if (index == -1) {
-				HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userinterface);
+				HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userInterface);
 				break;
 			}
 			discard.add(targetPlayer.getHand().remove(index));
