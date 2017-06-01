@@ -15,7 +15,7 @@ var mileNumbers = [];
 var mileurl = "";
 var chatRoomId = null;
 var gameStart = false;
-var plyaers = ['Connect'];
+var players = ['Connect'];
 
 var child;
 
