@@ -7,21 +7,20 @@ import bang.Discard;
 import bang.HelpFunctions;
 import bang.Mounting;
 import bang.Player;
-import bang.userinterface.JavaUserInterface;
+import bang.userinterface.UserInterface;
 
 public class Jail extends Card{
 	private HelpFunctions HelpFunctions = new HelpFunctions();
-	private JavaUserInterface userInterface = new JavaUserInterface();
-	
+
 	public Jail(String name, String suit, int value) {
 		super(name, suit, value);
 	}
-	
+
 	public boolean canPlay(Player currentPlayer, ArrayList<Player> players) {
 		return targets(currentPlayer, players).size() > 0;
 	}
 
-	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) {
 		ArrayList<Player> targets = targets(currentPlayer, players);
 		int index = userInterface.askTarget(targets); //TODO: ask target
 		if (index == -1)

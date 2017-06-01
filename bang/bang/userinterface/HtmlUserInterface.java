@@ -1,8 +1,6 @@
 package bang.userinterface;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 import bang.Player;
@@ -10,11 +8,22 @@ import bang.Hand;
 import bang.Mounting;
 import bang.card.Card;
 
-public class HtmlUserInterface implements UserInterface{
-	BufferedReader in = new BufferedReader(new FileReader("in.txt"));
+public class HtmlUserInterface extends UserInterface{
+	BufferedReader in;
+	WriteFunctions writeFunctions = new WriteFunctions();
 
-	private void waitWriting() {
-		while(in.length == 0) {
+	public HtmlUserInterface() {
+		try {
+			in = new BufferedReader(new FileReader("js2java.txt"));
+		} catch(IOException e) {
+		}
+	}
+
+	private String readFile() throws IOException{
+		while(true) {
+			String s = in.readLine();
+			if(s != null)
+				return s;
 		}
 	}
 
@@ -25,8 +34,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -45,8 +53,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index >= 0 && index < hand.size())
 					return index;
 			} catch (IOException e) {
@@ -61,8 +68,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -81,8 +87,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -101,8 +106,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -120,8 +124,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index >= -1 && index < players.size())
 					return index;
 			} catch (IOException e) {
@@ -137,8 +140,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index == -3)
 					return index;
 				if (index == -2 && mounting.hasGun())
@@ -158,8 +160,7 @@ public class HtmlUserInterface implements UserInterface{
 
 		while(true) {
 			try {
-				waitWriting();
-				index = Integer.parseInt(in.readLine());
+				index = Integer.parseInt(readFile());
 				if (index >= 0 && index < cards.size())
 					return index;
 			} catch (IOException e) {

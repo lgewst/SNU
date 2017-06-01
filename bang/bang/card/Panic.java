@@ -7,21 +7,20 @@ import bang.Discard;
 import bang.Hand;
 import bang.HelpFunctions;
 import bang.Player;
-import bang.userinterface.JavaUserInterface;
+import bang.userinterface.UserInterface;
 
 public class Panic extends Card{
 	private HelpFunctions HelpFunctions = new HelpFunctions();
-	private JavaUserInterface userInterface = new JavaUserInterface();
-	
+
 	public Panic(String name, String suit, int value) {
 		super(name, suit, value);
 	}
-	
+
 	public boolean canPlay(Player currentPlayer, ArrayList<Player> players) {
 		return targets(currentPlayer, players).size() > 0;
 	}
 
-	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard) {
+	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) {
 		ArrayList<Player> targets = targets(currentPlayer, players);
 		int index = userInterface.askTarget(targets);
 		if (index == -1)
@@ -29,7 +28,7 @@ public class Panic extends Card{
 		Player targetPlayer = targets.get(index);	//TODO: ask target
 		Hand hand = currentPlayer.getHand();
 		index = userInterface.askTargetCard(targetPlayer);	//TODO: ask card
-		
+
 		if (index == -3)
 			return false;
 		discard.add(this);

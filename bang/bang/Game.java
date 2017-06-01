@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import bang.card.Card;
-import bang.userinterface.JavaUserInterface;
+import bang.userinterface.UserInterface;
+import bang.userinterface.HtmlUserInterface;
 import bang.card.BangDeck;
 
 public class Game {
@@ -14,7 +15,7 @@ public class Game {
 	private Discard discard;
 	private Player currentPlayer;
 	private HelpFunctions HelpFunctions = new HelpFunctions();
-	private JavaUserInterface userInterface = new JavaUserInterface();
+	private UserInterface userInterface = new HtmlUserInterface();
 
 	public Game(int n) {
 		deck = new Deck(BangDeck.makeDeck());
@@ -55,7 +56,7 @@ public class Game {
 			discard.add(check);
 
 			if (check.getSuit().equals("Spade") && 2 <= check.getValue() && check.getValue()<= 9) {
-				HelpFunctions.damagePlayer(null, currentPlayer, 3, players, deck, discard);
+				HelpFunctions.damagePlayer(null, currentPlayer, 3, players, deck, discard, userInterface);
 				discard.add(dynamite);
 			}
 			else
@@ -91,7 +92,7 @@ public class Game {
 				break;
 
 			Card playedCard = hand.peek(index);
-			if (playedCard.play(currentPlayer, players, deck, discard))
+			if (playedCard.play(currentPlayer, players, deck, discard, userInterface))
 				hand.remove(index);
 
 			if (!players.contains(currentPlayer))

@@ -6,20 +6,20 @@ import java.util.ArrayList;
 import bang.Player;
 import bang.card.Card;
 
-public interface UserInterface {
-	int askPlay(Player player, ArrayList<Player> players);
-	
-	int askDiscard(Player player);
+public abstract class UserInterface {
+	public abstract int askPlay(Player player, ArrayList<Player> players);
 
-	int respondBang(Player player);
+	public abstract int askDiscard(Player player);
 
-	int respondMiss(Player player);
+	public abstract int respondBang(Player player);
 
-	int respondBeer(Player player);
-	
-	int askTarget(ArrayList<Player> players);
+	public abstract int respondMiss(Player player);
 
-	int askTargetCard(Player player);
-	
-	int chooseGeneralStore(ArrayList<Card> cards);
+	public abstract int respondBeer(Player player);
+
+	public abstract int askTarget(ArrayList<Player> players);
+
+	public abstract int askTargetCard(Player player);
+
+	public abstract int chooseGeneralStore(ArrayList<Card> cards);
 }

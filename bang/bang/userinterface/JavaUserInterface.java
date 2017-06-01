@@ -10,15 +10,15 @@ import bang.Hand;
 import bang.Mounting;
 import bang.card.Card;
 
-public class JavaUserInterface implements UserInterface{
+public class JavaUserInterface extends UserInterface{
 	InputStreamReader converter = new InputStreamReader(System.in);
 	BufferedReader in = new BufferedReader(converter);
-	
+
 	@Override
 	public int askPlay(Player player, ArrayList<Player> players) {
 		Hand hand = player.getHand();
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -37,7 +37,7 @@ public class JavaUserInterface implements UserInterface{
 	public int askDiscard(Player player) {
 		Hand hand = player.getHand();
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -52,7 +52,7 @@ public class JavaUserInterface implements UserInterface{
 	public int respondBang(Player player) {
 		Hand hand = player.getHand();
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -71,7 +71,7 @@ public class JavaUserInterface implements UserInterface{
 	public int respondMiss(Player player) {
 		Hand hand = player.getHand();
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -90,7 +90,7 @@ public class JavaUserInterface implements UserInterface{
 	public int respondBeer(Player player) {
 		Hand hand = player.getHand();
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -108,7 +108,7 @@ public class JavaUserInterface implements UserInterface{
 	@Override
 	public int askTarget(ArrayList<Player> players) {
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -124,7 +124,7 @@ public class JavaUserInterface implements UserInterface{
 		Mounting mounting = player.getMounting();
 		Hand hand = player.getHand();
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
@@ -144,7 +144,7 @@ public class JavaUserInterface implements UserInterface{
 	@Override
 	public int chooseGeneralStore(ArrayList<Card> cards) {
 		int index = -2;
-		
+
 		while(true) {
 			try {
 				index = Integer.parseInt(in.readLine());
