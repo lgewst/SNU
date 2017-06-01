@@ -58,10 +58,10 @@ public class BangDeck {
 		cards.add(new Beer("Beer", "Heart", 10));
 		cards.add(new Beer("Beer", "Heart", 11));
 
-		cards.add(new Catbalou("Catbalou", "Diamond", 9));
-		cards.add(new Catbalou("Catbalou", "Diamond", 10));
-		cards.add(new Catbalou("Catbalou", "Diamond", 11));
-		cards.add(new Catbalou("Catbalou", "Heart", 13));
+		cards.add(new Catbalou("Cat balou", "Diamond", 9));
+		cards.add(new Catbalou("Cat balou", "Diamond", 10));
+		cards.add(new Catbalou("Cat balou", "Diamond", 11));
+		cards.add(new Catbalou("Cat balou", "Heart", 13));
 
 		cards.add(new Duel("Duel", "Club", 8));
 		cards.add(new Duel("Duel", "Diamond", 12));
@@ -69,8 +69,8 @@ public class BangDeck {
 
 		cards.add(new Gatling("Gatling", "Heart", 10));
 
-		cards.add(new Generalstore("Generalstore", "Club", 9));
-		cards.add(new Generalstore("Generalstore", "Spade", 12));
+		cards.add(new Generalstore("General store", "Club", 9));
+		cards.add(new Generalstore("General store", "Spade", 12));
 
 		cards.add(new Indians("Indians", "Diamond", 13));
 		cards.add(new Indians("Indians", "Diamond", 1));

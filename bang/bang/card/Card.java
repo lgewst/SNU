@@ -25,7 +25,7 @@ public abstract class Card implements Playable{
 	}
 
 	public String getImageName() {
-		String s, v;
+		String s = "", v;
 		switch(suit) {
 			case "Diamond": s = "D"; break;
 			case "Heart": s = "H"; break;
@@ -40,6 +40,6 @@ public abstract class Card implements Playable{
 			default: v = Integer.toString(value); break;
 		}
 
-		return "../cards/tmp cards/" + name + "_" + suit + value + ".jpg";
+		return "../cards/tmp cards/" + name + "_" + v + s + ".jpg";
 	}
 }
