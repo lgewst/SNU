@@ -1,5 +1,7 @@
 package bang;
 
+import org.json.simple.*;
+
 public class Job {
 	public static String[] JOBS = {"Sheriff", "Outlaw", "Outlaw", "Renegade", "Deputy", "Outlaw", "Deputy"};
 
@@ -25,5 +27,13 @@ public class Job {
 		} else {
 			throw new RuntimeException("Invalid job");
 		}
+	}
+
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+		json.put("image", job + ".jpg");
+		json.put("name", job);
+		json.put("mission", this.getGoal());
+		return json;
 	}
 }

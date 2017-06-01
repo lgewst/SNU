@@ -26,4 +26,14 @@ public class Hand {
 		int index = (int)(Math.random() * hand.size());
 		return hand.remove(index);
 	}
+
+	public String toArray() {
+		String s = "[";
+		for(Card card: hand)
+			s += "\"" + card.getName() + "\", ";
+
+		if (s.equals("["))
+			return "[]";
+		return s.substring(0, s.length() - 2) + "]";
+	}
 }

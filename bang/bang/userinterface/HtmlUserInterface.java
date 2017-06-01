@@ -19,11 +19,22 @@ public class HtmlUserInterface extends UserInterface{
 		}
 	}
 
+	private String readFile(Player player, ArrayList<Player> players) throws IOException{
+		while(true) {
+			String s = in.readLine();
+			if (s != null)
+				if (s.split("\t")[0].equals("D"))
+					writeFunctions.writePlayer(player, players);
+				else
+					return s;
+		}
+	}
+
 	private String readFile() throws IOException{
 		while(true) {
 			String s = in.readLine();
-			if(s != null)
-				return s;
+			if (s != null)
+					return s;
 		}
 	}
 
@@ -34,7 +45,7 @@ public class HtmlUserInterface extends UserInterface{
 
 		while(true) {
 			try {
-				index = Integer.parseInt(readFile());
+				index = Integer.parseInt(readFile(player, players));
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {

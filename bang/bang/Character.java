@@ -1,5 +1,7 @@
 package bang;
 
+import org.json.simple.*;
+
 public class Character {
 	public static String[] CHARACTERS = { "Bart Cassidy", "Black Jack", "Calamity Janet", "El Gringo", "Jesse Jones", "Jourdonnais", "Kit Carlson", "Lucky Duke",
 			"Paul Regret", "Pedro Ramirez", "Rose Doolan", "Sid Ketchum", "Slab the Killer", "Suzy Lafayette", "Vulture Sam", "Willy the Kid" };
@@ -58,5 +60,13 @@ public class Character {
 		} else {
 			throw new RuntimeException("Invalid player name");
 		}
+	}
+
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+		json.put("image", name + ".jpg");
+		json.put("name", name);
+		json.put("effect", this.getAbility());
+		return json;
 	}
 }
