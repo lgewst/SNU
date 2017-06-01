@@ -4,7 +4,6 @@
 <meta charset=utf-8>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<link rel="stylesheet" type="text/css" href="mobile.css">
 <script src="../mindless.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -24,7 +23,19 @@ MILE.on('ready', function(data, from) {
         });
 MILE.on('game_start', function(data, from) {
         console.log("From server considering ready: " + data);
-        $.mobile.changePage("#background");
+        $('#willStart').append("Game will start in <span id=\"count\">5</span> seconds.");
+        var counter = 5;
+        setInterval(function(){
+            counter--;
+            if (counter >= 0){
+                span = document.getElementById("count");
+                span.innerHTML = counter;
+                }
+            if (counter == 0){
+                clearInterval(counter);
+                $.mobile.changePage("#background");
+                }
+            }, 1000);
         });
 MILE.on('playerInfo', function(data, from) {
         var info = JSON.parse(data);
@@ -209,7 +220,10 @@ $(document).on("pagecreate", "#cardInfo", function(){
 <body>
 <div data-role="page" id="readyPage">
     <div data-role="main" class="ui-content">
-        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="ready">Ready</a>
+        <p align="center" style="text-align:center; padding-top: 40%; font-size: 20px;" id="willStart"></p>
+        <div id="wrapper" align="center" style="text-align:center; padding-top: 20px;">
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="ready">Ready</a>
+        </div>
     </div>
 </div>
 <div data-role="page" id="background">
