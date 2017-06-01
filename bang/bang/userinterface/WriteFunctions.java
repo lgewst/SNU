@@ -66,4 +66,5 @@ public class WriteFunctions{
       out.newLine();
     } catch(IOException e) {
     }
+  }
 }
