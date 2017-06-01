@@ -39,6 +39,7 @@ MILE.on('game_start', function(data, from) {
             }, 1000);
         });
 MILE.on('playerInfo', function(data, from) {
+        console.log(data);
         var info = JSON.parse(data);
         var otherPlayers = info.otherPlayers; // str array
         var job = info.job; // image, str(name), str(mission)
@@ -50,7 +51,7 @@ MILE.on('playerInfo', function(data, from) {
         var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
         var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
         var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
-        
+
         var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
         var charName = "<p id=\"charName\"> CHAR: " + character.name + "</p>";
         var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
@@ -59,9 +60,9 @@ MILE.on('playerInfo', function(data, from) {
             var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
             $('#otherPlayers').append(playerN);
         }
-        $('#images').append(jobImage);     
+        $('#images').append(jobImage);
         $('#images').append(characterImage);
-        
+
         $('#contents').append(jobName);
         $('#contents').append(jobMission);
         $('#contents').append(charName);
@@ -89,17 +90,17 @@ MILE.on('otherPlayerInfo', function(data, from){
         var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
         var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
         var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
-        
+
         var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
         var charName = "<p id=\"charName\"> CHAR: " + character.name + "</p>";
         var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
         var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
-        
+
         var inHandCardBack = "<img src=\"" + inHand.image + "\" >";
         var inHandCardNum = inHand.num;
-        $('#images').append(jobImage);     
+        $('#images').append(jobImage);
         $('#images').append(characterImage);
-        
+
         $('#contents').append(jobName);
         $('#contents').append(jobMission);
         $('#contents').append(charName);
@@ -140,7 +141,7 @@ MILE.on('help', function(data, from){
         var info = JSON.parse(data);
         var helpStr = "<p id=\"helpStr\">" + info.help + "</p>";
         $('#explanation').append(helpStr);
-        
+
         });
 MILE.on('select', function(data, from){
         });
@@ -153,11 +154,11 @@ $(document).on("pagecreate", "#readyPage", function(){
             });
         });
 $(document).on("pagecreate", "#background", function(){
-        MILE.send("playerInfo", "Request basic information");
+        // MILE.send("playerInfo", "Request basic information");
         $("#otherPlayers").on('tap', function(){
             var id = event.target.id;
             var content = document.getElementById(id).innerHTML;
-            MILE.send("otherPlayerInfo", content); 
+            MILE.send("otherPlayerInfo", content);
             });
         $("#mountedCards").on('tap', function(){
             var id = event.target.id;/*div id e.g. mountedCardN*/

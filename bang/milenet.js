@@ -7,7 +7,7 @@ var fs = require('fs');
 var spawn = require('child_process').spawn;
 //java.classpath.push('./java_algorithm/src/');
 // TODO: *.java files are need to be compiled into *.class
-// var bangUI = java.import('bang/userinterface/JavaUserInterface');
+//var bangUI = java.import('bang/userinterface/JavaUserInterface');
 //var bangGame = java.import('bang/Game');
 
 var connections = [];
@@ -125,17 +125,17 @@ io.on('connection', function(socket){
 
   // Step 2: manage connection information
   // TODO: connection should have ready attribute
-  // connections.push({socket: socket, id: socket.id.substring(0,5)});
-  connections.push({socket: socket, id: socket.id.substring(0,5), ready: false});
-  socket.emit('message', {type: "$mile_id", data: socket.id.substring(0,5)});
-  console.log(socket.id.substring(0,5) + ' connected');
+  // connections.push({socket: socket, id: socket.id});
+  connections.push({socket: socket, id: socket.id, ready: false});
+  socket.emit('message', {type: "$mile_id", data: socket.id});
+  console.log(socket.id + ' connected');
   // check whether it's primary or not
 
   if (connections.length == 1) { // URL maker
     socket.emit('message', {type: "$mile_primary", data: mileurl});
   } else if (connections.length > 1 && connections.length <= 8) { // URL follower and Game user
     socket.emit('message', {type: "$mile_secondary", data: mileurl});
-    socket.broadcast.emit('message', {type: "$mile_join", data: socket.id.substring(0,5)}); // send the message except me
+    socket.broadcast.emit('message', {type: "$mile_join", data: socket.id}); // send the message except me
     updateConnection();
   }
 
@@ -145,12 +145,12 @@ io.on('connection', function(socket){
   }
   // receive the message and send it to other clients
   socket.on('message', function(msg){
-    console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id.substring(0,5) + ')');
+    console.log('[type]: ' + msg.type + ', [data]: ' + msg.data + ' (from ' + socket.id + ')');
 
     // TODO: if msg.type == 'ready', modify connection info
     if(msg.type == 'ready') {
         for (var i = 0; i < connections.length; i++) {
-          if (connections[i].id == socket.id.substring(0,5)) {
+          if (connections[i].id == socket.id) {
             connections[i].ready = !connections[i].ready;
             console.log(String(connections[i].id) + " is now ready: " + connections[i].ready);
             socket.emit('message', msg);
@@ -159,7 +159,7 @@ io.on('connection', function(socket){
         }
 
         //TODO: Setting gameStart Originally connections.length >= 5
-        if(connections.length >= 2 && connections.length <= 8) {
+        if(connections.length >= 5 && connections.length <= 8) {
             var tmpGameStart = true;
             for (var i = 1; i < connections.length; i++) {
                 if(connections[i].ready == false) {
@@ -187,7 +187,7 @@ io.on('connection', function(socket){
                   }
                   console.log("FILE INITIALIZED");
                 });
-                fs.writeFile('js2java.txt', 'D\t1', function(err) {
+                fs.writeFile('js2java.txt', '', function(err) {
                   if(err) {
                     return console.log("Error while writing on file: js2java.txt");
                   }
@@ -205,7 +205,7 @@ io.on('connection', function(socket){
         }
     } else if(msg.type == 'playerInfo') {
         for(var i=1; i < connections.length; i++) {
-            if(connections[i].id == socket.id.substring(0,5)) {
+            if(connections[i].id == socket.id) {
                 // TODO: each client
                 // socket.emit('message',{type: "playerInfo", data: JSON.parse(players[i-1])});
                 console.log("Server to Client: playerInfo");
@@ -215,15 +215,15 @@ io.on('connection', function(socket){
     } else if(msg.type == 'otherPlayer') {
 
     } else if(msg.type == 'help') {
-
+        //TODO: Server side request
     }
   });
   // remove the socket and send the update to other clients
   socket.on('disconnect', function(){
-    console.log(socket.id.substring(0,5) + ' disconnected');
-    socket.broadcast.emit('message', {type: "$mile_leave", data: socket.id.substring(0,5)});
+    console.log(socket.id + ' disconnected');
+    socket.broadcast.emit('message', {type: "$mile_leave", data: socket.id});
     for (var i = 0; i < connections.length; i++) {
-      if (connections[i].id == socket.id.substring(0,5)) {
+      if (connections[i].id == socket.id) {
         connections.splice(i, 1);
       }
     }
@@ -243,7 +243,7 @@ io.on('connection', function(socket){
     }
     io.emit('message', {type: "$mile_update", data: {connections: conns}});
   }
-
+  //
   // //TODO:
   // fs.watch('java2js.txt', function(event, filename) {
   //     if(filename) {
@@ -260,16 +260,22 @@ io.on('connection', function(socket){
   //         console.log('File Error: ' + filename);
   //     }
   // });
-  // //TODO: Get players information, read it, send msg
-  // fs.watch('players.txt', function(event, filename) {
-  //     if(filename) {
-  //        // players.push();
-  //        // socket.emit(playerInfo);
-  //        // socket.emit(otherPlayerInfo);
-  //     } else {
-  //         console.log('File Error: ' + filename);
-  //     }
-  // });
+  //TODO: Get players information, read it, send msg
+  fs.watch('players.txt', function(event, filename) {
+      if(filename) {
+         var playersText = fs.readFileSync(filename,'utf-8');
+         var playersInfoText = playersText.split('\n');
+         for(var i = 0; i < playersInfoText.length; i++) {
+             players.push(playersInfoText[i]);
+         }
+         for(var i = 1; i < connections.length; i++) {
+            //  console.log(connections[i] + ': ' + playersInfoText[i-1]);
+             io.to(connections[i].id).emit('message',{type:'playerInfo', data: playersInfoText[i-1]});
+         }
+      } else {
+          console.log('File Error: ' + filename);
+      }
+  });
 
 
 });
