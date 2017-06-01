@@ -6,11 +6,8 @@
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <link rel="stylesheet" type="text/css" href="mobile.css">
 <script src="../mindless.js"></script>
-<script src="mobile.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script src="https://unpkg.com/vue"></script>
-<script src="../semantic/dist/semantic.min.js"></script>
 <script type="text/javascript">
 window.addEventListener("load", function(){
         MILE.setAppID("connect");
@@ -68,8 +65,71 @@ MILE.on('playerInfo', function(data, from) {
             $('#inHandCards').append(cardDiv);
         }
         });
+MILE.on('otherPlayerInfo', function(data, from){
+        var info = JSON.parse(data);
+        var job = info.job; // image, str(name), str(mission)
+        /* Other players job show when he/she is a sceriff or is dead */
+        var character = info.character; // image, str(name), str(effect)
+        var curLife = info.curLife; // number
+        var maxLife = info.maxLife;
+        var mounted = info.mountedCards; // image array
+        var inHand = info.inHandCards; //image, num
+        var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
+        var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
+        var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
+        
+        var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
+        var charName = "<p id=\"charName\"> CHAR: " + character.name + "</p>";
+        var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
+        var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
+        
+        var inHandCardBack = "<img src=\"" + inHand.image + "\" >";
+        var inHandCardNum = inHand.num;
+        $('#images').append(jobImage);     
+        $('#images').append(characterImage);
+        
+        $('#contents').append(jobName);
+        $('#contents').append(jobMission);
+        $('#contents').append(charName);
+        $('#contents').append(charEffect);
+        for(i = 0; i < mounted.length; i++){
+            var cardImageN = "<img src=\"" + mounted[i].image + "\" >";
+            var cardDiv = "<div id=\"mountedCard" + i + "\">" + cardImageN + "</div>";
+            $('#mountedCards').append(cardDiv);
+        }
+        for(i = 0; i < inHandCardNum; i++){
+            var cardDiv = "<div id=\"inHandCard" + i + "\">" + inHandCardBack + "</div>";
+            $('#inHandCards').append(cardDiv);
+        }
+        });
 MILE.on('bangCard', function(data, from) {
         // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
+        });
+MILE.on('mountedCardInfo', function(data, from){
+        $.mobile.changePage('#cardInfo');
+        var info = JSON.parse(data);
+        var imageSrc = info.image;
+        var activated = info.activated;
+        var image = "<img src=\"" + imageSrc + "\">";
+        $('#cardImage').append(image);
+        /* add div attribute if the card is selectable*/
+        });
+MILE.on('inHandCardInfo', function(data, from){
+        $.mobile.changePage('#cardInfo');
+        var info = JSON.parse(data);
+        var imageSrc = info.image;
+        var activated = info.activated;
+        var image = "<img src=\"" + imageSrc + "\">";
+        $('#cardImage').append(image);
+        /* add div attribute if the card is selectable*/
+        });
+        */
+MILE.on('help', function(data, from){
+        var info = JSON.parse(data);
+        var helpStr = "<p id=\"helpStr\">" + info.help + "</p>";
+        $('#explanation').append(helpStr);
+        });
+MILE.on('select', function(data, from){
         });
 
 </script>
@@ -80,16 +140,24 @@ $(document).on("pagecreate", "#readyPage", function(){
             });
         });
 $(document).on("pagecreate", "#background", function(){
-        // Send server request
         MILE.send("playerInfo", "Request basic information");
-        $('p:contains("player").on('tap', function(){
-            alert("tap on p");
+        $("#otherPlayers").on('tap', function(){
+            var id = event.target.id;
+            var content;
+            MILE.send("otherPlayerInfo", content);
+            //alert(event.target.id);
+            
             });
-
-        /*$("#background").on("tap", function(){
-            $.mobile.changePage("#cardInfo");
+        $("#mountedCards").on('tap', function(){
+            var id = event.target.id;/*div id e.g. mountedCardN*/
+            var content;
+            MILE.send("mountedCardInfo", content);
             });
-            */
+        $("#inHandCards").on('tap', function(){
+            var id = event.target.id;
+            var content;
+            MILE.send("inHandCardInfo", content);
+            });
         /* TODO
            1. Ask server
            - other player list(character names)
@@ -104,6 +172,11 @@ $(document).on("pagecreate", "#background", function(){
          */
         });
 $(document).on("pagecreate", "#playerInfo", function(){
+        $("#mountedCards").on('tap', function(){
+            var id = event.target.id;/*div id e.g. mountedCardN*/
+            var content;
+            //MILE.send("mountedCardInfo", content);
+            });
         /* TODO
            1. Ask server
            Display information
@@ -113,9 +186,13 @@ $(document).on("pagecreate", "#playerInfo", function(){
          */
         });
 $(document).on("pagecreate", "#cardInfo", function(){
+        var content; /* img src */
         $("#help").on("tap", function(){
-            $("#cardExplain").popup("open");
+            MILE.send("help", content);
             });
+        $("#select").on("tap", function(){
+            MILE.send("select", content);
+            }
         /* TODO
            1. Display card image and buttons
            2. Add event listener on each buttons
@@ -123,8 +200,6 @@ $(document).on("pagecreate", "#cardInfo", function(){
            - If the user tap on the "Cancel" button, just close the popup
            - If the user tap on the "Help" button, ask server to give information and make a popup
          */
-        });
-$(document).on("pagecreate", "#cardExplain", function(){
         });
 </script>
 </head>
@@ -139,6 +214,7 @@ $(document).on("pagecreate", "#cardExplain", function(){
         <div data-role="collapsible" data-collapsed="true" id="otherPlayers">
 
             <h1>Other players </h1>
+            <p id="player1"> Suzy Lafayette </p>
             <!-- Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. -->
         </div>
         <div id="myInfo">
@@ -160,19 +236,26 @@ $(document).on("pagecreate", "#cardExplain", function(){
 </div>
 <div data-role="page" data-dialog="true" id="playerInfo">
     <div data-role="main" class="ui-content">
-        <p>Player information</p>
-        <div id="information">
-        </div>
-        <div id="mountedCards">
-        </div>
-        <div id="playingCards">
+        <div id="otherPlayerInfo">
+            <div id="status">
+                <p> STATUS </p>
+                <div id="images"></div>
+                <div id="contents"></div>
+            </div>
+            <div id="cards">
+                <div id="mountedCards">
+                    <p> Mounted </p>
+                </div>
+                <div id="inHandCards">
+                    <p> In Hand </p>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Show the information of other players. character card, character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. The player can see card information by touching the mounted card. -->
 </div>
 <div data-role="page" data-dialog="true" id="cardInfo">
     <div data-role="main" class="ui-content">
-        <!-- Show the card image and ok/cancel/help button when the card is selected-->
         <div id="cardImage" width="90%" height="60%"></div>
         <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
@@ -186,7 +269,6 @@ $(document).on("pagecreate", "#cardExplain", function(){
     <!-- Show the explanation of the card when help is selected. -->
     <div data-role="popup" id="explanation" class="ui-content" style="top: 50%">
         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">close</a>
-        <p>Help popup </p>
     </div>
 </div>
 </body>
