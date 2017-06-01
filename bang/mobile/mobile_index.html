@@ -123,11 +123,12 @@ MILE.on('inHandCardInfo', function(data, from){
         $('#cardImage').append(image);
         /* add div attribute if the card is selectable*/
         });
-        */
 MILE.on('help', function(data, from){
+        $.mobile.changePage('#cardExplain');
         var info = JSON.parse(data);
         var helpStr = "<p id=\"helpStr\">" + info.help + "</p>";
         $('#explanation').append(helpStr);
+        
         });
 MILE.on('select', function(data, from){
         });
@@ -143,19 +144,17 @@ $(document).on("pagecreate", "#background", function(){
         MILE.send("playerInfo", "Request basic information");
         $("#otherPlayers").on('tap', function(){
             var id = event.target.id;
-            var content;
-            MILE.send("otherPlayerInfo", content);
-            //alert(event.target.id);
-            
+            var content = document.getElementById(id).innerHTML;
+            MILE.send("otherPlayerInfo", content); 
             });
         $("#mountedCards").on('tap', function(){
             var id = event.target.id;/*div id e.g. mountedCardN*/
-            var content;
+            var content = document.getElementById(id).innerHTML;
             MILE.send("mountedCardInfo", content);
             });
         $("#inHandCards").on('tap', function(){
             var id = event.target.id;
-            var content;
+            var content = document.getElementById(id).innerHTML;
             MILE.send("inHandCardInfo", content);
             });
         /* TODO
@@ -174,7 +173,7 @@ $(document).on("pagecreate", "#background", function(){
 $(document).on("pagecreate", "#playerInfo", function(){
         $("#mountedCards").on('tap', function(){
             var id = event.target.id;/*div id e.g. mountedCardN*/
-            var content;
+            var content = document.getElementById(id).innerHTML;
             //MILE.send("mountedCardInfo", content);
             });
         /* TODO
@@ -188,11 +187,15 @@ $(document).on("pagecreate", "#playerInfo", function(){
 $(document).on("pagecreate", "#cardInfo", function(){
         var content; /* img src */
         $("#help").on("tap", function(){
+            var content = $(this).siblings("img").prop('outerHTML');
+            alert("To check tags: " + content);
             MILE.send("help", content);
             });
         $("#select").on("tap", function(){
+            var content = $(this).siblings("img").prop('outerHTML');
+            alert("To check tags: " + content);
             MILE.send("select", content);
-            }
+            });
         /* TODO
            1. Display card image and buttons
            2. Add event listener on each buttons
@@ -260,7 +263,7 @@ $(document).on("pagecreate", "#cardInfo", function(){
         <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
-            <a href="#cardExplain" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
         </div>
     </div>
 </div>
