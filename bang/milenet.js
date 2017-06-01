@@ -17,7 +17,7 @@ var chatRoomId = null;
 var gameStart = false;
 var players = [];
 var forSync = false;
-
+var playersInfoText;
 
 var child;
 
@@ -181,24 +181,24 @@ io.on('connection', function(socket){
                 console.log("Sending: Image to Client");
 
                 // Initialize File txt
-                fs.writeFile('java2js.txt', '', function(err) {
-                  if(err) {
-                    return console.log("Error while writing on file: java2js.txt");
-                  }
-                  console.log("FILE INITIALIZED");
-                });
+                // fs.writeFile('java2js.txt', '', function(err) {
+                //   if(err) {
+                //     return console.log("Error while writing on file: java2js.txt");
+                //   }
+                //   console.log("FILE INITIALIZED");
+                // });
                 fs.writeFile('js2java.txt', '', function(err) {
                   if(err) {
                     return console.log("Error while writing on file: js2java.txt");
                   }
                   console.log("FILE INITIALIZED");
                 });
-                fs.writeFile('players.txt', '', function(err) {
-                  if(err) {
-                    return console.log("Error while writing on file: js2java.txt");
-                  }
-                  console.log("FILE INITIALIZED");
-                });
+                // fs.writeFile('players.txt', '', function(err) {
+                //   if(err) {
+                //     return console.log("Error while writing on file: js2java.txt");
+                //   }
+                //   console.log("FILE INITIALIZED");
+                // });
                 //TODO: Send msg to clients to make the buttons disable
                 child = spawn('java', ['Test', connections.length - 1]);
             }
@@ -208,6 +208,14 @@ io.on('connection', function(socket){
             if(connections[i].id == socket.id) {
                 // TODO: each client
                 // socket.emit('message',{type: "playerInfo", data: JSON.parse(players[i-1])});
+                console.log("Server to Client: playerInfo");
+                break;
+            }
+        }
+    } else if(msg.type == 'initPlayerInfo') {
+        for(var i=1; i < connections.length; i++) {
+            if(connections[i].id == socket.id) {
+                io.to(connections[i].id).emit('message',{type:'playerInfo', data: playersInfoText[i-1]});
                 console.log("Server to Client: playerInfo");
                 break;
             }
@@ -243,7 +251,7 @@ io.on('connection', function(socket){
     }
     io.emit('message', {type: "$mile_update", data: {connections: conns}});
   }
-  //
+
   // //TODO:
   // fs.watch('java2js.txt', function(event, filename) {
   //     if(filename) {
@@ -259,24 +267,23 @@ io.on('connection', function(socket){
   //     } else {
   //         console.log('File Error: ' + filename);
   //     }
-  // });
-  //TODO: Get players information, read it, send msg
-  fs.watch('players.txt', function(event, filename) {
-      if(filename) {
-         var playersText = fs.readFileSync(filename,'utf-8');
-         var playersInfoText = playersText.split('\n');
-         for(var i = 0; i < playersInfoText.length; i++) {
-             players.push(playersInfoText[i]);
-         }
-         for(var i = 1; i < connections.length; i++) {
-            //  console.log(connections[i] + ': ' + playersInfoText[i-1]);
-             io.to(connections[i].id).emit('message',{type:'playerInfo', data: playersInfoText[i-1]});
-         }
-      } else {
-          console.log('File Error: ' + filename);
-      }
-  });
 
+  // });
+  var playerChecker = true;
+  var cnt = 0;
+  setInterval(function() {
+      if(playerChecker) {
+          var playersText = fs.readFileSync('players.txt','utf-8');
+          playersInfoText = playersText.split('\n');
+        //   console.log("Con len: " + connections.length + " Info len: " + playersInfoText.length);
+          if(playersInfoText.length == connections.length) {
+              playerChecker = false;
+              for(var i = 0; i < playersInfoText.length-1; i++) {
+                  players.push(playersInfoText[i]);
+              }
+          }
+      }
+  },1000);
 
 });
 

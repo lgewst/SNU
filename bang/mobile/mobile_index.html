@@ -35,6 +35,7 @@ MILE.on('game_start', function(data, from) {
             if (counter == 0){
                 clearInterval(counter);
                 $.mobile.changePage("#background");
+                MILE.send('initPlayerInfo', '');
                 }
             }, 1000);
         });
@@ -154,7 +155,8 @@ $(document).on("pagecreate", "#readyPage", function(){
             });
         });
 $(document).on("pagecreate", "#background", function(){
-        // MILE.send("playerInfo", "Request basic information");
+        //TODO: Changed
+        MILE.send("playerInfo", "Request basic information");
         $("#otherPlayers").on('tap', function(){
             var id = event.target.id;
             var content = document.getElementById(id).innerHTML;
