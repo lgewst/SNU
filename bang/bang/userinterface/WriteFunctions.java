@@ -11,13 +11,14 @@ import bang.card.Card;
 import bang.Game;
 
 public class WriteFunctions{
-
-  BufferedWriter out = new BufferedWriter(new FileWriter("java2js.txt"));
+  BufferedWriter out;
 
   public void writeCard(Card card) {
     try {
+      out = new BufferedWriter(new FileWriter("java2js.txt"));
       out.write(card.getImageName());
       out.newLine();
+      out.close();
     } catch(IOException e) {
     }
   }
@@ -42,8 +43,10 @@ public class WriteFunctions{
     json.put("inHandCards", player.getHand().toArray());
 
     try {
+      out = new BufferedWriter(new FileWriter("java2js.txt"));
       out.write(json.toString());
       out.newLine();
+      out.close();
     } catch(IOException e) {
     }
   }
@@ -52,8 +55,10 @@ public class WriteFunctions{
     JSONObject json = new JSONObject();
 
     try {
+      out = new BufferedWriter(new FileWriter("java2js.txt"));
       out.write(json.toString());
       out.newLine();
+      out.close();
     } catch(IOException e) {
     }
   }
@@ -62,8 +67,10 @@ public class WriteFunctions{
     JSONObject json = new JSONObject();
 
     try {
+      out = new BufferedWriter(new FileWriter("java2js.txt"));
       out.write(json.toString());
       out.newLine();
+      out.close();
     } catch(IOException e) {
     }
   }

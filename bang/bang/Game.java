@@ -10,14 +10,16 @@ import bang.userinterface.HtmlUserInterface;
 import bang.card.BangDeck;
 
 public class Game {
-	private ArrayList<Player> players = new ArrayList<Player>();
+	private ArrayList<Player> players;
 	private Deck deck;
 	private Discard discard;
 	private Player currentPlayer;
 	private HelpFunctions HelpFunctions = new HelpFunctions();
-	private UserInterface userInterface = new HtmlUserInterface();
+	private UserInterface userInterface;
 
 	public Game(int n) {
+		userInterface = new HtmlUserInterface();
+		players = new ArrayList<Player>();
 		deck = new Deck(BangDeck.makeDeck());
 		deck.suffle();
 		discard = new Discard();
