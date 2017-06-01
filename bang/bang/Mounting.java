@@ -2,6 +2,7 @@ package bang;
 
 import java.util.ArrayList;
 import bang.card.Card;
+import org.json.simple.*;
 
 public class Mounting {
 	private Card gun = null;
@@ -57,16 +58,10 @@ public class Mounting {
 		return mounting.size();
 	}
 
-	public String toArray() {
-			String s = "[";
-			if (gun != null)
-				s += "\"" + gun.getName() + "\", ";
-
-			for(Card card: mounting)
-				s += "\"" + card.getName() + "\", ";
-
-			if(s.equals("["))
-				return "[]";
-			return s.substring(0, s.length() - 2) + "]";
+	public JSONArray toJSONArray() {
+		JSONArray temp = new JSONArray();
+		for(Card card: mounting)
+			temp.add(card.getName());
+		return temp;
 	}
 }

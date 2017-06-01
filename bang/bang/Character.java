@@ -64,7 +64,7 @@ public class Character {
 
 	public JSONObject toJson() {
 		JSONObject json = new JSONObject();
-		json.put("image", name + ".jpg");
+		json.put("image", "../cards/Character cards/" + name + ".jpg");
 		json.put("name", name);
 		json.put("effect", this.getAbility());
 		return json;

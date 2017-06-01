@@ -31,7 +31,7 @@ public class Hand {
 	public JSONArray toJSONArray() {
 		JSONArray temp = new JSONArray();
 		for(Card card: hand)
-			temp.add(card.getName());
+			temp.add(card.getImageName());
 		return temp;
 	}
 }

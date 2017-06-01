@@ -40,6 +40,6 @@ public abstract class Card implements Playable{
 			default: v = Integer.toString(value); break;
 		}
 
-		return name + "_" + suit + value + ".jpg";
+		return "../cards/tmp cards/" + name + "_" + suit + value + ".jpg";
 	}
 }

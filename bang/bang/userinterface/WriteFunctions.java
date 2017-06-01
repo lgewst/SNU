@@ -34,7 +34,7 @@ public class WriteFunctions{
     json.put("character", player.getCharacter().toJson());
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
-    json.put("mountedCards", player.getMounting().toArray());
+    json.put("mountedCards", player.getMounting().toJSONArray());
     json.put("inHandCards", player.getHand().toJSONArray());
 
     try {

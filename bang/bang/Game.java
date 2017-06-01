@@ -3,7 +3,8 @@ package bang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
+import org.json.simple.*;
+import java.io.*;
 import bang.card.Card;
 import bang.userinterface.UserInterface;
 import bang.userinterface.HtmlUserInterface;
@@ -24,6 +25,34 @@ public class Game {
 		deck.suffle();
 		discard = new Discard();
 		setupPlayer(n);
+
+		writePlayerInfo();
+	}
+
+	private void writePlayerInfo() {
+		try {
+			BufferedWriter outPlayers = new BufferedWriter(new FileWriter("players.txt"));
+
+			for (Player player: players) {
+				JSONObject json = new JSONObject();
+				JSONArray others = new JSONArray();
+				for(Player other: HelpFunctions.getOthers(player, players))
+					others.add(other.getCharacter().getName());
+
+				json.put("otherPlayers", others);
+				json.put("job", player.getJob().toJson());
+				json.put("character", player.getCharacter().toJson());
+				json.put("curLife", player.getHealth());
+				json.put("maxLife", player.getMaxHealth());
+				json.put("mountedCards", player.getMounting().toJSONArray());
+				json.put("inHandCards", player.getHand().toJSONArray());
+
+				outPlayers.write(json.toString()); outPlayers.newLine();
+			}
+
+			outPlayers.close();
+		}catch(IOException e){
+		}
 	}
 
 	private void setupPlayer(int n) {

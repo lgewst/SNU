@@ -31,7 +31,7 @@ public class Job {
 
 	public JSONObject toJson() {
 		JSONObject json = new JSONObject();
-		json.put("image", job + ".jpg");
+		json.put("image", "../Role cards/" + job + ".jpg");
 		json.put("name", job);
 		json.put("mission", this.getGoal());
 		return json;
