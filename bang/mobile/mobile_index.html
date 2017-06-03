@@ -4,6 +4,7 @@
 <meta charset=utf-8>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="mobile.css">
 <script src="../mindless.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -70,12 +71,12 @@ MILE.on('playerInfo', function(data, from) {
         $('#contents').append(charName);
         $('#contents').append(charEffect);
         for(i = 0; i < mounted.length; i++){
-            var cardImageN = "<img src=\"" + mounted[i].image + "\" >";
+            var cardImageN = "<img src=\"" + mounted[i].image + "\" width=\"" + 100/mounted.length + "\" height=\"100\" >";
             var cardDiv = "<div id=\"mountedCard" + i + "\">" + cardImageN + "</div>";
             $('#mountedCards').append(cardDiv);
         }
         for(i = 0; i < inHand.length; i++){
-            var cardImageN = "<img src=\"" + inHand[i] + "\" >";
+            var cardImageN = "<img src=\"" + inHand[i] + "\" width=\"" + 100/inHand.length + "\" height=\"100\" >";
             var cardDiv = "<div id=\"inHandCard" + i + "\">" + cardImageN + "</div>";
             $('#inHandCards').append(cardDiv);
         }
@@ -289,7 +290,7 @@ $(document).on("pagecreate", "#cardInfo", function(){
 </div>
 <div data-role="page" data-dialog="true" id="cardInfo">
     <div data-role="main" class="ui-content">
-        <div id="cardImage" width="90%" height="60%"></div>
+        <div id="cardImage" width="90" height="70"></div>
         <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>

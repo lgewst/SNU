@@ -3,15 +3,27 @@
     height: 40%;
     padding-top: 10px;
 }
-
+#images {
+    width: 50%;
+    height: 100%;
+}
+#contents {
+    width: 50%;
+    height: 100%;
+    font-size: 8px;
+}
 #mountedCards{
     width: 100%;
-    height: 20%;
+    max-height: 20%;
+    min-height: 10%;
+    outline-style: ridge;
     padding-top: 10px;
 }
 
 #inHandCards{
     width: 100%;
-    height: 20%;
+    max-height: 20%;
+    min-height: 10%;
+    outline-style: ridge;
     padding-top: 10px;
 }
