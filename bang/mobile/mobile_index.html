@@ -29,14 +29,14 @@ MILE.on('game_start', function(data, from) {
         setInterval(function(){
             counter--;
             if (counter >= 0){
-                span = document.getElementById("count");
-                span.innerHTML = counter;
-                }
+            span = document.getElementById("count");
+            span.innerHTML = counter;
+            }
             if (counter == 0){
-                clearInterval(counter);
-                $.mobile.changePage("#background");
-                MILE.send('initPlayerInfo', '');
-                }
+            clearInterval(counter);
+            $.mobile.changePage("#background");
+            MILE.send('initPlayerInfo', '');
+            }
             }, 1000);
         });
 MILE.on('playerInfo', function(data, from) {
@@ -59,8 +59,9 @@ MILE.on('playerInfo', function(data, from) {
         var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
         for(i = 0; i < otherPlayers.length; i++){
             var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
-            $('#otherPlayers').append(playerN);
+            $('#listContent').append(playerN);
         }
+        $('#otherPlayersList').children().trigger("collapse");
         $('#images').append(jobImage);
         $('#images').append(characterImage);
 
@@ -78,7 +79,7 @@ MILE.on('playerInfo', function(data, from) {
             var cardDiv = "<div id=\"inHandCard" + i + "\">" + cardImageN + "</div>";
             $('#inHandCards').append(cardDiv);
         }
-        });
+});
 MILE.on('otherPlayerInfo', function(data, from){
         var info = JSON.parse(data);
         var job = info.job; // image, str(name), str(mission)
@@ -115,7 +116,7 @@ MILE.on('otherPlayerInfo', function(data, from){
             var cardDiv = "<div id=\"inHandCard" + i + "\">" + inHandCardBack + "</div>";
             $('#inHandCards').append(cardDiv);
         }
-        });
+});
 MILE.on('bangCard', function(data, from) {
         // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
         });
@@ -157,19 +158,25 @@ $(document).on("pagecreate", "#readyPage", function(){
 $(document).on("pagecreate", "#background", function(){
         //TODO: Changed
         MILE.send("playerInfo", "Request basic information");
-        $("#otherPlayers").on('tap', function(){
+        $("#otherPlayersList").on('tap', function(){
+            var tagName = event.target.tagName;
             var id = event.target.id;
-            var content = document.getElementById(id).innerHTML;
-            MILE.send("otherPlayerInfo", content);
+            alert(tagName + 'p');
+            if(tagName==='P'){
+                var content = document.getElementById(id).innerHTML;
+                MILE.send("otherPlayerInfo", content);
+                }
             });
         $("#mountedCards").on('tap', function(){
             var id = event.target.id;/*div id e.g. mountedCardN*/
             var content = document.getElementById(id).innerHTML;
+            alert(content);
             MILE.send("mountedCardInfo", content);
             });
         $("#inHandCards").on('tap', function(){
             var id = event.target.id;
             var content = document.getElementById(id).innerHTML;
+            alert(content);
             MILE.send("inHandCardInfo", content);
             });
         /* TODO
@@ -184,11 +191,11 @@ $(document).on("pagecreate", "#background", function(){
            4. Add event listener on each player names
            - If the user tap on the name, ask server to give information about the player and make a popup
          */
-        });
+});
 $(document).on("pagecreate", "#playerInfo", function(){
         $("#mountedCards").on('tap', function(){
             var id = event.target.id;/*div id e.g. mountedCardN*/
-            var content = document.getElementById(id).innerHTML;
+            //var content = document.getElementById(id).innerHTML;
             //MILE.send("mountedCardInfo", content);
             });
         /* TODO
@@ -232,12 +239,14 @@ $(document).on("pagecreate", "#cardInfo", function(){
 </div>
 <div data-role="page" id="background">
     <div data-role="main" class="ui-content">
-        <div data-role="collapsible" data-collapsed="true" id="otherPlayers">
+        <div data-role="collapsible" data-collapsed="true" id="otherPlayersList">
 
-            <h1>Other players </h1>
-            <p id="player1"> Suzy Lafayette </p>
-            <!-- Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. -->
+            <h3>Other players </h3>
+            <div id = "listContent">
+            </div>
         </div>
+            <!--Character cards of other players are listed. The player can touch the card to check that player's information: character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life.
+        </div> -->
         <div id="myInfo">
             <div id="status">
                 <p> STATUS </p>
