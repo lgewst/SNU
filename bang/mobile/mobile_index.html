@@ -161,23 +161,24 @@ $(document).on("pagecreate", "#background", function(){
         $("#otherPlayersList").on('tap', function(){
             var tagName = event.target.tagName;
             var id = event.target.id;
-            alert(tagName + 'p');
-            if(tagName==='P'){
+            if(tagName ==="P"){
                 var content = document.getElementById(id).innerHTML;
                 MILE.send("otherPlayerInfo", content);
                 }
             });
         $("#mountedCards").on('tap', function(){
-            var id = event.target.id;/*div id e.g. mountedCardN*/
-            var content = document.getElementById(id).innerHTML;
-            alert(content);
-            MILE.send("mountedCardInfo", content);
+            var tagName = event.target.tagName;
+            if(tagName === "IMG"){
+                var content = $(event.target).attr('src');
+                MILE.send("inHandCardInfo", content);
+                }
             });
         $("#inHandCards").on('tap', function(){
-            var id = event.target.id;
-            var content = document.getElementById(id).innerHTML;
-            alert(content);
-            MILE.send("inHandCardInfo", content);
+            var tagName = event.target.tagName;
+            if(tagName === "IMG"){
+                var content = $(event.target).attr('src');
+                MILE.send("inHandCardInfo", content);
+                }
             });
         /* TODO
            1. Ask server
@@ -194,9 +195,11 @@ $(document).on("pagecreate", "#background", function(){
 });
 $(document).on("pagecreate", "#playerInfo", function(){
         $("#mountedCards").on('tap', function(){
-            var id = event.target.id;/*div id e.g. mountedCardN*/
-            //var content = document.getElementById(id).innerHTML;
-            //MILE.send("mountedCardInfo", content);
+            var tagName = event.target.tagName;
+            if(tagName === "IMG"){
+                var content = $(event.target).attr('src');
+                MILE.send("inHandCardInfo", content);
+                }
             });
         /* TODO
            1. Ask server
@@ -209,12 +212,12 @@ $(document).on("pagecreate", "#playerInfo", function(){
 $(document).on("pagecreate", "#cardInfo", function(){
         var content; /* img src */
         $("#help").on("tap", function(){
-            var content = $(this).siblings("img").prop('outerHTML');
+            var content = $(this).siblings("img").attr('src');
             alert("To check tags: " + content);
             MILE.send("help", content);
             });
         $("#select").on("tap", function(){
-            var content = $(this).siblings("img").prop('outerHTML');
+            var content = $(this).siblings("img").attr('src');
             alert("To check tags: " + content);
             MILE.send("select", content);
             });
