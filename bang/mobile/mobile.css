@@ -1,29 +1,30 @@
-#status {
-    width: 100%;
-    height: 40%;
-    padding-top: 10px;
-}
 #images {
-    width: 50%;
-    height: 100%;
+    left: 0px;
+    top: 10px;
+    right: 10px;
+    height: 100px;
+    display: inline;
+    float: left;
 }
 #contents {
-    width: 50%;
-    height: 100%;
-    font-size: 8px;
+    right: 10px;
+    font-size: 12px;
+    max-width: 240px;
+    float: right;
+    min-height: 100px;
+}
+#cards{
+    width: 100%;
+    height: 50%;
 }
 #mountedCards{
-    width: 100%;
-    max-height: 20%;
-    min-height: 10%;
-    outline-style: ridge;
-    padding-top: 10px;
+    clear: both;
+    min-height: 90px;
+    max-height: 120px;
 }
 
 #inHandCards{
-    width: 100%;
-    max-height: 20%;
-    min-height: 10%;
-    outline-style: ridge;
-    padding-top: 10px;
+    max-height: 120px;
+    min-height: 90px;
+    display: inline;
 }
