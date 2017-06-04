@@ -29,11 +29,22 @@ public class Job {
 		}
 	}
 
-	public JSONObject toJson() {
+	public JSONObject toJsonKnown() {
 		JSONObject json = new JSONObject();
 		json.put("image", "../cards/Role cards/" + job + ".jpg");
 		json.put("name", job);
 		json.put("mission", this.getGoal());
+		return json;
+	}
+
+	public JSONObject toJsonUnknown() {
+		if (job.equals("Sheriff"))
+			return this.toJsonKnown();
+
+		JSONObject json = new JSONObject();
+		json.put("image", "../cards/role card(back).png");
+		json.put("name", "?");
+		json.put("mission", "?");
 		return json;
 	}
 }

@@ -4,48 +4,43 @@ import java.io.*;
 import java.util.ArrayList;
 
 import bang.Player;
+import bang.Game;
 import bang.Hand;
 import bang.Mounting;
 import bang.card.Card;
 
 public class HtmlUserInterface extends UserInterface{
 	BufferedReader in;
-	WriteFunctions writeFunctions = new WriteFunctions();
+	WriteFunctions writeFunctions;
 
-	public HtmlUserInterface() {
+	public HtmlUserInterface(Game game) {
+		writeFunctions = new WriteFunctions(game);
 		try {
 			in = new BufferedReader(new FileReader("js2java.txt"));
 		} catch(IOException e) {
 		}
 	}
 
-	private String readFile(Player player, ArrayList<Player> players) throws IOException{
-		while(true) {
-			String s = in.readLine();
-			if (s != null)
-				if (s.split("\t")[0].equals("D"))
-					writeFunctions.writePlayer(player, players);
-				else
-					return s;
-		}
-	}
-
 	private String readFile() throws IOException{
 		while(true) {
 			String s = in.readLine();
-			if (s != null)
-				return s;
+			if (s != null) {
+				if (s.split("\t")[0].equals("D"))	//OtherPlayInfo
+					writeFunctions.writeOtherPlyaer(Integer.parseInt(s.split("\t")[1]));
+				else
+					return s;
+			}
 		}
 	}
 
-	@Override
+	//@Override
 	public int askPlay(Player player, ArrayList<Player> players) {
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
 			try {
-				index = Integer.parseInt(readFile(player, players));
+				index = Integer.parseInt(readFile());
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {

@@ -93,7 +93,7 @@ public class BangDeck {
 		cards.add(new Panic("Panic", "Heart", 12));
 		cards.add(new Panic("Panic", "Heart", 1));
 
-		cards.add(new Sallon("Sallon", "Heart", 5));
+		cards.add(new Saloon("Saloon", "Heart", 5));
 
 		cards.add(new Stagecoach("Stagecoach", "Spade", 9));
 		cards.add(new Stagecoach("Stagecoach", "Spade", 9));

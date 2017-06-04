@@ -7,8 +7,8 @@ import bang.Discard;
 import bang.Player;
 import bang.userinterface.UserInterface;
 
-public class Sallon extends Card{
-	public Sallon(String name, String suit, int value) {
+public class Saloon extends Card{
+	public Saloon(String name, String suit, int value) {
 		super(name, suit, value);
 	}
 

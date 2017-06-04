@@ -7,6 +7,7 @@ import org.json.simple.*;
 import java.io.*;
 import bang.card.Card;
 import bang.userinterface.UserInterface;
+import bang.userinterface.WriteFunctions;
 import bang.userinterface.HtmlUserInterface;
 import bang.card.BangDeck;
 
@@ -17,9 +18,10 @@ public class Game {
 	private Player currentPlayer;
 	private HelpFunctions HelpFunctions = new HelpFunctions();
 	private UserInterface userInterface;
+	private WriteFunctions writeFunctions = new WriteFunctions(this);
 
 	public Game(int n) {
-		userInterface = new HtmlUserInterface();
+		userInterface = new HtmlUserInterface(this);
 		players = new ArrayList<Player>();
 		deck = new Deck(BangDeck.makeDeck());
 		deck.suffle();
@@ -40,7 +42,7 @@ public class Game {
 					others.add(other.getCharacter().getName());
 
 				json.put("otherPlayers", others);
-				json.put("job", player.getJob().toJson());
+				json.put("job", player.getJob().toJsonKnown());
 				json.put("character", player.getCharacter().toJson());
 				json.put("curLife", player.getHealth());
 				json.put("maxLife", player.getMaxHealth());
@@ -117,7 +119,7 @@ public class Game {
 	private void phase2() throws EndofGameException {
 		while (true) {
 			Hand hand = currentPlayer.getHand();
-			int index = userInterface.askPlay(currentPlayer, players);	//TODO: ask play card
+			int index = 1;//userInterface.askPlay(currentPlayer, players);
 
 			if (index == -1)
 				break;
@@ -134,7 +136,7 @@ public class Game {
 	private void phase3() {
 		Hand hand = currentPlayer.getHand();
 		while (hand.size() > currentPlayer.getHealth()) {
-			int index = userInterface.askDiscard(currentPlayer);	// TODO: ask discard card
+			int index = userInterface.askDiscard(currentPlayer);
 			discard.add(hand.remove(index));
 		}
 	}
@@ -144,6 +146,7 @@ public class Game {
 			try {
 				if (phase0()) {
 					phase1();
+//					writeFunctions.writePlayer(currentPlayer, HelpFunctions.getOthers(currentPlayer, players));
 					phase2();
 					phase3();
 				}
@@ -153,5 +156,9 @@ public class Game {
 			}
 			currentPlayer = HelpFunctions.getNextPlayer(currentPlayer, players);
 		}
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 }

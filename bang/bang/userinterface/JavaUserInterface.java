@@ -14,7 +14,7 @@ public class JavaUserInterface extends UserInterface{
 	InputStreamReader converter = new InputStreamReader(System.in);
 	BufferedReader in = new BufferedReader(converter);
 
-	@Override
+	//@Override
 	public int askPlay(Player player, ArrayList<Player> players) {
 		Hand hand = player.getHand();
 		int index = -2;

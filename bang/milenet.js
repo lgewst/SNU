@@ -159,7 +159,7 @@ io.on('connection', function(socket){
         }
 
         //TODO: Setting gameStart Originally connections.length >= 5
-        if(connections.length >= 5 && connections.length <= 8) {
+        if(connections.length >= 3 && connections.length <= 8) {
             var tmpGameStart = true;
             for (var i = 1; i < connections.length; i++) {
                 if(connections[i].ready == false) {
@@ -193,12 +193,12 @@ io.on('connection', function(socket){
                   }
                   console.log("FILE INITIALIZED");
                 });
-                // fs.writeFile('players.txt', '', function(err) {
-                //   if(err) {
-                //     return console.log("Error while writing on file: js2java.txt");
-                //   }
-                //   console.log("FILE INITIALIZED");
-                // });
+                fs.writeFile('players.txt', '', function(err) {
+                  if(err) {
+                    return console.log("Error while writing on file: js2java.txt");
+                  }
+                  console.log("FILE INITIALIZED");
+                });
                 //TODO: Send msg to clients to make the buttons disable
                 child = spawn('java', ['Test', connections.length - 1]);
             }
@@ -220,8 +220,19 @@ io.on('connection', function(socket){
                 break;
             }
         }
-    } else if(msg.type == 'otherPlayer') {
-
+    } else if(msg.type == 'otherPlayerInfo') {
+      for(var i = 0; i < playersInfoText.length - 1; i++) {
+        if (JSON.parse(playersInfoText[i]).character.name == msg.data) {
+          console.log('find' + i);
+          fs.appendFile('js2java.txt', 'D\t' + i, function(err) {
+            if(err) {
+              return console.log("Error while writing on file: js2java.txt");
+            }
+            console.log("FILE WRITED");
+          });
+          break;
+        }
+      }
     } else if(msg.type == 'help') {
         //TODO: Server side request
     }
@@ -252,14 +263,18 @@ io.on('connection', function(socket){
     io.emit('message', {type: "$mile_update", data: {connections: conns}});
   }
 
-  // //TODO:
-  // fs.watch('java2js.txt', function(event, filename) {
-  //     if(filename) {
-  //
-  //     } else {
-  //         console.log('File Error: ' + filename);
-  //     }
-  // });
+  //TODO:
+  fs.watch('java2js.txt', function(event, filename) {
+    console.log('watch java2js');
+      if(filename) {
+          var Texts = fs.readFileSync('java2js.txt','utf-8');
+          console.log(Texts);
+          io.emit('message',{type:'otherPlayerInfo', data: Texts});
+          console.log("Server to Client: OtherPlayerInfo");
+      } else {
+          console.log('File Error: ' + filename);
+      }
+  });
   // //TODO:
   // fs.watch('js2java.txt', function(event, filename) {
   //     if(filename) {
@@ -272,7 +287,7 @@ io.on('connection', function(socket){
   var playerChecker = true;
   var cnt = 0;
   setInterval(function() {
-      if(playerChecker) {
+      if(gameStart && playerChecker) {
           var playersText = fs.readFileSync('players.txt','utf-8');
           playersInfoText = playersText.split('\n');
         //   console.log("Con len: " + connections.length + " Info len: " + playersInfoText.length);
