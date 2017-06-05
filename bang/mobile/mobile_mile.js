@@ -30,6 +30,7 @@ MILE.on('game_start', function(data, from) {
             }, 1000);
         });
 MILE.on('playerInfo', function(data, from) {
+        $.mobile.changePage('#background');
         console.log(data);
         var info = JSON.parse(data);
         var otherPlayers = info.otherPlayers; // str array
@@ -71,6 +72,7 @@ MILE.on('playerInfo', function(data, from) {
         }
 });
 MILE.on('otherPlayerInfo', function(data, from){
+        $.mobile.changePage('#playerInfo');
         var info = JSON.parse(data);
         var job = info.job; // image, str(name), str(mission)
         /* Other players job show when he/she is a sceriff or is dead */
@@ -88,8 +90,9 @@ MILE.on('otherPlayerInfo', function(data, from){
         var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
         var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
 
-        var inHandCardBack = "<img src=\"" + inHand.image + "\" >";
+        var inHandCardBack = "<img src=\"" + inHand.image + "\" width=\"50\" height=\"90\" >";
         var inHandCardNum = inHand.num;
+        $('#pageName').append('<h1>' + charName + '</h1>');
         $('#images').append(jobImage);
         $('#images').append(characterImage);
 
@@ -98,7 +101,7 @@ MILE.on('otherPlayerInfo', function(data, from){
         $('#contents').append(charName);
         $('#contents').append(charEffect);
         for(i = 0; i < mounted.length; i++){
-            var cardImageN = "<img src=\"" + mounted[i].image + "\" >";
+            var cardImageN = "<img src=\"" + mounted[i].image + "\" width=\"50\" heigth=\"90\" >";
             var cardDiv = "<div id=\"mountedCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
             $('#mountedCards').append(cardDiv);
         }
@@ -110,17 +113,17 @@ MILE.on('otherPlayerInfo', function(data, from){
 MILE.on('bangCard', function(data, from) {
         // console.log("<img src=\"" + data + "\" width=\"50\" height=\"100\">");
         });
-MILE.on('mountedCardInfo', function(data, from){
+/*MILE.on('mountedCardInfo', function(data, from){
         $.mobile.changePage('#cardInfo');
         var info = JSON.parse(data);
         var imageSrc = info.image;
         var activated = info.activated;
         var image = "<img src=\"" + imageSrc + "\">";
         $('#cardImage').append(image);
-        /* add div attribute if the card is selectable*/
         });
+*/
 MILE.on('inHandCardInfo', function(data, from){
-        $.mobile.changePage('#cardInfo');
+        $.mobile.changePage('#cardInfo', );
         var info = JSON.parse(data);
         var imageSrc = info.image;
         var activated = info.activated;

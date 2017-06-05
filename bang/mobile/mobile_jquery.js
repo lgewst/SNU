@@ -1,9 +1,9 @@
-$(document).on("pagecreate", "#readyPage", function(){
+$(document).on("pageshow", "#readyPage", function(){
         $("#ready").on("tap", function(){
             MILE.send("ready", "Client ready");
             });
         });
-$(document).on("pagecreate", "#background", function(){
+$(document).on("pageshow", "#background", function(){
         //TODO: Changed
         MILE.send("playerInfo", "Request basic information");
         $("#otherPlayersList").on('tap', function(){
@@ -41,14 +41,16 @@ $(document).on("pagecreate", "#background", function(){
            - If the user tap on the name, ask server to give information about the player and make a popup
          */
 });
-$(document).on("pagecreate", "#playerInfo", function(){
+$(document).on("pageshow", "#playerInfo", function(){
         $("#mountedCards").on('tap', function(){
             var tagName = event.target.tagName;
             if(tagName === "IMG"){
                 var content = $(event.target).attr('src');
-                MILE.send("inHandCardInfo", content);
                 }
             });
+        //$().on(,function(){
+        //    $.mobile.back();
+        //}
         /* TODO
            1. Ask server
            Display information
@@ -57,7 +59,7 @@ $(document).on("pagecreate", "#playerInfo", function(){
            - If the user tap on the card, make a popup with card image and buttons
          */
         });
-$(document).on("pagecreate", "#cardInfo", function(){
+$(document).on("pageshow", "#cardInfo", function(){
         var content; /* img src */
         $("#help").on("tap", function(){
             var content = $(this).siblings("img").attr('src');
