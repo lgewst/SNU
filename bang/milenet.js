@@ -230,6 +230,20 @@ io.on('connection', function(socket){
             }
             console.log("FILE WRITED");
           });
+          //TODO
+          fs.watch('java2js.txt', function(event, filename) {
+            console.log('watch java2js');
+              if(filename) {
+                  setTimeout( function() {
+                      var Texts = fs.readFileSync('java2js.txt','utf-8');
+                      console.log(Texts);
+                      socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+                      console.log("Server to Client: OtherPlayerInfo");
+                  },100);
+              } else {
+                  console.log('File Error: ' + filename);
+              }
+          });
           break;
         }
       }
@@ -264,17 +278,17 @@ io.on('connection', function(socket){
   }
 
   //TODO:
-  fs.watch('java2js.txt', function(event, filename) {
-    console.log('watch java2js');
-      if(filename) {
-          var Texts = fs.readFileSync('java2js.txt','utf-8');
-          console.log(Texts);
-          io.emit('message',{type:'otherPlayerInfo', data: Texts});
-          console.log("Server to Client: OtherPlayerInfo");
-      } else {
-          console.log('File Error: ' + filename);
-      }
-  });
+  // fs.watch('java2js.txt', function(event, filename) {
+  //   console.log('watch java2js');
+  //     if(filename) {
+  //         var Texts = fs.readFileSync('java2js.txt','utf-8');
+  //         console.log(Texts);
+  //         io.emit('message',{type:'otherPlayerInfo', data: Texts});
+  //         console.log("Server to Client: OtherPlayerInfo");
+  //     } else {
+  //         console.log('File Error: ' + filename);
+  //     }
+  // });
   // //TODO:
   // fs.watch('js2java.txt', function(event, filename) {
   //     if(filename) {
