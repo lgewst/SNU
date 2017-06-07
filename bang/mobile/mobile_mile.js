@@ -48,22 +48,30 @@ MILE.on('playerInfo', function(data, from) {
         var charName = "<p id=\"charName\"> CHARARCTER: " + character.name + "</p>";
         var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
         var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
+        $('#listContent').empty();
+        $('#images').empty();
+        $('#contents').empty();
+        $('#mountedCardsList').empty();
+        $('inHandCardsList').empty();
+
         for(i = 0; i < otherPlayers.length; i++){
             var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
             $('#listContent').append(playerN);
         }
         $('#otherPlayersList').trigger("collapse");
+
         $('#images').append(jobImage);
         $('#images').append(characterImage);
 
         $('#contents').append(jobName);
         $('#contents').append(jobMission);
+        $('#contents').append(life);
         $('#contents').append(charName);
         $('#contents').append(charEffect);
         for(i = 0; i < mounted.length; i++){
             var cardImageN = "<img src=\"" + mounted[i].image + "\" width=\"50\" height=\"90\" >";
             var cardDiv = "<div id=\"mountedCard" + i + "\" style=\"display: inline;\">" + cardImageN + "</div>";
-            $('#mountedCards').append(cardDiv);
+            $('#mountedCardsList').append(cardDiv);
         }
         for(i = 0; i < inHand.length; i++){
             var cardImageN = "<img src=\"" + inHand[i] + "\" width=\"50\" height=\"90\" >";
@@ -92,18 +100,26 @@ MILE.on('otherPlayerInfo', function(data, from){
 
         var inHandCardBack = "<img src=\"" + inHand.image + "\" width=\"50\" height=\"90\" >";
         var inHandCardNum = inHand.num;
-        $('#pageName').append('<h1>' + charName + '</h1>');
+        $('#pageName').empty();
+        $('#images').empty();
+        $('#contents').empty();
+        $('#mountedCardsList').empty();
+        $('inHandCardsList').empty();
+
+        $('#pageName').append("<a href=\"#\" class=\"ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left\" data-rel=\"back\" id=\"back\">Back</a>");
+        $('#pageName').append('<h4>' + character.name + '</h4>');
         $('#images').append(jobImage);
         $('#images').append(characterImage);
 
         $('#contents').append(jobName);
         $('#contents').append(jobMission);
+        $('#contents').append(life);
         $('#contents').append(charName);
         $('#contents').append(charEffect);
         for(i = 0; i < mounted.length; i++){
             var cardImageN = "<img src=\"" + mounted[i].image + "\" width=\"50\" heigth=\"90\" >";
             var cardDiv = "<div id=\"mountedCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
-            $('#mountedCards').append(cardDiv);
+            $('#mountedCardsList').append(cardDiv);
         }
         for(i = 0; i < inHandCardNum; i++){
             var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\">" + inHandCardBack + "</div>";
@@ -128,6 +144,7 @@ MILE.on('inHandCardInfo', function(data, from){
         var imageSrc = info.image;
         var activated = info.activated;
         var image = "<img src=\"" + imageSrc + "\">";
+        $('#cardImage').empty();
         $('#cardImage').append(image);
         /* add div attribute if the card is selectable*/
         });
@@ -135,6 +152,7 @@ MILE.on('help', function(data, from){
         $.mobile.changePage('#cardExplain');
         var info = JSON.parse(data);
         var helpStr = "<p id=\"helpStr\">" + info.help + "</p>";
+        $('#explanation').empty();
         $('#explanation').append(helpStr);
 
         });
