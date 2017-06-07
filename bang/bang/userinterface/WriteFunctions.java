@@ -14,7 +14,7 @@ public class WriteFunctions{
 	  this.game = game;
   }
 
-  public void writePlayer(Player player, ArrayList<Player> otherPlayers) {
+  public void writePlayer(Player player, ArrayList<Player> otherPlayers, int write_index) {
     JSONObject json = new JSONObject();
     JSONArray others = new JSONArray();
     for(Player other: otherPlayers)
@@ -29,14 +29,14 @@ public class WriteFunctions{
     json.put("inHandCards", player.getHand().toJSONArray());
 
     try {
-      out = new BufferedWriter(new FileWriter("java2js.txt"));
+      out = new BufferedWriter(new FileWriter("java2js_" + Integer.toString(write_index) + ".txt"));
       out.write(json.toString());
       out.close();
     } catch(IOException e) {
     }
   }
 
-  public void writeOtherPlyaer(int index) {
+  public void writeOtherPlyaer(int index, int write_index) {
 	Player player = game.getPlayers().get(index);
     JSONObject json = new JSONObject();
 
@@ -48,7 +48,7 @@ public class WriteFunctions{
     json.put("inHandCards", player.getHand().size());
 
     try {
-      out = new BufferedWriter(new FileWriter("java2js.txt"));
+      out = new BufferedWriter(new FileWriter("java2js_" + Integer.toString(write_index) + ".txt"));
       out.write(json.toString());
       out.close();
     } catch(IOException e) {
