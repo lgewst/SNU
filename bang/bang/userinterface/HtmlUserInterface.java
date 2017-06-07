@@ -10,12 +10,16 @@ import bang.Mounting;
 import bang.card.Card;
 
 public class HtmlUserInterface extends UserInterface{
-	BufferedReader[] in = new BufferedReader[9];
+	BufferedReader[] in = new BufferedReader[8];
 	WriteFunctions writeFunctions;
+
+	//TODO: For debugging!!
+	PrintWriter[] tmp = new PrintWriter[8];
 
 	public HtmlUserInterface(Game game) {
 		writeFunctions = new WriteFunctions(game);
 		try {
+			in[0] = new BufferedReader(new FileReader("js2java_0.txt"));
 			in[1] = new BufferedReader(new FileReader("js2java_1.txt"));
 			in[2] = new BufferedReader(new FileReader("js2java_2.txt"));
 			in[3] = new BufferedReader(new FileReader("js2java_3.txt"));
@@ -23,18 +27,30 @@ public class HtmlUserInterface extends UserInterface{
 			in[5] = new BufferedReader(new FileReader("js2java_5.txt"));
 			in[6] = new BufferedReader(new FileReader("js2java_6.txt"));
 			in[7] = new BufferedReader(new FileReader("js2java_7.txt"));
-			in[8] = new BufferedReader(new FileReader("js2java_8.txt"));
+			//TODO
+			tmp[0] = new PrintWriter(new FileWriter("js2java_0.txt"));
+			tmp[1] = new PrintWriter(new FileWriter("js2java_1.txt"));
+			tmp[2] = new PrintWriter(new FileWriter("js2java_2.txt"));
+			tmp[3] = new PrintWriter(new FileWriter("js2java_3.txt"));
+			tmp[4] = new PrintWriter(new FileWriter("js2java_4.txt"));
+			tmp[5] = new PrintWriter(new FileWriter("js2java_5.txt"));
+			tmp[6] = new PrintWriter(new FileWriter("js2java_6.txt"));
+			tmp[7] = new PrintWriter(new FileWriter("js2java_7.txt"));
 		} catch(IOException e) {
 		}
 	}
 
 	private String readFile() throws IOException{
 		while(true) {
-			for (int i = 1; i < 9; i++) {
+			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
 				if (s != null) {
-					if (s.split("\t")[0].equals("D"))	//OtherPlayInfo
+					if (s.split("\t")[0].equals("D")) {	//OtherPlayInfo
 						writeFunctions.writeOtherPlyaer(Integer.parseInt(s.split("\t")[1]), i);
+						in[i].close();
+						tmp[i].print("");
+						tmp[i].close();
+					}
 					else
 						return s;
 				}

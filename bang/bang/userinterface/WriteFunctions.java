@@ -8,6 +8,7 @@ import bang.Game;
 
 public class WriteFunctions{
   BufferedWriter out;
+  BufferedWriter toDebug;
   Game game;
 
   public WriteFunctions(Game game) {
@@ -37,7 +38,8 @@ public class WriteFunctions{
   }
 
   public void writeOtherPlyaer(int index, int write_index) {
-	Player player = game.getPlayers().get(index);
+      //TODO: check
+	Player player = game.getPlayers().get(index-1);
     JSONObject json = new JSONObject();
 
     json.put("job", player.getJob().toJsonUnknown());
@@ -51,6 +53,10 @@ public class WriteFunctions{
       out = new BufferedWriter(new FileWriter("java2js_" + Integer.toString(write_index) + ".txt"));
       out.write(json.toString());
       out.close();
+
+      toDebug = new BufferedWriter(new FileWriter("debug.txt"));
+      toDebug.write(("Write is " + Integer.toString(write_index) + " getIndex is " + Integer.toString(index)));
+      toDebug.close();
     } catch(IOException e) {
     }
   }

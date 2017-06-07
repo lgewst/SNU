@@ -180,73 +180,127 @@ io.on('connection', function(socket){
                 io.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
                 console.log("Sending: Image to Client");
 
-                // Initialize File txt
-                // fs.writeFile('java2js.txt', '', function(err) {
-                //   if(err) {
-                //     return console.log("Error while writing on file: java2js.txt");
-                //   }
-                //   console.log("FILE INITIALIZED");
-                // });
-                fs.writeFile('js2java.txt', '', function(err) {
-                  if(err) {
-                    return console.log("Error while writing on file: js2java.txt");
-                  }
-                  console.log("FILE INITIALIZED");
+                fs.writeFile('js2java_0.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_0.txt");
+                    }
+                    console.log("js2java_0.txt FILE INITIALIZED");
                 });
+                fs.writeFile('js2java_1.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_1.txt");
+                    }
+                    console.log("js2java_1.txt FILE INITIALIZED");
+                });
+                fs.writeFile('js2java_2.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_2.txt");
+                    }
+                    console.log("js2java_2.txt FILE INITIALIZED");
+                });
+                fs.writeFile('js2java_3.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_3.txt");
+                    }
+                    console.log("js2java_3.txt FILE INITIALIZED");
+                });
+                fs.writeFile('js2java_4.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_4.txt");
+                    }
+                    console.log("js2java_4.txt FILE INITIALIZED");
+                });
+                fs.writeFile('js2java_5.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_5.txt");
+                    }
+                    console.log("js2java_5.txt FILE INITIALIZED");
+                });
+                fs.writeFile('js2java_6.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_6.txt");
+                    }
+                    console.log("js2java_6.txt FILE INITIALIZED");
+                });
+                fs.writeFile('js2java_7.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("js2java_7.txt FILE INITIALIZED");
+                });
+
+                fs.writeFile('debug.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: debug.txt");
+                    }
+                });
+
                 fs.writeFile('players.txt', '', function(err) {
                   if(err) {
                     return console.log("Error while writing on file: js2java.txt");
                   }
-                  console.log("FILE INITIALIZED");
+                  console.log("players.txt FILE INITIALIZED");
                 });
                 //TODO: Send msg to clients to make the buttons disable
                 child = spawn('java', ['Test', connections.length - 1]);
             }
         }
     } else if(msg.type == 'playerInfo') {
-        for(var i=1; i < connections.length; i++) {
-            if(connections[i].id == socket.id) {
-                // TODO: each client
-                // socket.emit('message',{type: "playerInfo", data: JSON.parse(players[i-1])});
-                console.log("Server to Client: playerInfo");
-                break;
+            for(var i = 1; i < connections.length; i++) {
+                if(connections[i].id == socket.id) {
+                    console.log(i + ' finds ' + i);
+                    //TODO: Do not use D\t because it has to find itself
+                    // fs.writeFile('js2java_' + i + '.txt', 'D\t' + i, function(err) {
+                    //     if(err) {
+                    //         return console.log("Error while writing on file: js2java.txt");
+                    //     }
+                    //     console.log("js2java_" + i +".txt FILE WRITED");
+                    // });
+                    // //TODO
+                    // setTimeout(function() {
+                    //         var Texts = fs.readFileSync('java2js_'+ i +'.txt','utf-8');
+                    //         // console.log(Texts);
+                    //         // socket.emit('message',{type:'playerInfo', data: Texts});
+                    // },100);
+                    break;
+                }
             }
-        }
     } else if(msg.type == 'initPlayerInfo') {
         for(var i=1; i < connections.length; i++) {
             if(connections[i].id == socket.id) {
                 io.to(connections[i].id).emit('message',{type:'playerInfo', data: playersInfoText[i-1]});
-                console.log("Server to Client: playerInfo");
+                console.log("Server to Client: initPlayerInfo");
                 break;
             }
         }
     } else if(msg.type == 'otherPlayerInfo') {
-      for(var i = 0; i < playersInfoText.length - 1; i++) {
-        if (JSON.parse(playersInfoText[i]).character.name == msg.data) {
-          console.log('find' + i);
-          fs.appendFile('js2java.txt', 'D\t' + i, function(err) {
-            if(err) {
-              return console.log("Error while writing on file: js2java.txt");
+        var reqInx = 0;
+        for(var i = 1; i < connections.length; i++) {
+            if(connections[i].id == socket.id) {
+                reqInx = i;
+                break;
             }
-            console.log("FILE WRITED");
-          });
-          //TODO
-          setTimeout(function() {
-              fs.watch('java2js.txt', function(event, filename) {
-                console.log('watch java2js');
-                  if(filename) {
-                          var Texts = fs.readFileSync('java2js.txt','utf-8');
-                          console.log(Texts);
-                          socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-                          console.log("Server to Client: OtherPlayerInfo");
-                  } else {
-                      console.log('File Error: ' + filename);
-                  }
-              });
-          },100);
-          break;
         }
-      }
+        for(var i = 0; i < playersInfoText.length; i++) {
+            if (JSON.parse(playersInfoText[i]).character.name == msg.data) {
+                var j = i+1;
+                console.log(msg.data);
+                console.log(reqInx + ' finds ' + j);
+                fs.writeFile('js2java_' + reqInx + '.txt', 'D\t' + j, function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java.txt");
+                    }
+                    console.log("js2java_" + reqInx +".txt FILE WRITED");
+                });
+                //TODO
+                setTimeout(function() {
+                    var Texts = fs.readFileSync('java2js_' + reqInx +'.txt','utf-8');
+                    // console.log(Texts);
+                    socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+                },100);
+                break;
+            }
+        }
     } else if(msg.type == 'help') {
         //TODO: Server side request
     }
@@ -277,27 +331,6 @@ io.on('connection', function(socket){
     io.emit('message', {type: "$mile_update", data: {connections: conns}});
   }
 
-  //TODO:
-  // fs.watch('java2js.txt', function(event, filename) {
-  //   console.log('watch java2js');
-  //     if(filename) {
-  //         var Texts = fs.readFileSync('java2js.txt','utf-8');
-  //         console.log(Texts);
-  //         io.emit('message',{type:'otherPlayerInfo', data: Texts});
-  //         console.log("Server to Client: OtherPlayerInfo");
-  //     } else {
-  //         console.log('File Error: ' + filename);
-  //     }
-  // });
-  // //TODO:
-  // fs.watch('js2java.txt', function(event, filename) {
-  //     if(filename) {
-  //
-  //     } else {
-  //         console.log('File Error: ' + filename);
-  //     }
-
-  // });
   var playerChecker = true;
   var cnt = 0;
   setInterval(function() {
@@ -313,7 +346,6 @@ io.on('connection', function(socket){
           }
       }
   },1000);
-
 });
 
 // Start HTTP Server
