@@ -50,31 +50,43 @@
     </div>
 </div>
 <div data-role="page" data-dialog="true" id="playerInfo">
-    <div data-role="header" id="pageName"></div>
+    <div data-role="header" id="pageName">
+        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
+    </div>
     <div data-role="main" class="ui-content">
         <div id="otherPlayerInfo">
-            <div id="status">
+            <div id="othersStatus">
                 <p> STATUS </p>
-                <div id="images"></div>
-                <div id="contents"></div>
+                <div id="othersImages"></div>
+                <div id="othersContents"></div>
             </div>
-            <div id="cards">
-                <div id="mountedCards">
+            <div id="othersCards">
+                <div id="othersMountedCards">
                     <p> Mounted </p>
-                    <div id="mountedCardsList"></div>
+                    <div id="othersMountedCardsList"></div>
                 </div>
-                <div id="inHandCards">
+                <div id="othersInHandCards">
                     <p> In Hand </p>
-                    <div id="inHandCardsList"></div>
+                    <div id="othersInHandCardsList"></div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Show the information of other players. character card, character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. The player can see card information by touching the mounted card. -->
 </div>
-<div data-role="page" data-dialog="true" id="cardInfo">
+<div data-role="page" data-dialog="true" id="mountedCardInfo">
     <div data-role="main" class="ui-content">
-        <div id="cardImage" width="90%" height="70%"></div>
+        <div id="mountedCardImage" width="90%" height="70%"></div>
+        <div data-role="controlgroup" data-type="horizontal">
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="inHandCardInfo">
+    <div data-role="main" class="ui-content">
+        <div id="inHandCardImage" width="90%" height="70%"></div>
         <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
@@ -82,7 +94,6 @@
         </div>
     </div>
 </div>
-
 <div data-role="page" data-dialog="true" id="cardExplain">
     <!-- Show the explanation of the card when help is selected. -->
     <div data-role="popup" id="explanation" class="ui-content" style="top: 50%">

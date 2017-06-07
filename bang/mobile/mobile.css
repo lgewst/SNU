@@ -28,6 +28,7 @@
     min-height: 90px;
     display: inline;
 }
-h4{
+#pageName{
     text-align:center;
+    display: inline;
 }
