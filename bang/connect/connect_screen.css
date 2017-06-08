@@ -12,7 +12,7 @@ body {
     font-family: "bang";
     src: url("../font/Western Bang Bang.otf");
 }
-#content {
+#connectionMessage {
     clear: both;
     text-align: center;
     position: relative;
