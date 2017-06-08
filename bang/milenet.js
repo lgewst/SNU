@@ -228,6 +228,54 @@ io.on('connection', function(socket){
                     }
                     console.log("js2java_7.txt FILE INITIALIZED");
                 });
+                fs.writeFile('java2js_0.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_0.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_1.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_1.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_2.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_2.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_3.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_3.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_4.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_4.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_5.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_5.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_6.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_6.txt FILE INITIALIZED");
+                });
+                fs.writeFile('java2js_7.txt', '', function(err) {
+                    if(err) {
+                        return console.log("Error while writing on file: js2java_7.txt");
+                    }
+                    console.log("java2js_7.txt FILE INITIALIZED");
+                });
 
                 fs.writeFile('debug.txt', '', function(err) {
                     if(err) {
@@ -286,7 +334,7 @@ io.on('connection', function(socket){
                 var j = i+1;
                 console.log(msg.data);
                 console.log(reqInx + ' finds ' + j);
-                fs.writeFile('js2java_' + reqInx + '.txt', 'D\t' + j, function(err) {
+                fs.appendFile('js2java_' + reqInx + '.txt', 'D\t' + j + '\n', function(err) {
                     if(err) {
                         return console.log("Error while writing on file: js2java.txt");
                     }

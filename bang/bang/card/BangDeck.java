@@ -17,7 +17,7 @@ public class BangDeck {
 		cards.add(new Scope("Scope", "Spade", 1));
 		//Blue cards-Gun
 		cards.add(new Gun("Remington", "Club", 13));
-		cards.add(new Gun("Rev carbine", "Club", 1));
+		cards.add(new Gun("Rev carabine", "Club", 1));
 		cards.add(new Gun("Schofield", "Spade", 13));
 		cards.add(new Gun("Schofield", "Club", 11));
 		cards.add(new Gun("Schofield", "Club", 12));

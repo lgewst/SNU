@@ -14,7 +14,7 @@ public class HtmlUserInterface extends UserInterface{
 	WriteFunctions writeFunctions;
 
 	//TODO: For debugging!!
-	PrintWriter[] tmp = new PrintWriter[8];
+	// PrintWriter[] tmp = new PrintWriter[8];
 
 	public HtmlUserInterface(Game game) {
 		writeFunctions = new WriteFunctions(game);
@@ -28,14 +28,14 @@ public class HtmlUserInterface extends UserInterface{
 			in[6] = new BufferedReader(new FileReader("js2java_6.txt"));
 			in[7] = new BufferedReader(new FileReader("js2java_7.txt"));
 			//TODO
-			tmp[0] = new PrintWriter(new FileWriter("js2java_0.txt"));
-			tmp[1] = new PrintWriter(new FileWriter("js2java_1.txt"));
-			tmp[2] = new PrintWriter(new FileWriter("js2java_2.txt"));
-			tmp[3] = new PrintWriter(new FileWriter("js2java_3.txt"));
-			tmp[4] = new PrintWriter(new FileWriter("js2java_4.txt"));
-			tmp[5] = new PrintWriter(new FileWriter("js2java_5.txt"));
-			tmp[6] = new PrintWriter(new FileWriter("js2java_6.txt"));
-			tmp[7] = new PrintWriter(new FileWriter("js2java_7.txt"));
+			// tmp[0] = new PrintWriter(new FileWriter("js2java_0d.txt"));
+			// tmp[1] = new PrintWriter(new FileWriter("js2java_1d.txt"));
+			// tmp[2] = new PrintWriter(new FileWriter("js2java_2d.txt"));
+			// tmp[3] = new PrintWriter(new FileWriter("js2java_3d.txt"));
+			// tmp[4] = new PrintWriter(new FileWriter("js2java_4d.txt"));
+			// tmp[5] = new PrintWriter(new FileWriter("js2java_5d.txt"));
+			// tmp[6] = new PrintWriter(new FileWriter("js2java_6d.txt"));
+			// tmp[7] = new PrintWriter(new FileWriter("js2java_7d.txt"));
 		} catch(IOException e) {
 		}
 	}
@@ -46,10 +46,15 @@ public class HtmlUserInterface extends UserInterface{
 				String s = in[i].readLine();
 				if (s != null) {
 					if (s.split("\t")[0].equals("D")) {	//OtherPlayInfo
+						BufferedWriter tmp = new BufferedWriter(new FileWriter("tmp.txt", true));
+						tmp.write("i: " + Integer.toString(i) + "s: " + s);
+						tmp.newLine();
+						tmp.close();
+
 						writeFunctions.writeOtherPlyaer(Integer.parseInt(s.split("\t")[1]), i);
-						in[i].close();
-						tmp[i].print("");
-						tmp[i].close();
+						// in[i].close();
+						// tmp[i].print("i: " + s);
+						// tmp[i].close();
 					}
 					else
 						return s;

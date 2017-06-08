@@ -16,7 +16,7 @@ public class Gun extends Card{
 	public int getRange() {
 		if(getName().equals("Winchester")){
 			return 5;
-		} else if(getName().equals("Rev carbine")){
+		} else if(getName().equals("Rev carabine")){
 			return 4;
 		} else if(getName().equals("Remington")){
 			return 3;
