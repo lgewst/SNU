@@ -36,6 +36,9 @@ $(document).on("pageshow", "#playerInfo", function(){
                 $.mobile.changePage('#mountedCardInfo', {data: {'imgsrc': content}});
                 }
             });
+        $('#back').on('tap', function(){
+            $.mobile.changePage('#background');
+        });
         });
 $(document).on("pageshow", "#mountedCardInfo", function(){
         var content = $(this).data('imgsrc'); /* img src */

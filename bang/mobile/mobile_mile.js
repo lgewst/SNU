@@ -101,7 +101,6 @@ MILE.on('otherPlayerInfo', function(data, from){
     var inHandCardBack = "<img src=\"" + inHand.image + "\" width=\"50\" height=\"90\" >";
 var inHandCardNum = inHand.num;
 $('#othersImages').empty();
-// $('#otherContents').empty();
 $('#othersContents').empty();
 $('#othersMountedCardsList').empty();
 $('#othersInHandCardsList').empty();
