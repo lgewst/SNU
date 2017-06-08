@@ -34,12 +34,11 @@ public class HtmlUserInterface extends UserInterface{
 				String s = in[i].readLine();
 				if (s != null) {
 					if (s.split("\t")[0].equals("D")) {	//OtherPlayInfo
-						// BufferedWriter tmp = new BufferedWriter(new FileWriter("text/tmp.txt", true));
-						// tmp.write("i: " + Integer.toString(i) + "s: " + s);
-						// tmp.newLine();
-						// tmp.close();
-
-						writeFunctions.writeOtherPlyaer(Integer.parseInt(s.split("\t")[1]), i);
+						int index = Integer.parseInt(s.split("\t")[1]);
+						if (index == i)
+							writeFunctions.writePlayer(index);
+						else
+							writeFunctions.writeOtherPlyaer(index, i);
 					}
 					else
 						return s;

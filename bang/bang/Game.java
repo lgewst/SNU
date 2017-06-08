@@ -146,7 +146,12 @@ public class Game {
 			try {
 				if (phase0()) {
 					phase1();
-//					writeFunctions.writePlayer(currentPlayer, HelpFunctions.getOthers(currentPlayer, players));
+					int index = 0;
+					for (index = 0; index < players.size(); index++) {
+						if (players.get(index) == currentPlayer)
+							break;
+					}
+					writeFunctions.writePlayer(index + 1);
 					phase2();
 					phase3();
 				}

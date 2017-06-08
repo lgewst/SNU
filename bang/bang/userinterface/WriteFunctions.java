@@ -5,17 +5,23 @@ import java.util.ArrayList;
 import org.json.simple.*;
 import bang.Player;
 import bang.Game;
+import bang.HelpFunctions;
 
 public class WriteFunctions{
   BufferedWriter out;
   BufferedWriter toDebug;
   Game game;
+	private HelpFunctions HelpFunctions = new HelpFunctions();
 
   public WriteFunctions(Game game) {
 	  this.game = game;
   }
 
-  public void writePlayer(Player player, ArrayList<Player> otherPlayers, int write_index) {
+  public void writePlayer(int index) {
+    ArrayList<Player> players = game.getPlayers();
+    Player player = players.get(index - 1);
+    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players);
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
     JSONArray others = new JSONArray();
@@ -34,7 +40,7 @@ public class WriteFunctions{
     writer.put("type", "playerInfo");
     writer.put("data", json.toString());
     try {
-      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(index) + ".txt"));
       out.write(writer.toString());
       out.close();
     } catch(IOException e) {

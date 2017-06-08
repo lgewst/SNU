@@ -4,7 +4,8 @@ $(document).on("pageshow", "#readyPage", function(){
             });
         });
 $(document).on("pageshow", "#background", function(){
-        MILE.send("playerInfo", "Request basic information");
+        console.log('chage background');
+        // MILE.send("playerInfo", "Request basic information");
         $("#otherPlayersList").off("tap").on('tap', function(){
             var tagName = event.target.tagName;
             var id = event.target.id;
@@ -37,7 +38,8 @@ $(document).on("pageshow", "#playerInfo", function(){
                 }
             });
         $('#back').off("tap").on('tap', function(){
-            $.mobile.changePage('#background');
+            //$.mobile.changePage('#background');
+            MILE.send("playerInfo", "Request basic information");
         });
         });
 $(document).on("pageshow", "#mountedCardInfo", function(){

@@ -306,13 +306,13 @@ io.on('connection', function(socket){
             for(var i = 1; i < connections.length; i++) {
                 if(connections[i].id == socket.id) {
                     console.log(i + ' playerInfo');
-                    //TODO: Do not use D\t because it has to find itself
-                    // fs.writeFile('text/js2java_' + i + '.txt', 'D\t' + i, function(err) {
-                    //     if(err) {
-                    //         return console.log("Error while writing on file: js2java.txt");
-                    //     }
-                    //     console.log("js2java_" + i +".txt FILE WRITED");
-                    // });
+                    // TODO: Do not use D\t because it has to find itself
+                    fs.appendFile('text/js2java_' + i + '.txt', 'D\t' + i, function(err) {
+                        if(err) {
+                            return console.log("Error while writing on file: js2java.txt");
+                        }
+                        console.log("js2java_" + i +".txt FILE WRITED");
+                    });
                     // //TODO
                     // setTimeout(function() {
                     //         var Texts = fs.readFileSync('text/java2js_'+ i +'.txt','utf-8');
@@ -325,6 +325,9 @@ io.on('connection', function(socket){
     } else if(msg.type == 'initPlayerInfo') {
         for(var i=1; i < connections.length; i++) {
             if(connections[i].id == socket.id) {
+                var parseInit = JSON.parse(playersInfoText[i-1]);
+                if (parseInit.job.name == 'Sheriff')
+                  continue;
                 io.to(connections[i].id).emit('message',{type:'playerInfo', data: playersInfoText[i-1]});
                 console.log("Server to Client: initPlayerInfo");
                 break;

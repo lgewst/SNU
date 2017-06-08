@@ -31,7 +31,7 @@ MILE.on('game_start', function(data, from) {
 });
 MILE.on('playerInfo', function(data, from) {
     $.mobile.changePage('#background');
-    console.log(data);
+    //console.log(data);
     var info = JSON.parse(data);
     var otherPlayers = info.otherPlayers; // str array
     var job = info.job; // image, str(name), str(mission)
@@ -52,7 +52,7 @@ MILE.on('playerInfo', function(data, from) {
 $('#images').empty();
 $('#contents').empty();
 $('#mountedCardsList').empty();
-$('inHandCardsList').empty();
+$('#inHandCardsList').empty();
 
 for(i = 0; i < otherPlayers.length; i++){
     var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
