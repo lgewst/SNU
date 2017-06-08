@@ -30,7 +30,7 @@ public class WriteFunctions{
     json.put("inHandCards", player.getHand().toJSONArray());
 
     try {
-      out = new BufferedWriter(new FileWriter("java2js_" + Integer.toString(write_index) + ".txt"));
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
       out.write(json.toString());
       out.close();
     } catch(IOException e) {
@@ -41,22 +41,21 @@ public class WriteFunctions{
       //TODO: check
 	Player player = game.getPlayers().get(index-1);
     JSONObject json = new JSONObject();
+    JSONObject hand = new JSONObject();
 
     json.put("job", player.getJob().toJsonUnknown());
     json.put("character", player.getCharacter().toJson());
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
     json.put("mountedCards", player.getMounting().toJSONArray());
-    json.put("inHandCards", player.getHand().size());
+    hand.put("image", "../cards/playing card(back).jpg");
+    hand.put("num", player.getHand().size());
+    json.put("inHandCards", hand);
 
     try {
-      out = new BufferedWriter(new FileWriter("java2js_" + Integer.toString(write_index) + ".txt"));
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
       out.write(json.toString());
       out.close();
-
-      toDebug = new BufferedWriter(new FileWriter("debug.txt"));
-      toDebug.write(("Write is " + Integer.toString(write_index) + " getIndex is " + Integer.toString(index)));
-      toDebug.close();
     } catch(IOException e) {
     }
   }

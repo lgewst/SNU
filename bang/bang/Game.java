@@ -33,7 +33,7 @@ public class Game {
 
 	private void writePlayerInfo() {
 		try {
-			BufferedWriter outPlayers = new BufferedWriter(new FileWriter("players.txt"));
+			BufferedWriter outPlayers = new BufferedWriter(new FileWriter("text/players.txt"));
 
 			for (Player player: players) {
 				JSONObject json = new JSONObject();

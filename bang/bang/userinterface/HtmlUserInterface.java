@@ -13,29 +13,17 @@ public class HtmlUserInterface extends UserInterface{
 	BufferedReader[] in = new BufferedReader[8];
 	WriteFunctions writeFunctions;
 
-	//TODO: For debugging!!
-	// PrintWriter[] tmp = new PrintWriter[8];
-
 	public HtmlUserInterface(Game game) {
 		writeFunctions = new WriteFunctions(game);
 		try {
-			in[0] = new BufferedReader(new FileReader("js2java_0.txt"));
-			in[1] = new BufferedReader(new FileReader("js2java_1.txt"));
-			in[2] = new BufferedReader(new FileReader("js2java_2.txt"));
-			in[3] = new BufferedReader(new FileReader("js2java_3.txt"));
-			in[4] = new BufferedReader(new FileReader("js2java_4.txt"));
-			in[5] = new BufferedReader(new FileReader("js2java_5.txt"));
-			in[6] = new BufferedReader(new FileReader("js2java_6.txt"));
-			in[7] = new BufferedReader(new FileReader("js2java_7.txt"));
-			//TODO
-			// tmp[0] = new PrintWriter(new FileWriter("js2java_0d.txt"));
-			// tmp[1] = new PrintWriter(new FileWriter("js2java_1d.txt"));
-			// tmp[2] = new PrintWriter(new FileWriter("js2java_2d.txt"));
-			// tmp[3] = new PrintWriter(new FileWriter("js2java_3d.txt"));
-			// tmp[4] = new PrintWriter(new FileWriter("js2java_4d.txt"));
-			// tmp[5] = new PrintWriter(new FileWriter("js2java_5d.txt"));
-			// tmp[6] = new PrintWriter(new FileWriter("js2java_6d.txt"));
-			// tmp[7] = new PrintWriter(new FileWriter("js2java_7d.txt"));
+			in[0] = new BufferedReader(new FileReader("text/js2java_0.txt"));
+			in[1] = new BufferedReader(new FileReader("text/js2java_1.txt"));
+			in[2] = new BufferedReader(new FileReader("text/js2java_2.txt"));
+			in[3] = new BufferedReader(new FileReader("text/js2java_3.txt"));
+			in[4] = new BufferedReader(new FileReader("text/js2java_4.txt"));
+			in[5] = new BufferedReader(new FileReader("text/js2java_5.txt"));
+			in[6] = new BufferedReader(new FileReader("text/js2java_6.txt"));
+			in[7] = new BufferedReader(new FileReader("text/js2java_7.txt"));
 		} catch(IOException e) {
 		}
 	}
@@ -46,15 +34,12 @@ public class HtmlUserInterface extends UserInterface{
 				String s = in[i].readLine();
 				if (s != null) {
 					if (s.split("\t")[0].equals("D")) {	//OtherPlayInfo
-						BufferedWriter tmp = new BufferedWriter(new FileWriter("tmp.txt", true));
-						tmp.write("i: " + Integer.toString(i) + "s: " + s);
-						tmp.newLine();
-						tmp.close();
+						// BufferedWriter tmp = new BufferedWriter(new FileWriter("text/tmp.txt", true));
+						// tmp.write("i: " + Integer.toString(i) + "s: " + s);
+						// tmp.newLine();
+						// tmp.close();
 
 						writeFunctions.writeOtherPlyaer(Integer.parseInt(s.split("\t")[1]), i);
-						// in[i].close();
-						// tmp[i].print("i: " + s);
-						// tmp[i].close();
 					}
 					else
 						return s;
