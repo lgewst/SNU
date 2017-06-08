@@ -1,11 +1,11 @@
 $(document).on("pageshow", "#readyPage", function(){
-        $("#ready").on("tap", function(){
+        $("#ready").off("tap").on("tap", function(){
             MILE.send("ready", "Client ready");
             });
         });
 $(document).on("pageshow", "#background", function(){
         MILE.send("playerInfo", "Request basic information");
-        $("#otherPlayersList").on('tap', function(){
+        $("#otherPlayersList").off("tap").on('tap', function(){
             var tagName = event.target.tagName;
             var id = event.target.id;
             if(tagName ==="P"){
@@ -13,14 +13,14 @@ $(document).on("pageshow", "#background", function(){
                 MILE.send("otherPlayerInfo", content);
                 }
             });
-        $("#mountedCardsList").on('tap', function(){
+        $("#mountedCardsList").off("tap").on('tap', function(){
             var tagName = event.target.tagName;
             if(tagName === "IMG"){
                 var content = $(event.target).attr('src');
                 $.mobile.changePage('#mountedCardInfo', {data: {'imgsrc': content}});
             }
             });
-        $("#inHandCardsList").on('tap', function(){
+        $("#inHandCardsList").off("tap").on('tap', function(){
             var tagName = event.target.tagName;
             if(tagName === "IMG"){
                 var content = $(event.target).attr('src');
@@ -29,14 +29,14 @@ $(document).on("pageshow", "#background", function(){
             });
 });
 $(document).on("pageshow", "#playerInfo", function(){
-        $("#othersMountedCardsList").on('tap', function(){
+        $("#othersMountedCardsList").off("tap").on('tap', function(){
             var tagName = event.target.tagName;
             if(tagName === "IMG"){
                 var content = $(event.target).attr('src');
                 $.mobile.changePage('#mountedCardInfo', {data: {'imgsrc': content}});
                 }
             });
-        $('#back').on('tap', function(){
+        $('#back').off("tap").on('tap', function(){
             $.mobile.changePage('#background');
         });
         });
@@ -45,19 +45,19 @@ $(document).on("pageshow", "#mountedCardInfo", function(){
         var image = "<img src=\"" + content + "\">";
         $('#mountedCardImage').empty();
         $('#mountedCardImage').append(image);
-        $("#help").on("tap", function(){
+        $("#help").off("tap").on("tap", function(){
             //var content = $(this).siblings("img").attr('src');
             alert("To check tags: " + content);
             MILE.send("help", content);
             });
         });
 $(document).on("pageshow", "#inHandCardInfo", function(){
-        $("#help").on("tap", function(){
+        $("#help").off("tap").on("tap", function(){
             //var content = $(this).siblings("img").attr('src');
             alert("To check tags: " + content);
             MILE.send("help", content);
             });
-        $("#select").on("tap", function(){
+        $("#select").off("tap").on("tap", function(){
             //var content = $(this).siblings("img").attr('src');
             alert("To check tags: " + content);
             MILE.send("select", content);
