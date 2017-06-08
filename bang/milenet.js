@@ -296,7 +296,7 @@ io.on('connection', function(socket){
     } else if(msg.type == 'playerInfo') {
             for(var i = 1; i < connections.length; i++) {
                 if(connections[i].id == socket.id) {
-                    console.log(i + ' finds ' + i);
+                    console.log(i + ' playerInfo');
                     //TODO: Do not use D\t because it has to find itself
                     // fs.writeFile('text/js2java_' + i + '.txt', 'D\t' + i, function(err) {
                     //     if(err) {
@@ -323,6 +323,7 @@ io.on('connection', function(socket){
         }
     } else if(msg.type == 'otherPlayerInfo') {
         var reqInx = 0;
+        var isSend = true;
         for(var i = 1; i < connections.length; i++) {
             if(connections[i].id == socket.id) {
                 reqInx = i;
@@ -332,13 +333,14 @@ io.on('connection', function(socket){
         for(var i = 0; i < playersInfoText.length; i++) {
             if (JSON.parse(playersInfoText[i]).character.name == msg.data) {
                 var j = i+1;
-                console.log(msg.data);
+                // console.log(msg.data);
                 console.log(reqInx + ' finds ' + j);
                 fs.appendFile('text/js2java_' + reqInx + '.txt', 'D\t' + j + '\n', function(err) {
                     if(err) {
                         return console.log("Error while writing on file: js2java.txt");
                     }
                     console.log("js2java_" + reqInx +".txt FILE WRITED");
+                    isSend = false;
                 });
                 //TODO
                 setTimeout(function() {
@@ -349,6 +351,10 @@ io.on('connection', function(socket){
                 break;
             }
         }
+        // var tmpF = true;
+        // while(tmpF) {
+        //     tmpF = tmpFunc(reqInx);
+        // }
     } else if(msg.type == 'help') {
         //TODO: Server side request
     }
@@ -396,9 +402,117 @@ io.on('connection', function(socket){
   },1000);
 });
 
+function tmpFunc(idx) {
+    console.log(idx + ' changed');
+    try {
+        var Texts;
+        setTimeout(function() {
+                Texts = fs.readFile('text/java2js_1.txt','utf-8');
+        },50);
+        console.log(Texts);
+        var parse = JSON.parse(Texts);
+        socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+        console.log('send otherPlayerInfo');
+        return false;
+    } catch(e) {
+        return true;
+    }
+}
+
+
+// var Texts = fs.readFileSync('text/java2js_' + reqInx +'.txt','utf-8');
+// socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+// console.log('send otherPlayerInfo');
+//
+// fs.watch('text/java2js_1.txt', function(event, filename) {
+//     console.log('1 changed');
+//     try {
+//         var Texts;
+//         setTimeout(function() {
+//                 Texts = fs.readFile('text/java2js_1.txt','utf-8');
+//         },50);
+//         console.log(Texts);
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_2.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_2.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_3.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_3.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_4.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_4.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_5.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_5.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_6.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_6.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_7.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_7.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+// fs.watch('text/java2js_0.txt', function() {
+//     try {
+//         var Texts = fs.readFileSync('text/java2js_0.txt','utf-8');
+//         var parse = JSON.parse(Texts);
+//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+//         console.log('send otherPlayerInfo');
+//     } catch(e) {
+//
+//     }
+// });
+
 // Start HTTP Server
 http.listen(8001, function(){
+    // console.log("Server running at http://147.47.249.199:8001");
   console.log("listening on *: 8001");
-  // console.log("Server running at http://147.47.249.199:8001");
-  console.log("Server running at localhost:8001");
 });
+  console.log("Server running at localhost:8001");
