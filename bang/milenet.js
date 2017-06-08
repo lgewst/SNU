@@ -4,7 +4,7 @@ var io = require('socket.io')(http);
 var express = require('express');
 var java = require('java');
 var fs = require('fs');
-var spawn = require('child_process').spawn;
+// var spawn = require('child_process').spawn;
 //java.classpath.push('./java_algorithm/src/');
 // TODO: *.java files are need to be compiled into *.class
 //var bangUI = java.import('bang/userinterface/JavaUserInterface');
@@ -19,7 +19,15 @@ var players = [];
 var forSync = false;
 var playersInfoText;
 
+var children = [];
 var child;
+// child.kill('SIGINT');
+
+process.on('exit', function() {
+    child.kill();
+    console.log('kill');
+});
+
 
 app.use(express.static('.'));
 
@@ -175,9 +183,7 @@ io.on('connection', function(socket){
                 }, 5050);
                 io.emit('message',{type: "game_start", data: "Game Start"});
                 console.log("Game Start in 5 seconds");
-            }
-            if(gameStart) {
-                io.emit('message',{type: "bangCard", data: "../cards/playing card(back).jpg"});
+
                 console.log("Sending: Image to Client");
 
                 fs.writeFile('text/js2java_0.txt', '', function(err) {
@@ -290,7 +296,10 @@ io.on('connection', function(socket){
                   console.log("players.txt FILE INITIALIZED");
                 });
                 //TODO: Send msg to clients to make the buttons disable
-                child = spawn('java', ['Test', connections.length - 1]);
+                // child = spawn('java', ['Test', connections.length - 1]);
+                child = require('child_process').spawn('java', ['Test', connections.length - 1]);
+                children.push(child);
+                console.log('children length is ' + children.length);
             }
         }
     } else if(msg.type == 'playerInfo') {
