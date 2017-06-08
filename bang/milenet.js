@@ -343,11 +343,11 @@ io.on('connection', function(socket){
                     isSend = false;
                 });
                 //TODO
-                setTimeout(function() {
-                    var Texts = fs.readFileSync('text/java2js_' + reqInx +'.txt','utf-8');
-                    // console.log(Texts);
-                    socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-                },100);
+                // setTimeout(function() {
+                //     var Texts = fs.readFileSync('text/java2js_' + reqInx +'.txt','utf-8');
+                //     // console.log(Texts);
+                //     socket.emit('message',{type:'otherPlayerInfo', data: Texts});
+                // },100);
                 break;
             }
         }
@@ -400,67 +400,94 @@ io.on('connection', function(socket){
           }
       }
   },1000);
-});
 
-function tmpFunc(idx) {
-    console.log(idx + ' changed');
+  function tmpFunc(idx) {
+    // console.log(idx + ' changed');
+    var Texts = fs.readFileSync('text/java2js_'+ idx +'.txt','utf-8');
     try {
-        var Texts = fs.readFileSync('text/java2js_'+ idx +'.txt','utf-8');
-        console.log(Texts);
-        var parse = JSON.parse(Texts);
-        socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-        console.log('send otherPlayerInfo');
-        // return false;
+        //   console.log(Texts);
+          var parse = JSON.parse(Texts);
+          console.log('send ' + parse.type);
+          // return false;
     } catch(e) {
-        // return true;
+          // return true;
+          return;
     }
-}
+    io.to(connections[idx].id).emit('message',{type:parse.type, data: parse.data});
+    fs.writeFile('text/java2js_'+idx+'.txt', '', function(err) {
+        if(err) {
+            return console.log("Error while writing on file: js2java_"+ idx +".txt");
+        }
+        // console.log("java2js_"+idx+".txt FILE INITIALIZED");
+    });
+  }
+
+  setInterval(function() {
+      if(gameStart) {
+          var Texts = fs.readFileSync('text/java2js_1.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(1);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart) {
+          var Texts = fs.readFileSync('text/java2js_2.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(2);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart) {
+          var Texts = fs.readFileSync('text/java2js_3.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(3);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart) {
+          var Texts = fs.readFileSync('text/java2js_4.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(4);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart && connections.length >= 6) {
+          var Texts = fs.readFileSync('text/java2js_5.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(5);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart && connections.length >= 7) {
+          var Texts = fs.readFileSync('text/java2js_6.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(6);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart && connections.length >= 8) {
+          var Texts = fs.readFileSync('text/java2js_7.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(7);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart) {
+          var Texts = fs.readFileSync('text/java2js_0.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(0);
+    }
+  },500);
 
 
-// var Texts = fs.readFileSync('text/java2js_' + reqInx +'.txt','utf-8');
-// socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-// console.log('send otherPlayerInfo');
+  // fs.watch('text/java2js_0.txt', function(event, filename) {
+  //     setTimeout(function() {
+  //         tmpFunc(0);
+  //     },50);
+  // });
+});
 
-fs.watch('text/java2js_1.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(1);
-    },50);
-});
-fs.watch('text/java2js_2.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(2);
-    },50);
-});
-fs.watch('text/java2js_3.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(3);
-    },50);
-});
-fs.watch('text/java2js_4.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(4);
-    },50);
-});
-fs.watch('text/java2js_5.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(5);
-    },50);
-});
-fs.watch('text/java2js_6.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(6);
-    },50);
-});
-fs.watch('text/java2js_7.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(7);
-    },50);
-});
-fs.watch('text/java2js_0.txt', function(event, filename) {
-    setTimeout(function() {
-        tmpFunc(0);
-    },50);
-});
+
 
 // Start HTTP Server
 http.listen(8001, function(){
