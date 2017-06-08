@@ -145,5 +145,110 @@ MILE.on('help', function(data, from){
     $('#explanation').append(helpStr);
 
 });
-MILE.on('select', function(data, from){
+/*MILE.on('select', function(data, from){
+  });
+  */
+
+MILE.on('askPlay', function(data, from){
+    //my turn started, what card are you going to use?
+    $.mobile.changePage('#cardToSelect');
+    var info = JSON.parse(data);
+    var cardList = info.cardList;
+    var helpStr = "Your turn! Select card to play.";
+    $('#selectSentence').empty();
+    $('#selectCardsList').empty();
+
+    $('#sentence').append(helpStr);
+
+    for(i = 0; i < cardList.length; i++){
+        var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" heigth=\"90\" >";
+        var cardDiv = "<div id=\"selectableCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
+        $('#selectCardsList').append(cardDiv);
+    });
+});
+MILE.on('askDiscard', function(data, from){
+    //what card are you going to discard?(my turn ends)
+    $.mobile.changePage('#cardToDiscard');
+    var info = JSON.parse(data);
+    var cardList = info.cardList;
+    var limit = info.limit;
+    var helpStr = "Your turn ends! Select card to discard. The number of remainig cards must be less than your maxlife(" + limit + ")" ;
+    $('#discardSentence').empty();
+    $('#discardCardsList').empty();
+
+    $('#discardSentence').append(helpStr);
+
+    for(i = 0; i < cardList.length; i++){
+        var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" heigth=\"90\" >";
+        var cardDiv = "<div id=\"discardingCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
+        $('#discardCardsList').append(cardDiv);
+    });
+});
+MILE.on('respondBang', function(data, from){
+    //Will you use your bang card for dual or indian?
+    var info = JSON.parse(data);
+    var who = info.who;
+    var what = info.what;
+    var num = info.num;
+    var target;
+    if(info.target === "True"){
+        target = "you";
+    }
+    else{
+        target = "all players";
+    }
+    var helpStr = who + " used " + what + " to " + target + ". You can respond by using 'Bang!' card, or you will lose 1 life. Will you use it? (Number of 'Bang!': " + num;
+    $('#bangSentence').empty();
+    $('#bangSentence').append(helpStr);
+});
+MILE.on('respondMiss', function(data, from){
+    //Will you use your miss card for bang or gatling?
+    //at least one miss card
+    var info = JSON.parse(data);
+    var who = info.who;
+    var what = info.what;
+    var num = info.num;
+    var target;
+    if(info.target === "True"){
+        target = "you";
+    }
+    else{
+        target = "all players";
+    }
+    var helpStr = who + " used " + what + " to " + target + ". You can avoid the attack if you use your 'Miss!' card. Will you use it? (Number of 'Miss!': " + num;
+    $('#missSentence').empty();
+    $('#missSentence').append(helpStr);
+});
+MILE.on('respondBeer', function(data, from){
+    //Will you use your beer card to charge your life?
+    var info = JSON.parse(data);
+    var helpStr = "You don't have any life now. You can revive if you use your 'Beer' card, or you will be dead. Will you use it?";
+    $('#beerSentence').empty();
+    $('#beerSentence').append(helpStr);
+});
+MILE.on('askTarget', function(data, from){
+    var info = JSON.parse(data);
+    var targetList = info.targetList;
+    $('#selectTargetSentence').empty();
+    $('#selectTargetList').empty();
+
+    var helpStr = "You should choose target player.";
+    $('#selectTargetSentence').append();
+    for(i = 0; i < targetList.length; i++){
+       var targetN = "<p id='target'" + i + ">"+ targetList[i] + " </p>";
+       $('#selectTargetList').append(targetN);
+    }
+});
+MILE.on('askTargetCard', function(data, from){
+    var info = JSON.parse(data);
+    var targetCardList = info.targetCardList;
+    $('#selectTargetCardSentence').empty();
+    $('#selectTargetCardList').empty();
+
+    var helpStr = "You should choose target card.";
+    $('#selectTargetCardSentence').append();
+    for(i = 0; i < targetCardList.length; i++){
+       var cardImageN = "<img src=\"" + targetCardList[i] + "\" width=\"50\" heigth=\"90\" >";
+       $('#selectTargetCardList').append(targetN);
+    }
 });
