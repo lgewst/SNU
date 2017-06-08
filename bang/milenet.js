@@ -405,17 +405,14 @@ io.on('connection', function(socket){
 function tmpFunc(idx) {
     console.log(idx + ' changed');
     try {
-        var Texts;
-        setTimeout(function() {
-                Texts = fs.readFile('text/java2js_1.txt','utf-8');
-        },50);
+        var Texts = fs.readFileSync('text/java2js_'+ idx +'.txt','utf-8');
         console.log(Texts);
         var parse = JSON.parse(Texts);
         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
         console.log('send otherPlayerInfo');
-        return false;
+        // return false;
     } catch(e) {
-        return true;
+        // return true;
     }
 }
 
@@ -423,92 +420,47 @@ function tmpFunc(idx) {
 // var Texts = fs.readFileSync('text/java2js_' + reqInx +'.txt','utf-8');
 // socket.emit('message',{type:'otherPlayerInfo', data: Texts});
 // console.log('send otherPlayerInfo');
-//
-// fs.watch('text/java2js_1.txt', function(event, filename) {
-//     console.log('1 changed');
-//     try {
-//         var Texts;
-//         setTimeout(function() {
-//                 Texts = fs.readFile('text/java2js_1.txt','utf-8');
-//         },50);
-//         console.log(Texts);
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_2.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_2.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_3.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_3.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_4.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_4.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_5.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_5.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_6.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_6.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_7.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_7.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
-// fs.watch('text/java2js_0.txt', function() {
-//     try {
-//         var Texts = fs.readFileSync('text/java2js_0.txt','utf-8');
-//         var parse = JSON.parse(Texts);
-//         socket.emit('message',{type:'otherPlayerInfo', data: Texts});
-//         console.log('send otherPlayerInfo');
-//     } catch(e) {
-//
-//     }
-// });
+
+fs.watch('text/java2js_1.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(1);
+    },50);
+});
+fs.watch('text/java2js_2.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(2);
+    },50);
+});
+fs.watch('text/java2js_3.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(3);
+    },50);
+});
+fs.watch('text/java2js_4.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(4);
+    },50);
+});
+fs.watch('text/java2js_5.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(5);
+    },50);
+});
+fs.watch('text/java2js_6.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(6);
+    },50);
+});
+fs.watch('text/java2js_7.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(7);
+    },50);
+});
+fs.watch('text/java2js_0.txt', function(event, filename) {
+    setTimeout(function() {
+        tmpFunc(0);
+    },50);
+});
 
 // Start HTTP Server
 http.listen(8001, function(){
