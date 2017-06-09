@@ -24,7 +24,9 @@ $(document).on("pageshow", "#background", function(){
     $("#inHandCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var content = $(event.target).attr('src');
+            //    var content = $(event.target).attr('src');
+            var selected = $(event.target.id);
+            var content = $('img').index(selected);
             MILE.send("inHandCardInfo", content);
         }
     });
@@ -48,19 +50,20 @@ $(document).on("pageshow", "#mountedCardInfo", function(){
     $('#mountedCardImage').empty();
     $('#mountedCardImage').append(image);
     $("#help").off("tap").on("tap", function(){
-        //var content = $(this).siblings("img").attr('src');
+        var content = $(this).siblings("img").attr('src');
         alert("To check tags: " + content);
         MILE.send("help", content);
     });
 });
 $(document).on("pageshow", "#inHandCardInfo", function(){
     $("#help").off("tap").on("tap", function(){
-        //var content = $(this).siblings("img").attr('src');
+        var content = $(this).siblings("img").attr('src');
         alert("To check tags: " + content);
         MILE.send("help", content);
     });
+    /*erase select*/
     $("#select").off("tap").on("tap", function(){
-        //var content = $(this).siblings("img").attr('src');
+        var content = $(this).siblings("img").attr('src');
         alert("To check tags: " + content);
         MILE.send("select", content);
     });
@@ -69,16 +72,21 @@ $(document).on("pageshow", "#cardToSelect", function(){
     $("#selectCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var content = $(event.target).attr('src');
+            var selected = $(event.target.id);
+            var content = $('img').index(selected);
             MILE.send("selectPlayingCard", content);
         }
+    });
+    $('#done').off('tap').on('tap', function(){
+        MILE.send("selectPlayingCard", -1);
     });
 });
 $(document).on("pageshow", "#cardToDiscard", function(){
     $("#discardCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var content = $(event.target).attr('src');
+            var selected = $(event.target.id);
+            var content = $('img').index(selected);
             MILE.send("discardPlayingCard", content);
         }
     });
@@ -112,20 +120,20 @@ $(document).on("pageshow", "#selectTarget", function(){
         var tagName = event.target.tagName;
         var id = event.target.id;
         if(tagName ==="P"){
-            var content = document.getElementById(id).innerHTML;
+            var selected = $(event.target.id);
+            var content = $('p').index(selected);
             MILE.send("selectTargetRespond", content);
         }
     });
 });
 $(document).on("pageshow", "#selectTargetCard", function(){
-        $('#selectTargetCardList').off('tap').on('tap', function(){
+    $('#selectTargetCardList').off('tap').on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var content = $(event.target).attr('src');
+            var selected = $(event.target.id);
+            var content = $('img').index(selected);
             MILE.send("selectTargetCardRespond", content);
         }
-        });
-});
-$(document).on("pageshow", "#willUseBang", function(){
+    });
 });
 /* TODO: respond, select target/targetcard */
