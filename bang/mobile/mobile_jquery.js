@@ -83,5 +83,49 @@ $(document).on("pageshow", "#cardToDiscard", function(){
         }
     });
 });
-//$(document).on("pageshow", "#
+$(document).on("pageshow", "#willUseBang", function(){
+    $('#bangYes').off("tap").on('tap', function(){
+        MILE.send("bangRespond", "Yes");
+    });
+    $('#bangNo').off("tap").on('tap', function(){
+        MILE.send("bangRespond", "Yes");
+    });
+});
+$(document).on("pageshow", "#willUseMiss", function(){
+    $('#missYes').off("tap").on('tap', function(){
+        MILE.send("missRespond", "Yes");
+    });
+    $('#missNo').off("tap").on('tap', function(){
+        MILE.send("missRespond", "Yes");
+    });
+});
+$(document).on("pageshow", "#willUseBeer", function(){
+    $('#beerYes').off("tap").on('tap', function(){
+        MILE.send("beerRespond", "Yes");
+    });
+    $('#beerNo').off("tap").on('tap', function(){
+        MILE.send("beerRespond", "Yes");
+    });
+});
+$(document).on("pageshow", "#selectTarget", function(){
+    $('#selectTargetList').off('tap').on('tap', function(){
+        var tagName = event.target.tagName;
+        var id = event.target.id;
+        if(tagName ==="P"){
+            var content = document.getElementById(id).innerHTML;
+            MILE.send("selectTargetRespond", content);
+        }
+    });
+});
+$(document).on("pageshow", "#selectTargetCard", function(){
+        $('#selectTargetCardList').off('tap').on('tap', function(){
+        var tagName = event.target.tagName;
+        if(tagName === "IMG"){
+            var content = $(event.target).attr('src');
+            MILE.send("selectTargetCardRespond", content);
+        }
+        });
+});
+$(document).on("pageshow", "#willUseBang", function(){
+});
 /* TODO: respond, select target/targetcard */
