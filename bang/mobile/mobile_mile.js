@@ -164,7 +164,7 @@ MILE.on('askPlay', function(data, from){
         var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" heigth=\"90\" >";
         var cardDiv = "<div id=\"selectableCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
         $('#selectCardsList').append(cardDiv);
-    });
+    }
 });
 MILE.on('askDiscard', function(data, from){
     //what card are you going to discard?(my turn ends)
@@ -182,10 +182,11 @@ MILE.on('askDiscard', function(data, from){
         var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" heigth=\"90\" >";
         var cardDiv = "<div id=\"discardingCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
         $('#discardCardsList').append(cardDiv);
-    });
+    };
 });
 MILE.on('respondBang', function(data, from){
     //Will you use your bang card for dual or indian?
+    $.mobile.changePage('#willUseBang');
     var info = JSON.parse(data);
     var who = info.who;
     var what = info.what;
@@ -204,6 +205,7 @@ MILE.on('respondBang', function(data, from){
 MILE.on('respondMiss', function(data, from){
     //Will you use your miss card for bang or gatling?
     //at least one miss card
+    $.mobile.changePage('#willUseMiss');
     var info = JSON.parse(data);
     var who = info.who;
     var what = info.what;
@@ -221,6 +223,7 @@ MILE.on('respondMiss', function(data, from){
 });
 MILE.on('respondBeer', function(data, from){
     //Will you use your beer card to charge your life?
+    $.mobile.changePage('#willUseBeer');
     var info = JSON.parse(data);
     var helpStr = "You don't have any life now. You can revive if you use your 'Beer' card, or you will be dead. Will you use it?";
     $('#beerSentence').empty();

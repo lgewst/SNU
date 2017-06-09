@@ -83,4 +83,5 @@ $(document).on("pageshow", "#cardToDiscard", function(){
         }
     });
 });
+//$(document).on("pageshow", "#
 /* TODO: respond, select target/targetcard */
