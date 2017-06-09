@@ -19,7 +19,7 @@ public class WriteFunctions{
 
   public void writePlayer(int index) {
     ArrayList<Player> players = game.getPlayers();
-    Player player = players.get(index - 1);
+    Player player = game.getPlayers_Info().get(index - 1);
     ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players);
 
     JSONObject writer = new JSONObject();
@@ -34,8 +34,10 @@ public class WriteFunctions{
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
     json.put("mountedCards", player.getMounting().toJSONArray());
-    json.put("inHandCards", player.getHand().toJSONArray());
-
+    if (index == game.getCurrentPlayer_index())
+    	json.put("inHandCards", player.getHand().toJSONArray(player, otherPlayers));
+    else
+    	json.put("inHandCards", player.getHand().toJSONArray());
 
     writer.put("type", "playerInfo");
     writer.put("data", json.toString());
@@ -48,7 +50,7 @@ public class WriteFunctions{
   }
 
   public void writeOtherPlyaer(int index, int write_index) {
-	  Player player = game.getPlayers().get(index-1);
+	Player player = game.getPlayers_Info().get(index-1);
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
     JSONObject hand = new JSONObject();
@@ -71,4 +73,22 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
+
+//  public void writeAskPlay(int write_index) {
+//	Player player = game.getPlayers_Info().get(write_index-1);
+//    JSONObject writer = new JSONObject();
+//    JSONObject json = new JSONObject();
+//
+//    json.put("cardList", player.getHand().toJSONArray());
+//
+//
+//    writer.put("type", "askPlay");
+//    writer.put("data", json.toString());
+//    try {
+//      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+//      out.write(writer.toString());
+//      out.close();
+//    } catch(IOException e) {
+//    }
+//  }
 }

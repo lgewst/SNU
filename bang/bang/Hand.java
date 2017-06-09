@@ -28,10 +28,25 @@ public class Hand {
 		return hand.remove(index);
 	}
 
+	public JSONArray toJSONArray(Player player, ArrayList<Player> otherPlayers) {
+		JSONArray temp = new JSONArray();
+		for(Card card: hand) {
+			JSONObject json_card = new JSONObject();
+			json_card.put("image", card.getImageName());
+			json_card.put("activated", card.canPlay(player, otherPlayers));
+			temp.add(json_card);
+		}
+		return temp;
+	}
+
 	public JSONArray toJSONArray() {
 		JSONArray temp = new JSONArray();
-		for(Card card: hand)
-			temp.add(card.getImageName());
+		for(Card card: hand) {
+			JSONObject json_card = new JSONObject();
+			json_card.put("image", card.getImageName());
+			json_card.put("activated", false);
+			temp.add(json_card);
+		}
 		return temp;
 	}
 }

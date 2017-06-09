@@ -47,8 +47,9 @@ public class HtmlUserInterface extends UserInterface{
 		}
 	}
 
-	//@Override
-	public int askPlay(Player player, ArrayList<Player> players) {
+	@Override
+	public int askPlay(int currentPlayer_index, Player player, ArrayList<Player> players) {
+//		writeFunctions.writeAskPlay(currentPlayer_index + 1);
 		Hand hand = player.getHand();
 		int index = -2;
 

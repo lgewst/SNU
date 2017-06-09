@@ -13,8 +13,10 @@ import bang.card.BangDeck;
 
 public class Game {
 	private ArrayList<Player> players;
+	private ArrayList<Player> players_info;
 	private Deck deck;
 	private Discard discard;
+	private int currentPlayer_index;
 	private Player currentPlayer;
 	private HelpFunctions HelpFunctions = new HelpFunctions();
 	private UserInterface userInterface;
@@ -23,6 +25,7 @@ public class Game {
 	public Game(int n) {
 		userInterface = new HtmlUserInterface(this);
 		players = new ArrayList<Player>();
+		players_info = new ArrayList<Player>();
 		deck = new Deck(BangDeck.makeDeck());
 		deck.suffle();
 		discard = new Discard();
@@ -74,8 +77,11 @@ public class Game {
 			for (int j = 0; j < tmp_player.getHealth(); j++)
 				tmp_player.getHand().add(HelpFunctions.peekDeck(deck, discard));
 			players.add(tmp_player);
-			if (roles.get(i).equals("Sheriff"))
+			players_info.add(tmp_player);
+			if (roles.get(i).equals("Sheriff")) {
 				currentPlayer = tmp_player;
+				currentPlayer_index = i;
+			}
 		}
 	}
 
@@ -118,8 +124,9 @@ public class Game {
 
 	private void phase2() throws EndofGameException {
 		while (true) {
+			writeFunctions.writePlayer(currentPlayer_index + 1);
 			Hand hand = currentPlayer.getHand();
-			int index = 1;//userInterface.askPlay(currentPlayer, players);
+			int index = userInterface.askPlay(currentPlayer_index, currentPlayer, players);
 
 			if (index == -1)
 				break;
@@ -146,13 +153,9 @@ public class Game {
 			try {
 				if (phase0()) {
 					phase1();
-					int index = 0;
-					for (index = 0; index < players.size(); index++) {
-						if (players.get(index) == currentPlayer)
-							break;
-					}
-					writeFunctions.writePlayer(index + 1);
+					currentPlayer.setCanBang(true);
 					phase2();
+					currentPlayer.setCanBang(false);
 					phase3();
 				}
 			} catch (EndofGameException e) {
@@ -160,10 +163,24 @@ public class Game {
 				System.out.println(winner);
 			}
 			currentPlayer = HelpFunctions.getNextPlayer(currentPlayer, players);
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i) == currentPlayer) {
+					currentPlayer_index = i;
+					break;
+				}
+			}
 		}
+	}
+
+	public ArrayList<Player> getPlayers_Info() {
+		return players_info;
 	}
 
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+	
+	public int getCurrentPlayer_index() {
+		return currentPlayer_index;
 	}
 }

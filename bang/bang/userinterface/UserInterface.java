@@ -7,7 +7,7 @@ import bang.Player;
 import bang.card.Card;
 
 public abstract class UserInterface {
-	public abstract int askPlay(Player player, ArrayList<Player> players);
+	public abstract int askPlay(int currentPlyaer_index, Player player, ArrayList<Player> players);
 
 	public abstract int askDiscard(Player player);
 
