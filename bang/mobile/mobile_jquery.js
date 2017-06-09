@@ -93,26 +93,26 @@ $(document).on("pageshow", "#cardToDiscard", function(){
 });
 $(document).on("pageshow", "#willUseBang", function(){
     $('#bangYes').off("tap").on('tap', function(){
-        MILE.send("bangRespond", "Yes");
+        MILE.send("bangRespond", true);
     });
     $('#bangNo').off("tap").on('tap', function(){
-        MILE.send("bangRespond", "Yes");
+        MILE.send("bangRespond", false);
     });
 });
 $(document).on("pageshow", "#willUseMiss", function(){
     $('#missYes').off("tap").on('tap', function(){
-        MILE.send("missRespond", "Yes");
+        MILE.send("missRespond", true);
     });
     $('#missNo').off("tap").on('tap', function(){
-        MILE.send("missRespond", "Yes");
+        MILE.send("missRespond", false);
     });
 });
 $(document).on("pageshow", "#willUseBeer", function(){
     $('#beerYes').off("tap").on('tap', function(){
-        MILE.send("beerRespond", "Yes");
+        MILE.send("beerRespond", true);
     });
     $('#beerNo').off("tap").on('tap', function(){
-        MILE.send("beerRespond", "Yes");
+        MILE.send("beerRespond", false);
     });
 });
 $(document).on("pageshow", "#selectTarget", function(){
