@@ -22,7 +22,7 @@ public class Bang extends Card{
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		ArrayList<Player> targets = targets(currentPlayer, players);
-		int index = userInterface.askTarget(targets);	//TODO
+		int index = userInterface.askTarget(currentPlayer, targets);	//TODO
 		if (index == -1)
 			return false;
 
@@ -43,9 +43,10 @@ public class Bang extends Card{
 				miss_count--;
 		}
 
-		index = -1;
 		while (miss_count > 0) {
-			index = userInterface.respondMiss(targetPlayer);	//TODO
+			index = -1;
+			if (targetPlayer.getHand().hasMiss())
+				index = userInterface.respondMiss(targetPlayer, currentPlayer, "Bang", 1, true);
 			if (index == -1)
 				break;
 			discard.add(targetPlayer.getHand().remove(index));

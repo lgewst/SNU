@@ -48,8 +48,8 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int askPlay(int currentPlayer_index, Player player, ArrayList<Player> players) {
-//		writeFunctions.writeAskPlay(currentPlayer_index + 1);
+	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
+//		writeFunctions.writeAskPlay(Player_index + 1);
 		Hand hand = player.getHand();
 		int index = -2;
 
@@ -68,7 +68,8 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int askDiscard(Player player) {
+	public int askDiscard(int Player_index, Player player) {
+		writeFunctions.writeAskDiscard(Player_index + 1);
 		Hand hand = player.getHand();
 		int index = -2;
 
@@ -83,13 +84,16 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int respondBang(Player player) {
+	public int respondBang(Player player, Player attacker, String card, int num, boolean t) {
+		writeFunctions.writeRespondeBang(player, attacker, card, num, t);
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
 			try {
-				index = Integer.parseInt(readFile());
+				if (!Boolean.valueOf(readFile()))
+					return -1;
+				index = player.getHand().getBang();
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -102,13 +106,16 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int respondMiss(Player player) {
+	public int respondMiss(Player player, Player attacker, String card, int num, boolean t) {
+		writeFunctions.writeRespondeMiss(player, attacker, card, num, t);
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
 			try {
-				index = Integer.parseInt(readFile());
+				if (!Boolean.valueOf(readFile()))
+					return -1;
+				index = player.getHand().getMiss();
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -122,12 +129,15 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondBeer(Player player) {
+		writeFunctions.writeRespondeBeer(player);
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
 			try {
-				index = Integer.parseInt(readFile());
+				if (!Boolean.valueOf(readFile()))
+					return -1;
+				index = player.getHand().getBeer();
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -140,7 +150,8 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int askTarget(ArrayList<Player> players) {
+	public int askTarget(Player player, ArrayList<Player> players) {
+		writeFunctions.writeAskTarget(player, players);
 		int index = -2;
 
 		while(true) {

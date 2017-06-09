@@ -11,7 +11,7 @@ public class WriteFunctions{
   BufferedWriter out;
   BufferedWriter toDebug;
   Game game;
-	private HelpFunctions HelpFunctions = new HelpFunctions();
+  private HelpFunctions HelpFunctions = new HelpFunctions();
 
   public WriteFunctions(Game game) {
 	  this.game = game;
@@ -34,7 +34,7 @@ public class WriteFunctions{
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
     json.put("mountedCards", player.getMounting().toJSONArray());
-    if (index == game.getCurrentPlayer_index())
+    if (index == game.getCurrentPlayer_index() + 1)
     	json.put("inHandCards", player.getHand().toJSONArray(player, otherPlayers));
     else
     	json.put("inHandCards", player.getHand().toJSONArray());
@@ -91,4 +91,124 @@ public class WriteFunctions{
 //    } catch(IOException e) {
 //    }
 //  }
+
+  public void writeAskDiscard(int write_index) {
+	Player player = game.getPlayers_Info().get(write_index-1);
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+
+    json.put("cardList", player.getHand().toJSONArray());
+    json.put("limit", player.getHealth());
+    
+    writer.put("type", "askDiscard");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
+  
+  public void writeRespondeBang(Player player, Player attacker, String card, int num, boolean t) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i;
+			break;
+		}
+	}
+	
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+
+    json.put("who", attacker.getCharacter().getName());
+    json.put("what", card);
+    json.put("num", num);
+    json.put("target", t);
+    
+    writer.put("type", "respondBang");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
+  
+  public void writeRespondeMiss(Player player, Player attacker, String card, int num, boolean t) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i;
+			break;
+		}
+	}
+	
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+
+    json.put("who", attacker.getCharacter().getName());
+    json.put("what", card);
+    json.put("num", num);
+    json.put("target", t);
+    
+    writer.put("type", "respondMiss");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
+  
+  public void writeRespondeBeer(Player player) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i;
+			break;
+		}
+	}
+	
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+    
+    writer.put("type", "respondMiss");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
+  
+  public void writeAskTarget(Player player, ArrayList<Player> others) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i;
+			break;
+		}
+	}
+	
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+    
+    writer.put("type", "respondMiss");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
 }

@@ -22,14 +22,16 @@ public class Duel extends Card{
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		ArrayList<Player> targets = targets(currentPlayer, players);
-		int index = userInterface.askTarget(targets);	//TODO: ask target
+		int index = userInterface.askTarget(currentPlayer, targets);	//TODO: ask target
 		if (index == -1)
 			return false;
 		discard.add(this);
 		Player targetPlayer = targets.get(index);
 
 		while(true) {
-			index = userInterface.respondBang(currentPlayer);	//TODO: Ask Bang
+			index = -1;
+			if (currentPlayer.getHand().hasBang())
+				index = userInterface.respondBang(currentPlayer, currentPlayer, "Duel", 1, true);
 
 			if (index == -1) {
 				HelpFunctions.damagePlayer(targetPlayer, currentPlayer, 1, players, deck, discard, userInterface);
@@ -37,7 +39,9 @@ public class Duel extends Card{
 			}
 			discard.add(currentPlayer.getHand().remove(index));
 
-			index = userInterface.respondBang(targetPlayer);	//TODO: ask bang
+			index = -1;
+			if (targetPlayer.getHand().hasBang())
+				index = userInterface.respondBang(targetPlayer, currentPlayer, "Duel", 1, true);
 
 			if (index == -1) {
 				HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userInterface);

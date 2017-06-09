@@ -27,7 +27,9 @@ public class Indians extends Card{
 			int index = -1;
 
 			while (bang_count > 0) {
-				index = userInterface.respondBang(player); //TODO: ask bang
+				index = -1;
+				if (player.getHand().hasBang())
+					index = userInterface.respondBang(player, currentPlayer, "Indians", 1, false);
 				if (index == -1)
 					break;
 				discard.add(player.getHand().remove(index));

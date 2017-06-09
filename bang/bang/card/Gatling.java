@@ -31,9 +31,11 @@ public class Gatling extends Card{
 					miss_count--;
 			}
 
-			int index = -1;
+			int index;
 			while (miss_count > 0) {
-				index = userInterface.respondMiss(player); //TODO: ask miss
+				index = -1;
+				if (player.getHand().hasMiss())
+					index = userInterface.respondMiss(player, currentPlayer, "Gatling", 1, false);
 				if (index == -1)
 					break;
 				discard.add(player.getHand().remove(index));

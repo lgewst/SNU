@@ -49,4 +49,52 @@ public class Hand {
 		}
 		return temp;
 	}
+
+	public boolean hasBang() {
+		for(Card card: hand) {
+			if (card.getName().equals("Bang"))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean hasMiss() {
+		for(Card card: hand) {
+			if (card.getName().equals("Miss"))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean hasBeer() {
+		for(Card card: hand) {
+			if (card.getName().equals("Beer"))
+				return true;
+		}
+		return false;
+	}
+
+	public int getBang() {
+		for(int i = 0; i < hand.size(); i++) {
+			if (hand.get(i).getName().equals("Bang"))
+				return i;
+		}
+		return -2;
+	}
+
+	public int getMiss() {
+		for(int i = 0; i < hand.size(); i++) {
+			if (hand.get(i).getName().equals("Miss"))
+				return i;
+		}
+		return -2;
+	}
+
+	public int getBeer() {
+		for(int i = 0; i < hand.size(); i++) {
+			if (hand.get(i).getName().equals("Beer"))
+				return i;
+		}
+		return -2;
+	}
 }

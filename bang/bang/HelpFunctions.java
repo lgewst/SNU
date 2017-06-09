@@ -112,7 +112,7 @@ public class HelpFunctions {
 	public void damagePlayer(Player damager, Player damagee, int damage, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		int health = damagee.getHealth() - damage;
 		if (health <= 0 && players.size() > 2) {
-			while (health <= 0) {
+			while (health <= 0 && damagee.getHand().hasBeer()) {
 				int index = userInterface.respondBeer(damagee);	 // TODO: ask beer
 
 				if (index == -1)

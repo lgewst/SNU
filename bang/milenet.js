@@ -369,6 +369,22 @@ io.on('connection', function(socket){
         // }
     } else if(msg.type == 'help') {
         //TODO: Server side request
+    } else if(msg.type == 'selectPlayingCard' || msg.type == 'discardPlayingCard' || msg.type == 'bangRespond'
+     || msg.type == 'missRespond' || msg.type == 'beerRespond' || msg.type == 'selectTargetRespond') {
+        var reqInx = 0;
+        for(var i = 1; i < connections.length; i++) {
+            if(connections[i].id == socket.id) {
+                reqInx = i;
+                break;
+            }
+        }
+        console.log(reqInx + ' send type: ' + msg.type +' index: ' + msg.data);
+        fs.appendFile('text/js2java_' + reqInx + '.txt', msg.data, function(err) {
+          if(err) {
+            return console.log("Error while writing on file: js2java.txt");
+          }
+          console.log("js2java_" + reqInx +".txt FILE WRITED");
+        });
     }
   });
   // remove the socket and send the update to other clients

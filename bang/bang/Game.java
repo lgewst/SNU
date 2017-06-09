@@ -127,7 +127,7 @@ public class Game {
 			writeFunctions.writePlayer(currentPlayer_index + 1);
 			Hand hand = currentPlayer.getHand();
 			int index = userInterface.askPlay(currentPlayer_index, currentPlayer, players);
-
+			
 			if (index == -1)
 				break;
 
@@ -143,7 +143,7 @@ public class Game {
 	private void phase3() {
 		Hand hand = currentPlayer.getHand();
 		while (hand.size() > currentPlayer.getHealth()) {
-			int index = userInterface.askDiscard(currentPlayer);
+			int index = userInterface.askDiscard(currentPlayer_index, currentPlayer);
 			discard.add(hand.remove(index));
 		}
 	}
