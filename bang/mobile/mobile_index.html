@@ -11,6 +11,7 @@
 <script src="../mobile/mobile_mile.js"></script>
 <script src="../mobile/mobile_jquery.js"></script>
 </head>
+
 <body>
 <div data-role="page" id="readyPage">
     <div data-role="main" class="ui-content">
@@ -20,6 +21,7 @@
         </div>
     </div>
 </div>
+
 <div data-role="page" id="background">
     <div data-role="main" class="ui-content">
         <div data-role="collapsible" data-collapsed="true" id="otherPlayersList">
@@ -39,7 +41,12 @@
             <div id="cards">
                 <div id="mountedCards">
                     <p> Mounted </p>
-                    <div id="mountedCardsList"></div>
+                    <!-- TODO
+                    divide into weapon/others
+                    check json type
+                    -->
+                    <div id="mountedWeaponCardsList"></div>
+                    <div id="mountedConditionCardsList"></div>
                 </div>
                 <div id="inHandCards">
                     <p> In Hand </p>
@@ -49,6 +56,7 @@
         </div>
     </div>
 </div>
+
 <div data-role="page" data-dialog="true" id="playerInfo">
     <div data-role="header" id="pageName">
         <!--<a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>-->
@@ -64,7 +72,8 @@
             <div id="othersCards">
                 <div id="othersMountedCards">
                     <p> Mounted </p>
-                    <div id="othersMountedCardsList"></div>
+                    <div id="othersWeaponCardsList"></div>
+                    <div id="othersConditionCardsList"></div>
                 </div>
                 <div id="othersInHandCards">
                     <p> In Hand </p>
@@ -75,9 +84,10 @@
     </div>
     <!-- Show the information of other players. character card, character name and features, player's job(if the player is a sceriff), mounted cards on the player side, number of the playing cards the player have, and remaining life. The player can see card information by touching the mounted card. -->
 </div>
-<div data-role="page" data-dialog="true" id="mountedCardInfo">
+
+<div data-role="page" data-dialog="true" id="showCardInfo">
     <div data-role="main" class="ui-content">
-        <div id="mountedCardImage" width="90%" height="70%"></div>
+        <div id="showCardImage" width="90%" height="70%"></div>
         <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
             <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
@@ -85,36 +95,34 @@
     </div>
 </div>
 
-<div data-role="page" data-dialog="true" id="inHandCardInfo">
-    <div data-role="main" class="ui-content">
-        <div id="inHandCardImage" width="90%" height="70%"></div>
-        <div data-role="controlgroup" data-type="horizontal">
-            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left" id="select">Select</a>
-            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>
-            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="help">Help</a>
-        </div>
-    </div>
-</div>
 <div data-role="page" data-dialog="true" id="cardExplain">
     <!-- Show the explanation of the card when help is selected. -->
     <div data-role="popup" id="explanation" class="ui-content" style="top: 50%">
         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">close</a>
     </div>
 </div>
+
 <div data-role="page" data-dialog="true" id="cardToSelect">
     <div data-role="popup" id="selectPop" class="ui-content">
         <div id="selectContainer">
             <p id="selectSentence"></p>
             <div id="selectCardsList"></div>
         </div>
-        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left" id="done">Done</a>
+        <div data-role="controlgroup" data-type="horizontal">
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="select">Select</a>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="endTurn">End Turn</a>
+        </div>
     </div>
 </div>
+
 <div data-role="page" data-dialog="true" id="cardToDiscard">
     <div data-role="popup" id="discardPop" class="ui-content">
         <div id="discardContainer">
             <p id="discardSentence"></p>
             <div id="discardCardsList"></div>
+        </div>
+        <div data-role="controlgroup" data-type="horizontal">
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="discard">Discard</a>
         </div>
     </div>
 </div>
@@ -153,8 +161,15 @@
     <div data-role="popup" id="selectTargetCardPop" class="ui-content">
         <div id="selectTargetCardContainer">
             <p id="selectTargetCardSentence"></p>
-            <div id="selectTargetCardList"></div>
+                    <div id="targetWeaponCardsList"></div>
+                    <div id="targetConditionCardsList"></div>
+                    <div id="targetInHandCardsList"></div>
         </div>
+        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="cancel">Back</a>
+    </div>
+</div>
+<div data-role="page" data-dialog="true" id="lifeLost">
+    <div data-role="popup" id="lifeLostPopUp" class="ui-content">
     </div>
 </div>
 </body>

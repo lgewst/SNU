@@ -38,20 +38,24 @@ MILE.on('playerInfo', function(data, from) {
     var character = info.character; // image, str(name), str(effect)
     var curLife = info.curLife; // number
     var maxLife = info.maxLife;
-    var mounted = info.mountedCards; // {image, cardName} array
+    var mounted = info.mountedCards; // weapon, condition
     var inHand = info.inHandCards; //array
-    var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
+    var weapon = mounted.weapon;
+    var condition = mounted.condition;
+
+    var jobImage = "<img src=\"" + job.image + "\" width=\"50\" height=\"100\">";
     var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
     var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
 
-    var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
+    var characterImage = "<img src=\"" + character.image + "\" width=\"50\" height=\"100\">";
     var charName = "<p id=\"charName\"> CHARARCTER: " + character.name + "</p>";
     var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
     var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
     $('#listContent').empty();
     $('#images').empty();
     $('#contents').empty();
-    $('#mountedCardsList').empty();
+    $('#mountedWeaponCardsList').empty();
+    $('#mountedConditionCardsList').empty();
     $('#inHandCardsList').empty();
 
     for(i = 0; i < otherPlayers.length; i++){
@@ -68,10 +72,15 @@ MILE.on('playerInfo', function(data, from) {
     $('#contents').append(life);
     $('#contents').append(charName);
     $('#contents').append(charEffect);
-    for(i = 0; i < mounted.length; i++){
-        var cardImageN = "<img src=\"" + mounted[i] + "\" width=\"50\" height=\"90\" >";
-        var cardDiv = "<div id=\"mountedCard" + i + "\" style=\"display: inline;\">" + cardImageN + "</div>";
-        $('#mountedCardsList').append(cardDiv);
+    for(i = 0; i < weapon.length; i++){
+        var cardImageN = "<img src=\"" + weapon[i] + "\" width=\"50\" height=\"90\" >";
+        var cardDiv = "<div id=\"mountedWeaponCard" + i + "\" style=\"display: inline;\">" + cardImageN + "</div>";
+        $('#mountedWeaponCardsList').append(cardDiv);
+    }
+    for(i = 0; i < condition.length; i++){
+        var cardImageN = "<img src=\"" + condition[i] + "\" width=\"50\" height=\"90\" >";
+        var cardDiv = "<div id=\"mountedConditionCard" + i + "\" style=\"display: inline;\">" + cardImageN + "</div>";
+        $('#mountedConditionCardsList').append(cardDiv);
     }
     for(i = 0; i < inHand.length; i++){
         var cardImageN = "<img src=\"" + inHand[i].image + "\" activated=" + inHand[i].activated + " width=\"50\" height=\"90\" >";
@@ -89,11 +98,14 @@ MILE.on('otherPlayerInfo', function(data, from){
     var maxLife = info.maxLife;
     var mounted = info.mountedCards; // image array
     var inHand = info.inHandCards; //image, num
-    var jobImage = "<img src=\"" + job.image + "\" width=\"50\" heigth=\"100\">";
+    var weapon = mounted.weapon;
+    var condition = mounted.condition;
+
+    var jobImage = "<img src=\"" + job.image + "\" width=\"50\" height=\"100\">";
     var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
     var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
 
-    var characterImage = "<img src=\"" + character.image + "\" width=\"50\" heigth=\"100\">";
+    var characterImage = "<img src=\"" + character.image + "\" width=\"50\" height=\"100\">";
     var charName = "<p id=\"charName\"> CHARARCTER: " + character.name + "</p>";
     var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
     var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
@@ -102,7 +114,8 @@ MILE.on('otherPlayerInfo', function(data, from){
     var inHandCardNum = inHand.num;
     $('#othersImages').empty();
     $('#othersContents').empty();
-    $('#othersMountedCardsList').empty();
+    $('#othersWeaponCardsList').empty();
+    $('#othersConditionCardsList').empty();
     $('#othersInHandCardsList').empty();
 
     $('#othersImages').append(jobImage);
@@ -113,29 +126,30 @@ MILE.on('otherPlayerInfo', function(data, from){
     $('#othersContents').append(life);
     $('#othersContents').append(charName);
     $('#othersContents').append(charEffect);
-    for(i = 0; i < mounted.length; i++){
-        var cardImageN = "<img src=\"" + mounted[i] + "\" width=\"50\" heigth=\"90\" >";
-        var cardDiv = "<div id=\"mountedCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
-        $('#othersMountedCardsList').append(cardDiv);
+    for(i = 0; i < weapon.length; i++){
+        var cardImageN = "<img src=\"" + weapon[i] + "\" width=\"50\" height=\"90\" >";
+        var cardDiv = "<div id=\"othersWeaponCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
+        $('#othersWeaponCardsList').append(cardDiv);
+    }
+    for(i = 0; i < condition.length; i++){
+        var cardImageN = "<img src=\"" + condition[i] + "\" width=\"50\" height=\"90\" >";
+        var cardDiv = "<div id=\"othersConditionCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
+        $('#othersConditionCardsList').append(cardDiv);
     }
     for(i = 0; i < inHandCardNum; i++){
         var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\">" + inHandCardBack + "</div>";
         $('#othersInHandCardsList').append(cardDiv);
     }
 });
-MILE.on('inHandCardInfo', function(data, from){
+MILE.on('respondCardInfo', function(data, from){
     //imgSrc: img source of the card
-    $.mobile.changePage('#inHandCardInfo');
+    $.mobile.changePage('#showCardInfo');
     var info = JSON.parse(data);
     var imgSrc = info.image;
-    var activated = info.activated;
     var image = "img src=\"" + imgSrc + "\">";
-    $('#inHandCardImage').empty();
-    $('#inHandCardImage').append(image);
+    $('#showCardImage').empty();
+    $('#showCardImage').append(image);
     /* add div attribute if the card is selectable*/
-    if (activated === "False"){
-        $('#select').addClass('ui-disabled');
-    }
 });
 MILE.on('help', function(data, from){
     $.mobile.changePage('#cardExplain');
@@ -145,10 +159,6 @@ MILE.on('help', function(data, from){
     $('#explanation').append(helpStr);
 
 });
-/*MILE.on('select', function(data, from){
-  });
-  */
-
 MILE.on('askPlay', function(data, from){
     //my turn started, what card are you going to use?
     $.mobile.changePage('#cardToSelect');
@@ -158,11 +168,11 @@ MILE.on('askPlay', function(data, from){
     $('#selectSentence').empty();
     $('#selectCardsList').empty();
 
-    $('#sentence').append(helpStr);
+    $('#selectSentence').append(helpStr);
 
     for(i = 0; i < cardList.length; i++){
-        var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" heigth=\"90\" >";
-        var cardDiv = "<div id=\"selectableCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
+        var cardImageN = "<img src=\"" + cardList[i].image + "\" width=\"50\" height=\"90\" >";
+        var cardDiv = "<div id=\"selectableCard" + i + "\" able=" + cardList[i].able + " style=\" display: inline;\">" + cardImageN + "</div>";
         $('#selectCardsList').append(cardDiv);
     }
 });
@@ -179,7 +189,7 @@ MILE.on('askDiscard', function(data, from){
     $('#discardSentence').append(helpStr);
 
     for(i = 0; i < cardList.length; i++){
-        var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" heigth=\"90\" >";
+        var cardImageN = "<img src=\"" + cardList[i] + "\" width=\"50\" height=\"90\" >";
         var cardDiv = "<div id=\"discardingCard" + i + "\" style=\" display: inline;\">" + cardImageN + "</div>";
         $('#discardCardsList').append(cardDiv);
     };
@@ -230,6 +240,7 @@ MILE.on('respondBeer', function(data, from){
     $('#beerSentence').append(helpStr);
 });
 MILE.on('askTarget', function(data, from){
+    $.mobile.changePage('#selectTarget');
     var info = JSON.parse(data);
     var targetList = info.targetList;
     $('#selectTargetSentence').empty();
@@ -243,15 +254,39 @@ MILE.on('askTarget', function(data, from){
     }
 });
 MILE.on('askTargetCard', function(data, from){
+    $.mobile.changePage('#selectTargetCard');
     var info = JSON.parse(data);
     var targetCardList = info.targetCardList;
+    var who = info.who;
+    var weapon = targetCardList.weapon;
+    var condition = targetCardList.condition;
+    var inHandBack = "<img src=\"" + targetCardList.inHand.image + "\" width=\"50\" height=\"90\" >"; //imgsrc
+    var inHandNum = targetCardList.inHand.num;
     $('#selectTargetCardSentence').empty();
-    $('#selectTargetCardList').empty();
-
-    var helpStr = "You should choose target card.";
+    $('#targetWeaponCardsList').empty();
+    $('#targetConditionCardslist').empty();
+    $('#targetInHandCardsList').empty();
+    var helpStr = "You should choose target card from " + who +"." ;
     $('#selectTargetCardSentence').append();
-    for(i = 0; i < targetCardList.length; i++){
-       var cardImageN = "<img src=\"" + targetCardList[i] + "\" width=\"50\" heigth=\"90\" >";
-       $('#selectTargetCardList').append(targetN);
+    for(i = 0; i < weapon.length; i++){
+       var cardImageN = "<img src=\"" + weapon[i] + "\" width=\"50\" height=\"90\" >";
+       $('#targetWeaponCardsList').append(cardImageN);
+    }
+    for(i = 0; i < condition.length; i++){
+       var cardImageN = "<img src=\"" + weapon[i] + "\" width=\"50\" height=\"90\" >";
+       $('#targetConditionCardsList').append(cardImageN);
+    }
+    for(i = 0; i < inHandNum; i++){
+       $('#targetInHandCardsList').append(inHandBack);
     }
 });
+MILE.on('loseLife', function(data, from){
+    $.mobile.changePage('#lifeLost');
+    var info = JSON.parse(data);
+    var much = info.much;
+    var remain = info.remain;
+    var sentence = "<p> You lost "+ much + "life. Your remaining life is " + remain+".</p>";
+    $('#lifeLostPopUp').empty();
+    $('#lifeLostPopUp').append(sentence);
+});
+

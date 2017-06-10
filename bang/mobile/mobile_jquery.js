@@ -14,29 +14,20 @@ $(document).on("pageshow", "#background", function(){
             MILE.send("otherPlayerInfo", content);
         }
     });
-    $("#mountedCardsList").off("tap").on('tap', function(){
+    $("#cards").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             var content = $(event.target).attr('src');
-            $.mobile.changePage('#mountedCardInfo', {data: {'imgsrc': content}});
-        }
-    });
-    $("#inHandCardsList").off("tap").on('tap', function(){
-        var tagName = event.target.tagName;
-        if(tagName === "IMG"){
-            //    var content = $(event.target).attr('src');
-            var selected = $(event.target.id);
-            var content = $('img').index(selected);
-            MILE.send("inHandCardInfo", content);
+            MILE.send('requestCardInfo',content);
         }
     });
 });
 $(document).on("pageshow", "#playerInfo", function(){
-    $("#othersMountedCardsList").off("tap").on('tap', function(){
+    $("#othersMountedCards").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             var content = $(event.target).attr('src');
-            $.mobile.changePage('#mountedCardInfo', {data: {'imgsrc': content}});
+            MILE.send('requestCardInfo', content);
         }
     });
     $('#back').off("tap").on('tap', function(){
@@ -44,51 +35,52 @@ $(document).on("pageshow", "#playerInfo", function(){
         MILE.send("playerInfo", "Request basic information");
     });
 });
-$(document).on("pageshow", "#mountedCardInfo", function(){
-    var content = $(this).data('imgsrc'); /* img src */
-    var image = "<img src=\"" + content + "\">";
-    $('#mountedCardImage').empty();
-    $('#mountedCardImage').append(image);
+$(document).on("pageshow", "#showCardInfo", function(){
     $("#help").off("tap").on("tap", function(){
         var content = $(this).siblings("img").attr('src');
         alert("To check tags: " + content);
         MILE.send("help", content);
     });
 });
-$(document).on("pageshow", "#inHandCardInfo", function(){
-    $("#help").off("tap").on("tap", function(){
-        var content = $(this).siblings("img").attr('src');
-        alert("To check tags: " + content);
-        MILE.send("help", content);
-    });
-    /*erase select*/
-    $("#select").off("tap").on("tap", function(){
-        var content = $(this).siblings("img").attr('src');
-        alert("To check tags: " + content);
-        MILE.send("select", content);
-    });
-});
+
 $(document).on("pageshow", "#cardToSelect", function(){
+    var index = "";
     $("#selectCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
+
+            //var parent = $(event.target).parent();
+            //if($(parent).hasClass('ui-disabled')){
+            //$(parent).removeClass('ui-disabled');
+            //}
             var selected = $(event.target.id);
-            var content = $('img').index(selected);
+            index = $('img').index(selected);
+            //var able= $(event.target).parent().attr('able');
+            //if(!able){
+            //$(parent).addClass('ui-disabled');
+            //}
+        }
+    });
+    $('#select').off('tap').on('tap', function(){
+        if(index!=""){
             MILE.send("selectPlayingCard", content);
         }
     });
-    $('#done').off('tap').on('tap', function(){
+    $('#endTurn').off('tap').on('tap', function(){
         MILE.send("selectPlayingCard", -1);
     });
 });
 $(document).on("pageshow", "#cardToDiscard", function(){
+    var content;
     $("#discardCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             var selected = $(event.target.id);
-            var content = $('img').index(selected);
-            MILE.send("discardPlayingCard", content);
+            content = $('img').index(selected);
         }
+    });
+    $('#discard').off('tap').on('tap', function(){
+        MILE.send("discardPlayingCard", content);
     });
 });
 $(document).on("pageshow", "#willUseBang", function(){
@@ -127,13 +119,26 @@ $(document).on("pageshow", "#selectTarget", function(){
     });
 });
 $(document).on("pageshow", "#selectTargetCard", function(){
-    $('#selectTargetCardList').off('tap').on('tap', function(){
+    $('#targetWeaponCardsList').off('tap').on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var selected = $(event.target.id);
-            var content = $('img').index(selected);
-            MILE.send("selectTargetCardRespond", content);
+            MILE.send("selectTargetCardRespond", -2);
         }
+    });
+    $('#targetConditionCardsList').off('tap').on('tap', function(){
+        var tagName = event.target.tagName;
+        if(tagName === "IMG"){
+            MILE.send("selectTargetCardRespond", 0);
+        }
+    });
+    $('#targetInHandCardsList').off('tap').on('tap', function(){
+        var tagName = event.target.tagName;
+        if(tagName === "IMG"){
+            MILE.send("selectTargetCardRespond", -1);
+        }
+    });
+    $('#cancel').off('tap').on('tap', function(){
+        MILE.send("selectTargetCardRespond", -3);
     });
 });
 /* TODO: respond, select target/targetcard */
