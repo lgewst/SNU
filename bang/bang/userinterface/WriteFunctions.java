@@ -33,9 +33,9 @@ public class WriteFunctions{
     json.put("character", player.getCharacter().toJson());
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
-    json.put("mountedCards", player.getMounting().toJSONArray());
+    json.put("mountedCards", player.getMounting().toJSONObject());
     if (index == game.getCurrentPlayer_index() + 1)
-    	json.put("inHandCards", player.getHand().toJSONArray(player, otherPlayers));
+    	json.put("inHandCards", player.getHand().toJSONArray());
     else
     	json.put("inHandCards", player.getHand().toJSONArray());
 
@@ -59,7 +59,7 @@ public class WriteFunctions{
     json.put("character", player.getCharacter().toJson());
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
-    json.put("mountedCards", player.getMounting().toJSONArray());
+    json.put("mountedCards", player.getMounting().toJSONObject());
     hand.put("image", "../cards/playing card(back).jpg");
     hand.put("num", player.getHand().size());
     json.put("inHandCards", hand);
@@ -74,23 +74,21 @@ public class WriteFunctions{
     }
   }
 
-//  public void writeAskPlay(int write_index) {
-//	Player player = game.getPlayers_Info().get(write_index-1);
-//    JSONObject writer = new JSONObject();
-//    JSONObject json = new JSONObject();
-//
-//    json.put("cardList", player.getHand().toJSONArray());
-//
-//
-//    writer.put("type", "askPlay");
-//    writer.put("data", json.toString());
-//    try {
-//      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
-//      out.write(writer.toString());
-//      out.close();
-//    } catch(IOException e) {
-//    }
-//  }
+  public void writeAskPlay(int write_index, Player player, ArrayList<Player> others) {
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+
+    json.put("cardList", player.getHand().toJSONArray(player, others));
+
+    writer.put("type", "askPlay");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
 
   public void writeAskDiscard(int write_index) {
 	Player player = game.getPlayers_Info().get(write_index-1);

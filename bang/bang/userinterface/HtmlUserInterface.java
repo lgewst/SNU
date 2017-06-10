@@ -49,7 +49,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
-//		writeFunctions.writeAskPlay(Player_index + 1);
+		writeFunctions.writeAskPlay(Player_index + 1, player, players);
 		Hand hand = player.getHand();
 		int index = -2;
 

@@ -58,10 +58,19 @@ public class Mounting {
 		return mounting.size();
 	}
 
-	public JSONArray toJSONArray() {
-		JSONArray temp = new JSONArray();
+	public JSONObject toJSONObject() {
+		JSONObject json = new JSONObject();
+		
+		JSONArray weapon = new JSONArray();
+		if(gun != null)
+			weapon.add(gun.getImageName());
+		json.put("weapon", weapon);
+		
+		JSONArray cond = new JSONArray();
 		for(Card card: mounting)
-			temp.add(card.getName());
-		return temp;
+			cond.add(card.getName());
+		json.put("condition", cond);
+		
+		return json;
 	}
 }

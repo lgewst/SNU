@@ -17,9 +17,9 @@ $(document).on("pageshow", "#background", function(){
     $("#cards").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var parent = $(event.target).parent();
-            var index = $('img').index(parent);
-            MILE.send('requestCardInfo',index);
+            // var parent = $(event.target).parent();
+            // var index = $('img').index(parent);
+            MILE.send('requestCardInfo', $(event.target).attr('src'));
         }
     });
 });
@@ -45,6 +45,7 @@ $(document).on("pageshow", "#showCardInfo", function(){
 });
 
 $(document).on("pageshow", "#cardToSelect", function(){
+    console.log("chagne cardToSelect");
     var index = "";
     $("#selectCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;

@@ -33,20 +33,27 @@ public class Hand {
 		for(Card card: hand) {
 			JSONObject json_card = new JSONObject();
 			json_card.put("image", card.getImageName());
-			json_card.put("activated", card.canPlay(player, otherPlayers));
+			json_card.put("able", card.canPlay(player, otherPlayers));
 			temp.add(json_card);
 		}
 		return temp;
 	}
 
+//	public JSONArray toJSONArray() {
+//		JSONArray temp = new JSONArray();
+//		for(Card card: hand) {
+//			JSONObject json_card = new JSONObject();
+//			json_card.put("image", card.getImageName());
+//			json_card.put("activated", false);
+//			temp.add(json_card);
+//		}
+//		return temp;
+//	}
+	
 	public JSONArray toJSONArray() {
 		JSONArray temp = new JSONArray();
-		for(Card card: hand) {
-			JSONObject json_card = new JSONObject();
-			json_card.put("image", card.getImageName());
-			json_card.put("activated", false);
-			temp.add(json_card);
-		}
+		for(Card card: hand)
+			temp.add(card.getImageName());
 		return temp;
 	}
 

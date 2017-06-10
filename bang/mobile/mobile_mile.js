@@ -24,7 +24,7 @@ MILE.on('game_start', function(data, from) {
         }
         if (counter == 0){
             clearInterval(counter);
-            $.mobile.changePage("#background");
+            // $.mobile.changePage("#background");
             MILE.send('initPlayerInfo', '');
         }
     }, 1000);
@@ -83,7 +83,7 @@ MILE.on('playerInfo', function(data, from) {
         $('#mountedConditionCardsList').append(cardDiv);
     }
     for(i = 0; i < inHand.length; i++){
-        var cardImageN = "<img src=\"" + inHand[i].image + "\" activated=" + inHand[i].activated + " width=\"50\" height=\"90\" >";
+        var cardImageN = "<img src=\"" + inHand[i] + "\" activated=" + inHand[i] + " width=\"50\" height=\"90\" >";
         var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\" >" + cardImageN + "</div>";
         $('#inHandCardsList').append(cardDiv);
     }
@@ -144,9 +144,10 @@ MILE.on('otherPlayerInfo', function(data, from){
 MILE.on('respondCardInfo', function(data, from){
     //imgSrc: img source of the card
     $.mobile.changePage('#showCardInfo');
-    var info = JSON.parse(data);
-    var imgSrc = info.image;
-    var image = "img src=\"" + imgSrc + "\">";
+    // var info = JSON.parse(data);
+    // var imgSrc = info.image;
+    var imgSrc = data;
+    var image = "<img src=\"" + imgSrc + "\">";
     $('#showCardImage').empty();
     $('#showCardImage').append(image);
     /* add div attribute if the card is selectable*/
@@ -171,6 +172,7 @@ MILE.on('askPlay', function(data, from){
     $('#selectSentence').append(helpStr);
 
     for(i = 0; i < cardList.length; i++){
+        console.log(cardList[i].image + '\t' + cardList[i].able);
         var cardImageN = "<img src=\"" + cardList[i].image + "\" width=\"50\" height=\"90\" >";
         var cardDiv = "<div id=\"selectableCard" + i + "\" able=" + cardList[i].able + " style=\" display: inline;\">" + cardImageN + "</div>";
         $('#selectCardsList').append(cardDiv);
@@ -289,4 +291,3 @@ MILE.on('loseLife', function(data, from){
     $('#lifeLostPopUp').empty();
     $('#lifeLostPopUp').append(sentence);
 });
-

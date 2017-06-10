@@ -49,7 +49,7 @@ public class Game {
 				json.put("character", player.getCharacter().toJson());
 				json.put("curLife", player.getHealth());
 				json.put("maxLife", player.getMaxHealth());
-				json.put("mountedCards", player.getMounting().toJSONArray());
+				json.put("mountedCards", player.getMounting().toJSONObject());
 				json.put("inHandCards", player.getHand().toJSONArray());
 
 				outPlayers.write(json.toString()); outPlayers.newLine();
@@ -81,6 +81,7 @@ public class Game {
 			if (roles.get(i).equals("Sheriff")) {
 				currentPlayer = tmp_player;
 				currentPlayer_index = i;
+				writeFunctions.writePlayer(currentPlayer_index + 1);
 			}
 		}
 	}
@@ -124,7 +125,7 @@ public class Game {
 
 	private void phase2() throws EndofGameException {
 		while (true) {
-			writeFunctions.writePlayer(currentPlayer_index + 1);
+//			writeFunctions.writePlayer(currentPlayer_index + 1);
 			Hand hand = currentPlayer.getHand();
 			int index = userInterface.askPlay(currentPlayer_index, currentPlayer, players);
 			

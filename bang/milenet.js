@@ -385,6 +385,8 @@ io.on('connection', function(socket){
           }
           console.log("js2java_" + reqInx +".txt FILE WRITED");
         });
+    } else if(msg.type == 'requestCardInfo') {
+      socket.emit('message',{type:'respondCardInfo', data: msg.data});
     }
   });
   // remove the socket and send the update to other clients
