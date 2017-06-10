@@ -17,8 +17,9 @@ $(document).on("pageshow", "#background", function(){
     $("#cards").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var content = $(event.target).attr('src');
-            MILE.send('requestCardInfo',content);
+            var parent = $(event.target).parent();
+            var index = $('img').index(parent);
+            MILE.send('requestCardInfo',index);
         }
     });
 });
@@ -53,8 +54,9 @@ $(document).on("pageshow", "#cardToSelect", function(){
             //if($(parent).hasClass('ui-disabled')){
             //$(parent).removeClass('ui-disabled');
             //}
-            var selected = $(event.target.id);
-            index = $('img').index(selected);
+            var parent = $(event.target).parent();
+            index = $('img').index(parent);
+            //index = $('img').index(selected);
             //var able= $(event.target).parent().attr('able');
             //if(!able){
             //$(parent).addClass('ui-disabled');
@@ -63,7 +65,7 @@ $(document).on("pageshow", "#cardToSelect", function(){
     });
     $('#select').off('tap').on('tap', function(){
         if(index!=""){
-            MILE.send("selectPlayingCard", content);
+            MILE.send("selectPlayingCard", index);
         }
     });
     $('#endTurn').off('tap').on('tap', function(){
