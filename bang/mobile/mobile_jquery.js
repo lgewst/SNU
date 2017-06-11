@@ -50,13 +50,12 @@ $(document).on("pageshow", "#cardToSelect", function(){
     $("#selectCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-
             //var parent = $(event.target).parent();
             //if($(parent).hasClass('ui-disabled')){
             //$(parent).removeClass('ui-disabled');
             //}
-            var parent = $(event.target).parent();
-            index = $('img').index(parent);
+            var closest = $(event.target).parent();
+            index = closest.parent().children('div').index(closest);
             //index = $('img').index(selected);
             //var able= $(event.target).parent().attr('able');
             //if(!able){
@@ -74,12 +73,12 @@ $(document).on("pageshow", "#cardToSelect", function(){
     });
 });
 $(document).on("pageshow", "#cardToDiscard", function(){
-    var content;
+    var index;
     $("#discardCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            var selected = $(event.target.id);
-            content = $('img').index(selected);
+            var closest = $(event.target).parent();
+            index = closest.parent().children('div').index(closest);
         }
     });
     $('#discard').off('tap').on('tap', function(){
