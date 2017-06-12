@@ -321,4 +321,30 @@ public class WriteFunctions{
 	  } catch(IOException e) {
 	  }
   }
+
+  public void writeAddLife(Player player, int damage, int health) {
+	  int write_index = 0;
+	  ArrayList<Player> players_Info = game.getPlayers_Info();
+	  for(int i = 0; i < players_Info.size(); i++) {
+		  if (players_Info.get(i) == player) {
+			  write_index = i + 1;
+			  break;
+		  }
+	  }
+
+	  JSONObject writer = new JSONObject();
+	  JSONObject json = new JSONObject();
+
+	  json.put("much", damage);
+	  json.put("remain", health);
+
+	  writer.put("type", "addLife");
+	  writer.put("data", json.toString());
+	  try {
+	    out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+	    out.write(writer.toString());
+	    out.close();
+	  } catch(IOException e) {
+	  }
+  }
 }

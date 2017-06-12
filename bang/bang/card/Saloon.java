@@ -19,10 +19,13 @@ public class Saloon extends Card{
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) {
 		discard.add(this);
 		for (Player player: players) {
-			int health = player.getHealth();
+			int health = player.getHealth() + 1;
 			if (health > player.getMaxHealth())
 				health = player.getMaxHealth();
-			player.setHealth(health);
+			else {
+				userInterface.getWriteFunctions().writeAddLife(player, 1, health);
+				player.setHealth(health);
+			}
 		}
 		return true;
 	}

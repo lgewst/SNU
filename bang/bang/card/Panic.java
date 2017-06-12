@@ -38,6 +38,7 @@ public class Panic extends Card{
 			hand.add(targetPlayer.getMounting().removeGun());
 		else
 			hand.add(targetPlayer.getMounting().remove(index));
+		userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;
 	}
 
