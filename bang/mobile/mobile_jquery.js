@@ -45,7 +45,6 @@ $(document).on("pageshow", "#showCardInfo", function(){
 });
 
 $(document).on("pageshow", "#cardToSelect", function(){
-    console.log("chagne cardToSelect");
     var index = "";
     $("#selectCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
@@ -73,8 +72,7 @@ $(document).on("pageshow", "#cardToSelect", function(){
     });
 });
 $(document).on("pageshow", "#cardToDiscard", function(){
-    var index;
-    console.log("change Discard");
+    var index="";
     $("#discardCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
@@ -83,7 +81,9 @@ $(document).on("pageshow", "#cardToDiscard", function(){
         }
     });
     $('#discard').off('tap').on('tap', function(){
-        MILE.send("discardPlayingCard", index);
+        if(index!=""){
+            MILE.send("discardPlayingCard", index);
+        }
     });
 });
 $(document).on("pageshow", "#willUseBang", function(){
@@ -115,9 +115,10 @@ $(document).on("pageshow", "#selectTarget", function(){
         var tagName = event.target.tagName;
         var id = event.target.id;
         if(tagName ==="P"){
-            var selected = $(event.target.id);
-            var content = $('p').index(selected);
-            MILE.send("selectTargetRespond", content);
+            var selected = $(event.target);
+            var index = selected.parent().children('p').index(selected);
+            alert(index);
+            MILE.send("selectTargetRespond", index);
         }
     });
 });

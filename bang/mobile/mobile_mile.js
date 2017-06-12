@@ -184,7 +184,7 @@ MILE.on('askDiscard', function(data, from){
     var info = JSON.parse(data);
     var cardList = info.cardList;
     var limit = info.limit;
-    var helpStr = "Your turn ends! Select card to discard. The number of remainig cards must be less than your maxlife(" + limit + ")" ;
+    var helpStr = "Your turn ends! Select card to discard. The number of remainig cards must be less than your current life.(" + limit + ")" ;
     $('#discardSentence').empty();
     $('#discardCardsList').empty();
 
@@ -251,7 +251,7 @@ MILE.on('askTarget', function(data, from){
     var helpStr = "You should choose target player.";
     $('#selectTargetSentence').append();
     for(i = 0; i < targetList.length; i++){
-       var targetN = "<p id='target'" + i + ">"+ targetList[i] + " </p>";
+       var targetN = "<p id='target" + i + "'>"+ targetList[i] + " </p>";
        $('#selectTargetList').append(targetN);
     }
 });
