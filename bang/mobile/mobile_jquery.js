@@ -50,21 +50,22 @@ $(document).on("pageshow", "#cardToSelect", function(){
     $("#selectCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            //var parent = $(event.target).parent();
-            //if($(parent).hasClass('ui-disabled')){
-            //$(parent).removeClass('ui-disabled');
-            //}
             var closest = $(event.target).parent();
+            if($('#selected').hasClass('ui-disabled')){
+                $('#selected').removeClass('ui-disabled');
+            }
             index = closest.parent().children('div').index(closest);
-            //index = $('img').index(selected);
-            //var able= $(event.target).parent().attr('able');
-            //if(!able){
-            //$(parent).addClass('ui-disabled');
-            //}
+            var able= $(event.target).parent().attr('able');
+            if(!able){
+                $('#selected').addClass('ui-disabled');
+            }
         }
     });
     $('#select').off('tap').on('tap', function(){
         if(index!=""){
+            if(!$('#selected').hasClass('ui-disabled')){
+                $('#selected').addClass('ui-disabled');
+            }
             MILE.send("selectPlayingCard", index);
         }
     });

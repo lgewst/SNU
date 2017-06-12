@@ -154,10 +154,8 @@ MILE.on('respondCardInfo', function(data, from){
 });
 MILE.on('help', function(data, from){
     $.mobile.changePage('#cardExplain');
-    var info = JSON.parse(data);
-    var helpStr = "<p id=\"helpStr\">" + info.help + "</p>";
-    $('#explanation').empty();
-    $('#explanation').append(helpStr);
+    $('#helpStr').empty();
+    $('#helpStr').append(data);
 
 });
 MILE.on('askPlay', function(data, from){
@@ -288,6 +286,6 @@ MILE.on('loseLife', function(data, from){
     var much = info.much;
     var remain = info.remain;
     var sentence = "<p> You lost "+ much + "life. Your remaining life is " + remain+".</p>";
-    $('#lifeLostPopUp').empty();
-    $('#lifeLostPopUp').append(sentence);
+    $('#lifeLostMain').empty();
+    $('#lifeLostMain').append(sentence);
 });

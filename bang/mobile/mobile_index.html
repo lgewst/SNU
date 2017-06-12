@@ -97,7 +97,8 @@
 
 <div data-role="page" data-dialog="true" id="cardExplain">
     <!-- Show the explanation of the card when help is selected. -->
-    <div data-role="main" id="explanation" class="ui-content" style="top: 50%">
+    <div data-role="main" id="explanation" class="ui-content">
+        <p id="helpStr"></p>
         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">close</a>
     </div>
 </div>
@@ -165,11 +166,14 @@
                     <div id="targetConditionCardsList"></div>
                     <div id="targetInHandCardsList"></div>
         </div>
-        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="cancel">Back</a>
+        <div data-role="controlgroup" data-type="horizontal">
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-info ui-btn-icon-left" id="cardSelect">Select</a>
+            <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="cancel">Back</a>
+        </div>
     </div>
 </div>
 <div data-role="page" data-dialog="true" id="lifeLost">
-    <div data-role="main" id="lifeLostmain" class="ui-content">
+    <div data-role="main" id="lifeLostMain" class="ui-content">
     </div>
 </div>
 </body>
