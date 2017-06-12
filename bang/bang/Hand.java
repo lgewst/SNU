@@ -67,7 +67,7 @@ public class Hand {
 
 	public boolean hasMiss() {
 		for(Card card: hand) {
-			if (card.getName().equals("Miss"))
+			if (card.getName().equals("Missed"))
 				return true;
 		}
 		return false;
@@ -91,7 +91,7 @@ public class Hand {
 
 	public int getMiss() {
 		for(int i = 0; i < hand.size(); i++) {
-			if (hand.get(i).getName().equals("Miss"))
+			if (hand.get(i).getName().equals("Missed"))
 				return i;
 		}
 		return -2;

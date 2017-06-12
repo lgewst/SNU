@@ -296,13 +296,6 @@ public class WriteFunctions{
   }
 
   public void writeLostLife(Player player, int damage, int health) {
-	try {
-		BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-		debug.write(player.getCharacter().getName() + " LoseLife " + Integer.toString(damage) + " remain " + Integer.toString(health));
-		debug.newLine();
-		debug.close();
-	} catch (IOException e) {
-	}
 		
 	  int write_index = 0;
 	  ArrayList<Player> players_Info = game.getPlayers_Info();

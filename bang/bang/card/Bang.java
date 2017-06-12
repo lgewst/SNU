@@ -1,5 +1,8 @@
 package bang.card;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import bang.Deck;
@@ -58,8 +61,9 @@ public class Bang extends Card{
 
 		while (miss_count > 0) {
 			index = -1;
-			if (targetPlayer.getHand().hasMiss())
+			if (targetPlayer.getHand().hasMiss()) {
 				index = userInterface.respondMiss(targetPlayer, currentPlayer, "Bang", 1, true);
+			}
 			if (index == -1)
 				break;
 			discard.add(targetPlayer.getHand().remove(index));
