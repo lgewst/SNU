@@ -286,6 +286,18 @@ MILE.on('loseLife', function(data, from){
     var much = info.much;
     var remain = info.remain;
     var sentence = "<p> You lost "+ much + "life. Your remaining life is " + remain+".</p>";
+    var counter = 5;
     $('#lifeLostMain').empty();
     $('#lifeLostMain').append(sentence);
+    setInterval(function(){
+        counter--;
+        if (counter >= 0){
+            span = document.getElementById("count");
+            span.innerHTML = counter;
+        }
+        if (counter == 0){
+            clearInterval(counter);
+            MILE.send('PlayerInfo', '');
+        }
+    }, 1000);
 });
