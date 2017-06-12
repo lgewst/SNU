@@ -37,13 +37,13 @@ public class HtmlUserInterface extends UserInterface{
 		while(true) {
 			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
-				
+
 				if (s != null) {
 					debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 					debug.write("read " + s + " from " + Integer.toString(i));
 					debug.newLine();
 					debug.close();
-					
+
 					if (s.split("\t")[0].equals("D")) {	//OtherPlayInfo
 						int index = Integer.parseInt(s.split("\t")[1]);
 						if (index == i)
@@ -60,7 +60,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
-		
+
 		writeFunctions.writeAskPlay(player, players);
 		Hand hand = player.getHand();
 		int index = -2;
@@ -115,7 +115,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondBang(Player player, Player attacker, String card, int num, boolean t) {
-		
+
 		writeFunctions.writeRespondeBang(player, attacker, card, num, t);
 		Hand hand = player.getHand();
 		int index = -2;
@@ -157,7 +157,7 @@ public class HtmlUserInterface extends UserInterface{
 				debug.close();
 			} catch (IOException e) {
 			}
-			
+
 			try {
 				if (!Boolean.valueOf(readFile()))
 					return -1;
@@ -165,7 +165,7 @@ public class HtmlUserInterface extends UserInterface{
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
-					if(hand.peek(index).getName().equals("Miss"))
+					if(hand.peek(index).getName().equals("Missed"))
 						return index;
 				}
 			} catch (IOException e) {
@@ -175,7 +175,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondBeer(Player player) {
-		
+
 		writeFunctions.writeRespondeBeer(player);
 		Hand hand = player.getHand();
 		int index = -2;
@@ -205,7 +205,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTarget(Player player, ArrayList<Player> players) {
-		
+
 		writeFunctions.writeAskTarget(player, players);
 		int index = -2;
 
@@ -228,7 +228,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTargetCard(Player player, Player target) {
-		
+
 		writeFunctions.writeAskTargetCard(player, target);
 		Mounting mounting = target.getMounting();
 		Hand hand = target.getHand();
@@ -270,7 +270,7 @@ public class HtmlUserInterface extends UserInterface{
 			}
 		}
 	}
-	
+
 	@Override
 	public WriteFunctions getWriteFunctions() {
 		return writeFunctions;

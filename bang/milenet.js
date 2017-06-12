@@ -404,7 +404,7 @@ io.on('connection', function(socket){
         console.log("help msg is " + helpText[helpData]);
         socket.emit('message', {type: "help",data:helpText[helpData]});
     } else if(msg.type == 'selectPlayingCard' || msg.type == 'discardPlayingCard' || msg.type == 'bangRespond'
-     || msg.type == 'missRespond' || msg.type == 'beerRespond' || msg.type == 'selectTargetRespond') {
+     || msg.type == 'missRespond' || msg.type == 'beerRespond' || msg.type == 'selectTargetRespond' || msg.type == 'selectTargetCardRespond') {
         var reqInx = 0;
         for(var i = 1; i < connections.length; i++) {
             if(connections[i].id == socket.id) {

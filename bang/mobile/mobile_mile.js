@@ -202,13 +202,13 @@ MILE.on('respondBang', function(data, from){
     var what = info.what;
     var num = info.num;
     var target;
-    if(info.target === "True"){
+    if(info.target === true){
         target = "you";
     }
     else{
         target = "all players";
     }
-    var helpStr = who + " used " + what + " to " + target + ". You can respond by using 'Bang!' card, or you will lose 1 life. Will you use it? (Number of 'Bang!': " + num;
+    var helpStr = who + " used " + what + " to " + target + ". You can respond by using 'Bang!' card, or you will lose 1 life. Will you use it? (Number of 'Bang!': " + num + ")";
     $('#bangSentence').empty();
     $('#bangSentence').append(helpStr);
 });
@@ -221,13 +221,13 @@ MILE.on('respondMiss', function(data, from){
     var what = info.what;
     var num = info.num;
     var target;
-    if(info.target === "True"){
+    if(info.target === true){
         target = "you";
     }
     else{
         target = "all players";
     }
-    var helpStr = who + " used " + what + " to " + target + ". You can avoid the attack if you use your 'Miss!' card. Will you use it? (Number of 'Miss!': " + num;
+    var helpStr = who + " used " + what + " to " + target + ". You can avoid the attack if you use your 'Miss!' card. Will you use it? (Number of 'Miss!': " + num + ")";
     $('#missSentence').empty();
     $('#missSentence').append(helpStr);
 });

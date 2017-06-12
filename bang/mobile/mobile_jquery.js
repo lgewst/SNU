@@ -150,5 +150,3 @@ $(document).on("pageshow", "#selectTargetCard", function(){
         MILE.send("selectTargetCardRespond", -3);
     });
 });
-/* TODO: respond, select target/targetcard */
-

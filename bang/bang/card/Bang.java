@@ -58,8 +58,9 @@ public class Bang extends Card{
 
 		while (miss_count > 0) {
 			index = -1;
-			if (targetPlayer.getHand().hasMiss())
+			if (targetPlayer.getHand().hasMiss()) {
 				index = userInterface.respondMiss(targetPlayer, currentPlayer, "Bang", 1, true);
+			}
 			if (index == -1)
 				break;
 			discard.add(targetPlayer.getHand().remove(index));

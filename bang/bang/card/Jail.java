@@ -30,6 +30,7 @@ public class Jail extends Card{
 		if (mounting.hasCard("Jail"))
 			discard.add(mounting.remove(mounting.find("Jail")));
 		mounting.add(this);
+		userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;
 	}
 

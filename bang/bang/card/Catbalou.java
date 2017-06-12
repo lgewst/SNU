@@ -38,6 +38,7 @@ public class Catbalou extends Card {
 			discard.add(targetPlayer.getMounting().removeGun());
 		else	//Remove mounting
 			discard.add(targetPlayer.getMounting().remove(index));
+		userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;
 	}
 
