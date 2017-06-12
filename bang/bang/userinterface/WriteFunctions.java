@@ -47,7 +47,7 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
-  
+
   public void writePlayer(Player player) {
 	    ArrayList<Player> players = game.getPlayers();
 	    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players);
@@ -121,7 +121,7 @@ public class WriteFunctions{
 			break;
 		}
 	}
-		
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
 
@@ -144,7 +144,7 @@ public class WriteFunctions{
 
     json.put("cardList", player.getHand().toJSONArray());
     json.put("limit", player.getHealth());
-    
+
     writer.put("type", "askDiscard");
     writer.put("data", json.toString());
     try {
@@ -154,7 +154,7 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
-  
+
   public void writeRespondeBang(Player player, Player attacker, String card, int num, boolean t) {
 	int write_index = 0;
 	ArrayList<Player> players_Info = game.getPlayers_Info();
@@ -164,7 +164,7 @@ public class WriteFunctions{
 			break;
 		}
 	}
-	
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
 
@@ -172,7 +172,7 @@ public class WriteFunctions{
     json.put("what", card);
     json.put("num", num);
     json.put("target", t);
-    
+
     writer.put("type", "respondBang");
     writer.put("data", json.toString());
     try {
@@ -182,7 +182,7 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
-  
+
   public void writeRespondeMiss(Player player, Player attacker, String card, int num, boolean t) {
 	int write_index = 0;
 	ArrayList<Player> players_Info = game.getPlayers_Info();
@@ -192,7 +192,7 @@ public class WriteFunctions{
 			break;
 		}
 	}
-	
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
 
@@ -200,7 +200,7 @@ public class WriteFunctions{
     json.put("what", card);
     json.put("num", num);
     json.put("target", t);
-    
+
     writer.put("type", "respondMiss");
     writer.put("data", json.toString());
     try {
@@ -210,7 +210,7 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
-  
+
   public void writeRespondeBeer(Player player) {
 	int write_index = 0;
 	ArrayList<Player> players_Info = game.getPlayers_Info();
@@ -220,10 +220,10 @@ public class WriteFunctions{
 			break;
 		}
 	}
-	
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
-    
+
     writer.put("type", "respondMiss");
     writer.put("data", json.toString());
     try {
@@ -233,7 +233,7 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
-  
+
   public void writeAskTarget(Player player, ArrayList<Player> others) {
 	int write_index = 0;
 	ArrayList<Player> players_Info = game.getPlayers_Info();
@@ -243,15 +243,15 @@ public class WriteFunctions{
 			break;
 		}
 	}
-	
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
     JSONArray targets = new JSONArray();
-    
+
     for(Player target: others)
     	targets.add(target.getCharacter().getName());
     json.put("targetList", targets);
-    
+
     writer.put("type", "askTarget");
     writer.put("data", json.toString());
     try {
@@ -261,7 +261,7 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
-  
+
   public void writeAskTargetCard(Player player, Player target) {
 	int write_index = 0;
 	ArrayList<Player> players_Info = game.getPlayers_Info();
@@ -271,20 +271,20 @@ public class WriteFunctions{
 			break;
 		}
 	}
-	
+
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
     JSONObject cardList = target.getMounting().toJSONObject();
     JSONObject inHand = new JSONObject();
-    
+
     inHand.put("image", "../cards/playing card(back).jpg");
     inHand.put("num", target.getHand().size());
-    
+
     cardList.put("inHand", inHand);
-    
+
     json.put("targetCardList", cardList);
     json.put("who", target.getCharacter().getName());
-    
+
     writer.put("type", "askTargetCard");
     writer.put("data", json.toString());
     try {
@@ -304,13 +304,13 @@ public class WriteFunctions{
 			  break;
 		  }
 	  }
-	  
+
 	  JSONObject writer = new JSONObject();
 	  JSONObject json = new JSONObject();
-	  
+
 	  json.put("much", damage);
-	  json.put("less", health);
-	    
+	  json.put("remain", health);
+
 	  writer.put("type", "loseLife");
 	  writer.put("data", json.toString());
 	  try {
