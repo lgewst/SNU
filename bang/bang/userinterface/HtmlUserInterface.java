@@ -232,7 +232,7 @@ public class HtmlUserInterface extends UserInterface{
 		writeFunctions.writeAskTargetCard(player, target);
 		Mounting mounting = target.getMounting();
 		Hand hand = target.getHand();
-		int index = -2;
+		int index = -4;
 
 		while(true) {
 			try {

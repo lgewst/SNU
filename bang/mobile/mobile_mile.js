@@ -273,7 +273,7 @@ MILE.on('askTargetCard', function(data, from){
        $('#targetWeaponCardsList').append(cardImageN);
     }
     for(i = 0; i < condition.length; i++){
-       var cardImageN = "<img src=\"" + weapon[i] + "\" width=\"50\" height=\"90\" >";
+       var cardImageN = "<img src=\"" + condition[i] + "\" width=\"50\" height=\"90\" >";
        $('#targetConditionCardsList').append(cardImageN);
     }
     for(i = 0; i < inHandNum; i++){
