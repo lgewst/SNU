@@ -420,7 +420,9 @@ io.on('connection', function(socket){
           console.log("js2java_" + reqInx +".txt FILE WRITED");
         });
     } else if(msg.type == 'requestCardInfo') {
-      socket.emit('message',{type:'respondCardInfo', data: msg.data});
+        setTimeout(function() {
+            socket.emit('message',{type:'respondCardInfo', data: msg.data});
+        },500);
     }
   });
   // remove the socket and send the update to other clients
@@ -477,7 +479,9 @@ io.on('connection', function(socket){
           // return true;
           return;
     }
-    io.to(connections[idx].id).emit('message',{type:parse.type, data: parse.data});
+    setTimeout(function(){
+            io.to(connections[idx].id).emit('message',{type:parse.type, data: parse.data});
+    },300);
     fs.writeFile('text/java2js_'+idx+'.txt', '', function(err) {
         if(err) {
             return console.log("Error while writing on file: js2java_"+ idx +".txt");
