@@ -23,6 +23,29 @@ var children = [];
 var child;
 // child.kill('SIGINT');
 
+var helpText = {"Bang":'사정거리 이내의 한 명을 지목하여 공격할 수 있는 카드로, 표적이 된 사람은 이를 피하지 못할 시 생명력이 1 줄어든다. 특수한 경우가 아니라면 자신의 차례에 단 한 번 사용 가능하다.',
+    'Barrel':'"Bang!"의 표적(단, "결투" 제외)이 되었을 때, 카드 펼치기를 하여 하트가 나오면 피할 수 있다. 펼친 카드는 버린다.',
+    'Beer':'효과는 생명력 1추가. 단, 자신의 한계 생명력을 넘을 수는 없다. 일반적으로는 자신의 차례에만 사용할 수 있지만, 자신의 생명력이 0이하가 되었을 때에는 자신의 차례가 아니라도, 다시 1로 복구할 수 있는 만큼의 맥주를 가지고 있다면, 그를 사용하여 되살아날 수 있다.',
+    'Catbalou':'카드 더미를 제외한 모든 영역에서, 게임카드 하나를 임의로 버리게 한다. 단, 그렇게 버려진 카드는 Cat balou 위에 버려진다.',
+    'Duel':'표적이 된 사람부터 결투를 신청한 사람과 번갈아 "뱅!"을 한 장씩 내고, 먼저 "뱅!"을 낼 수 없게 된(혹은 내지 않은) 사람이 생명력 1을 잃는다.',
+    'Dynamite':'먼저 자신의 필드 위에 장착한다. 자신의 차례는 이미 시작한 뒤므로, 다이너마이트가 발동하려면 차례가 한 바퀴 돌아 다시 자신의 차례가 와야 한다. 그 다음 차례가 오기 전에 죽으면, 다이너마이트는 자신의 필드 위에 있으므로, 버려진다.죽지 않고 다음 차례가 오면, 카드 가져오기 이전에 카드 펼치기를 한다. 펼친 카드는 버리고, 그 문양이 스페이드 2~9인 경우, 다이너마이트가 터쳐 생명력 3을 잃고[11], 아닌 경우엔 기본 순서(시계 방향)에 따라 다이너마이트를 왼쪽으로 넘긴다.',
+    'Gatling':'사용한 사람을 제외한 모두가 "Missed" 카드를 내야하며, 내지 못할 시엔 생명력을 1 잃는다.',
+    'Indians':'사용한 사람을 제외한 모든 사람들이 "Bang!"을 한 장 버려야 하며, 그렇지 못하면 생명력 1을 잃게 된다.',
+    'Jail':'보안관을 제외한 인물에게만 사용할 수 있는 카드로, 감옥에 갇힌 사람은 자신의 차례에 오기 전에 없어지지(캣 벌로우, 강탈) 않는 이상, 카드 가져오기 단계에 앞서 카드 펼치기를 한다. 카드는 한 장만 펼치며, 하트인 경우 펼친 카드와 감옥을 버리고 카드 두 장을 가져오며, 하트가 아닌 경우엔 펼친 카드와 감옥을 버린 채로 차례가 종료된다.(감옥안에 걸린경우 듀얼,인디언등을 피할 수없다 모두다 적용된다 그리고 뱅같은걸 맞으면 빗나감 또는 술통을 사용할 수 있다)',
+    'Missed':'이를 사용함으로 "뱅!과 "기관총"을 피할 수 있다.',
+    'Mustang':'타인이 볼 때, 자신과의 거리가 멀어진다. 하지만 자신의 관점에서의 거리는 사용 전과 동일하다.',
+    'Panic':'사정거리 1이내의 상대로부터 패를 한 장 가져올 수 있다. 이는 필드 위의 패에도 해당되며, 가져온 카드는 일단 수중에 넣는다.',
+    'Saloon':'플레이 중인 인원 전부 생명력 1을 올린다. 단, 한계 이상으로의 회복은 불가하며, 맥주와는 달리, 생명력이 0이하로 떨어진 후엔 자신의 차례이든 아니든 사용할 수 없다.',
+    'Scope':'타인을 볼 때, 거리가 1 가까워진다. 타인의 관점에서의 자신과의 거리는 사용 전과 변함 없다.',
+    'Stagecoach':'카드 더미 맨 위의 두 장을 가져올 수 있다.',
+    'Wellsfargo':'카드 더미 맨 위의 세 장을 가져올 수 있다.',
+    'Remington':"사정거리가 3으로 변경된다.",
+    'Rev carabine':'사정거리가 4로 변경된다.',
+    'Schofield':'사정거리가 2로 변경된다.',
+    'Volcanic':'사정거리는 기본 사정거리(1) 그대로이지만, "Bang!"을 원하는 만큼 사용할 수 있다.',
+    'Winchester':'사정거리가 5로 변경된다.'
+};
+
 process.on('exit', function() {
     child.kill();
     console.log('kill');
@@ -369,6 +392,17 @@ io.on('connection', function(socket){
         // }
     } else if(msg.type == 'help') {
         //TODO: Server side request
+        var getData = msg.data;
+        var toParseSrc = getData.split("/");
+        var toParseSrcIdx;
+        if(toParseSrc.length > 0)
+            toParseSrcIdx = toParseSrc.length - 1;
+        else
+            toParseSrcIdx = 0;
+        var helpData = toParseSrc[toParseSrcIdx].split('_')[0];
+        console.log('is help right? ' + helpData);
+        console.log("help msg is " + helpText[helpData]);
+        socket.emit('message', {type: "help",data:helpText[helpData]});
     } else if(msg.type == 'selectPlayingCard' || msg.type == 'discardPlayingCard' || msg.type == 'bangRespond'
      || msg.type == 'missRespond' || msg.type == 'beerRespond' || msg.type == 'selectTargetRespond') {
         var reqInx = 0;
