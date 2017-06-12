@@ -163,8 +163,7 @@ navigator.getBattery().then(function(battery) {
     updateChargeInfo();
   });
   function updateChargeInfo(){
-    console.log("Battery charging? "
-                + (battery.charging ? "Yes" : "No"));
+    console.log("Battery charging? " + (battery.charging ? "Yes" : "No"));
   }
 
   battery.addEventListener('levelchange', function(){
@@ -172,23 +171,22 @@ navigator.getBattery().then(function(battery) {
   });
   function updateLevelInfo(){
     console.log("Battery level: " + battery.level * 100 + "%");
-    // document.write("Battery level: " + battery.level * 100 + "%");
+    if(!battery.charging && (battery.level == 0.3 || battery.level == 0.20 || battery.level == 0.10 || battery.level == 0.05))
+        alert('Low Battery: Please charge your phone');
   }
 
   battery.addEventListener('chargingtimechange', function(){
     updateChargingInfo();
   });
   function updateChargingInfo(){
-    console.log("Battery charging time: "
-                 + battery.chargingTime + " seconds");
+    console.log("Battery charging time: " + battery.chargingTime + " seconds");
   }
 
   battery.addEventListener('dischargingtimechange', function(){
     updateDischargingInfo();
   });
   function updateDischargingInfo(){
-    console.log("Battery discharging time: "
-                 + battery.dischargingTime + " seconds");
+    console.log("Battery discharging time: " + battery.dischargingTime + " seconds");
   }
 
 });
