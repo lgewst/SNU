@@ -125,7 +125,6 @@ public class Game {
 
 	private void phase2() throws EndofGameException {
 		while (true) {
-//			writeFunctions.writePlayer(currentPlayer_index + 1);
 			Hand hand = currentPlayer.getHand();
 			int index = userInterface.askPlay(currentPlayer_index, currentPlayer, players);
 			
@@ -158,6 +157,7 @@ public class Game {
 					phase2();
 					currentPlayer.setCanBang(false);
 					phase3();
+					writeFunctions.writePlayer(currentPlayer_index);;
 				}
 			} catch (EndofGameException e) {
 				String winner = HelpFunctions.getWinner(players);

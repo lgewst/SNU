@@ -1,5 +1,8 @@
 package bang.card;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import bang.Deck;
@@ -24,6 +27,13 @@ public class Wellsfargo extends Card{
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("askPlay");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
 		return true;
 	}
 

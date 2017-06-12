@@ -307,7 +307,7 @@ io.on('connection', function(socket){
                 if(connections[i].id == socket.id) {
                     console.log(i + ' playerInfo');
                     // TODO: Do not use D\t because it has to find itself
-                    fs.appendFile('text/js2java_' + i + '.txt', 'D\t' + i, function(err) {
+                    fs.appendFile('text/js2java_' + i + '.txt', 'D\t' + i + '\n', function(err) {
                         if(err) {
                             return console.log("Error while writing on file: js2java.txt");
                         }
@@ -379,7 +379,7 @@ io.on('connection', function(socket){
             }
         }
         console.log(reqInx + ' send type: ' + msg.type +' index: ' + msg.data);
-        fs.appendFile('text/js2java_' + reqInx + '.txt', msg.data, function(err) {
+        fs.appendFile('text/js2java_' + reqInx + '.txt', msg.data + '\n', function(err) {
           if(err) {
             return console.log("Error while writing on file: js2java.txt");
           }

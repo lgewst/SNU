@@ -12,6 +12,7 @@ import bang.card.Card;
 public class HtmlUserInterface extends UserInterface{
 	BufferedReader[] in = new BufferedReader[8];
 	WriteFunctions writeFunctions;
+	BufferedWriter debug;
 
 	public HtmlUserInterface(Game game) {
 		writeFunctions = new WriteFunctions(game);
@@ -29,10 +30,20 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	private String readFile() throws IOException{
+		debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+		debug.write("readFile");
+		debug.newLine();
+		debug.close();
 		while(true) {
 			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
+				
 				if (s != null) {
+					debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+					debug.write("read " + s + " from " + Integer.toString(i));
+					debug.newLine();
+					debug.close();
+					
 					if (s.split("\t")[0].equals("D")) {	//OtherPlayInfo
 						int index = Integer.parseInt(s.split("\t")[1]);
 						if (index == i)
@@ -49,13 +60,25 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
+		
 		writeFunctions.writeAskPlay(Player_index + 1, player, players);
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
 			try {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("askPlay");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
+			try {
 				index = Integer.parseInt(readFile());
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("use" + Integer.toString(index));
+				debug.newLine();
+				debug.close();
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {
@@ -63,6 +86,13 @@ public class HtmlUserInterface extends UserInterface{
 						return index;
 				}
 			} catch (IOException e) {
+				try {
+					debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+					debug.write("error");
+					debug.newLine();
+					debug.close();
+				} catch (IOException e1) {
+				}
 			}
 		}
 	}
@@ -75,6 +105,13 @@ public class HtmlUserInterface extends UserInterface{
 
 		while(true) {
 			try {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("askDiscard");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
+			try {
 				index = Integer.parseInt(readFile());
 				if (index >= 0 && index < hand.size())
 					return index;
@@ -85,12 +122,20 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondBang(Player player, Player attacker, String card, int num, boolean t) {
+		
 		writeFunctions.writeRespondeBang(player, attacker, card, num, t);
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
 			try {
+				try {
+					debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+					debug.write("respondBang");
+					debug.newLine();
+					debug.close();
+				} catch (IOException e) {
+				}
 				if (!Boolean.valueOf(readFile()))
 					return -1;
 				index = player.getHand().getBang();
@@ -113,6 +158,14 @@ public class HtmlUserInterface extends UserInterface{
 
 		while(true) {
 			try {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("respondMiss");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
+			
+			try {
 				if (!Boolean.valueOf(readFile()))
 					return -1;
 				index = player.getHand().getMiss();
@@ -129,11 +182,19 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondBeer(Player player) {
+		
 		writeFunctions.writeRespondeBeer(player);
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
+			try {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("respondBeer");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
 			try {
 				if (!Boolean.valueOf(readFile()))
 					return -1;
@@ -151,10 +212,18 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTarget(Player player, ArrayList<Player> players) {
+		
 		writeFunctions.writeAskTarget(player, players);
 		int index = -2;
 
 		while(true) {
+			try {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("askTarget");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
 			try {
 				index = Integer.parseInt(readFile());
 				if (index >= -1 && index < players.size())
@@ -166,11 +235,19 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTargetCard(Player player) {
+		
 		Mounting mounting = player.getMounting();
 		Hand hand = player.getHand();
 		int index = -2;
 
 		while(true) {
+			try {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("askTargetCard");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
 			try {
 				index = Integer.parseInt(readFile());
 				if (index == -3)

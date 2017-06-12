@@ -9,7 +9,6 @@ import bang.HelpFunctions;
 
 public class WriteFunctions{
   BufferedWriter out;
-  BufferedWriter toDebug;
   Game game;
   private HelpFunctions HelpFunctions = new HelpFunctions();
 
@@ -113,7 +112,7 @@ public class WriteFunctions{
 	ArrayList<Player> players_Info = game.getPlayers_Info();
 	for(int i = 0; i < players_Info.size(); i++) {
 		if (players_Info.get(i) == player) {
-			write_index = i;
+			write_index = i + 1;
 			break;
 		}
 	}
@@ -141,7 +140,7 @@ public class WriteFunctions{
 	ArrayList<Player> players_Info = game.getPlayers_Info();
 	for(int i = 0; i < players_Info.size(); i++) {
 		if (players_Info.get(i) == player) {
-			write_index = i;
+			write_index = i + 1;
 			break;
 		}
 	}
@@ -169,7 +168,7 @@ public class WriteFunctions{
 	ArrayList<Player> players_Info = game.getPlayers_Info();
 	for(int i = 0; i < players_Info.size(); i++) {
 		if (players_Info.get(i) == player) {
-			write_index = i;
+			write_index = i + 1;
 			break;
 		}
 	}
@@ -192,15 +191,20 @@ public class WriteFunctions{
 	ArrayList<Player> players_Info = game.getPlayers_Info();
 	for(int i = 0; i < players_Info.size(); i++) {
 		if (players_Info.get(i) == player) {
-			write_index = i;
+			write_index = i + 1;
 			break;
 		}
 	}
 	
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
+    JSONArray targets = new JSONArray();
     
-    writer.put("type", "respondMiss");
+    for(Player target: others)
+    	targets.add(target.getCharacter().getName());
+    json.put("targetList", targets);
+    
+    writer.put("type", "askTarget");
     writer.put("data", json.toString());
     try {
       out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
