@@ -40,13 +40,13 @@ $(document).on("pageshow", "#playerInfo", function(){
 $(document).on("pageshow", "#showCardInfo", function(){
     $("#help").off("tap").on("tap", function(){
         var content = $('#showCardImage').children("img").attr('src');
-        alert("To check tags: " + content);
+        // alert("To check tags: " + content);
         MILE.send("help", content);
     });
 });
 
 $(document).on("pageshow", "#cardToSelect", function(){
-    var index;
+    var index, able;
     var style = "style=\"border: 1px solid red;\"";
     while($('#select').hasClass('ui-disabled')){
         $('#select').removeClass('ui-disabled');
@@ -59,15 +59,14 @@ $(document).on("pageshow", "#cardToSelect", function(){
         if(tagName === "IMG"){
             var closest = $(event.target).parent();
             index = closest.parent().children('div').index(closest);
-            var able = closest.attr('able');
-            if(!able){
+            able = closest.attr('able');
+            if(able == 'false'){
                 $('#select').addClass('ui-disabled');
             }
         }
     });
     $('#select').off('tap').on('tap', function(){
         if(index != null){
-            alert(index);
             MILE.send("selectPlayingCard", index);
             $.mobile.changePage('#waiting');
         }
@@ -122,8 +121,9 @@ $(document).on("pageshow", "#selectTarget", function(){
         if(tagName ==="P"){
             var selected = $(event.target);
             var index = selected.parent().children('p').index(selected);
-            alert(index);
+            // alert(index);
             MILE.send("selectTargetRespond", index);
+            $.mobile.changePage('#waiting');
         }
     });
 });

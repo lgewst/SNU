@@ -224,7 +224,7 @@ public class WriteFunctions{
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
 
-    writer.put("type", "respondMiss");
+    writer.put("type", "respondBeer");
     writer.put("data", json.toString());
     try {
       out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
@@ -296,7 +296,7 @@ public class WriteFunctions{
   }
 
   public void writeLostLife(Player player, int damage, int health) {
-		
+
 	  int write_index = 0;
 	  ArrayList<Player> players_Info = game.getPlayers_Info();
 	  for(int i = 0; i < players_Info.size(); i++) {
