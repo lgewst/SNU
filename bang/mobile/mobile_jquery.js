@@ -19,6 +19,7 @@ $(document).on("pageshow", "#background", function(){
         if(tagName === "IMG"){
             // var parent = $(event.target).parent();
             // var index = $('img').index(parent);
+            var content =
             MILE.send('requestCardInfo', $(event.target).attr('src'));
         }
     });
@@ -38,7 +39,7 @@ $(document).on("pageshow", "#playerInfo", function(){
 });
 $(document).on("pageshow", "#showCardInfo", function(){
     $("#help").off("tap").on("tap", function(){
-        var content = $(this).siblings("img").attr('src');
+        var content = $('#showCardImage').children("img").attr('src');
         alert("To check tags: " + content);
         MILE.send("help", content);
     });
