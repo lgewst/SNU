@@ -125,6 +125,15 @@ public class Game {
 
 	private void phase2() throws EndofGameException {
 		while (true) {
+			//TODO: character ability
+			for (Player player: players) {
+				if(player.getCharacter().getName().equals("Suzy Lafayette")) {
+					if(player.getHand().size() == 0)
+						player.getHand().add(HelpFunctions.peekDeck(deck, discard));
+					break;
+				}
+			}
+			
 			Hand hand = currentPlayer.getHand();
 			int index = userInterface.askPlay(currentPlayer_index, currentPlayer, players);
 			

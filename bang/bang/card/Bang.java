@@ -26,7 +26,10 @@ public class Bang extends Card{
 		if (index == -1)
 			return false;
 
-		currentPlayer.setCanBang(false);
+		if (currentPlayer.getCharacter().getName().equals("Willy the Kid"))
+			currentPlayer.setCanBang(true);
+		else
+			currentPlayer.setCanBang(false);
 		if (currentPlayer.getMounting().hasGun()) {
 			Card gun = currentPlayer.getMounting().getGun();
 			if (gun.getName().equals("Volcanic"))
@@ -36,8 +39,18 @@ public class Bang extends Card{
 		discard.add(this);
 		Player targetPlayer = targets.get(index);
 		int miss_count = 1;
+		
+		//TODO: character ability
+		if (currentPlayer.getCharacter().getName().equals("Slab the Killer"))
+			miss_count = 2;
 
 		if (targetPlayer.getMounting().hasCard("Barrel")) {
+			Card card = HelpFunctions.peekDeck(deck, discard);
+			if (card.getSuit().equals("Heart"))
+				miss_count--;
+		}
+
+		if (targetPlayer.getCharacter().getName().equals("Jourdonnais")) {
 			Card card = HelpFunctions.peekDeck(deck, discard);
 			if (card.getSuit().equals("Heart"))
 				miss_count--;

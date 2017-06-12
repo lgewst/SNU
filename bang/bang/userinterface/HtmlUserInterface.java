@@ -76,7 +76,7 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				index = Integer.parseInt(readFile());
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-				debug.write("use" + Integer.toString(index));
+				debug.write("use " + Integer.toString(index));
 				debug.newLine();
 				debug.close();
 				if (index == -1)
@@ -86,13 +86,6 @@ public class HtmlUserInterface extends UserInterface{
 						return index;
 				}
 			} catch (IOException e) {
-				try {
-					debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-					debug.write("error");
-					debug.newLine();
-					debug.close();
-				} catch (IOException e1) {
-				}
 			}
 		}
 	}
