@@ -12,7 +12,7 @@ import bang.Player;
 import bang.userinterface.UserInterface;
 
 public class Stagecoach extends Card{
-	private HelpFunctions HelpFunctions;
+	private HelpFunctions HelpFunctions = new HelpFunctions();
 
 	public Stagecoach(String name, String suit, int value) {
 		super(name, suit, value);
@@ -38,11 +38,26 @@ public class Stagecoach extends Card{
 			debug.close();
 		} catch (IOException e) {
 		}
-		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
-		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
+		Card card = HelpFunctions.peekDeck(deck, discard);
 		try {
 			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 			debug.write("Stagecoach3");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		currentPlayer.getHand().add(card);
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Stagecoach4");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Stagecoach5");
 			debug.newLine();
 			debug.close();
 		} catch (IOException e) {

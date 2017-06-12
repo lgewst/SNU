@@ -12,7 +12,7 @@ import bang.Player;
 import bang.userinterface.UserInterface;
 
 public class Wellsfargo extends Card{
-	private HelpFunctions HelpFunctions;
+	private HelpFunctions HelpFunctions = new HelpFunctions();
 
 	public Wellsfargo(String name, String suit, int value) {
 		super(name, suit, value);
@@ -38,12 +38,27 @@ public class Wellsfargo extends Card{
 			debug.close();
 		} catch (IOException e) {
 		}
-		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
+		Card card = HelpFunctions.peekDeck(deck, discard);
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Wellsfargo3");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		currentPlayer.getHand().add(card);
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Wellsfargo4");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		try {
 			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("Wellsfargo3");
+			debug.write("Wellsfargo5");
 			debug.newLine();
 			debug.close();
 		} catch (IOException e) {
