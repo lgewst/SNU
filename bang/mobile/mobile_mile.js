@@ -297,7 +297,7 @@ MILE.on('loseLife', function(data, from){
         }
         if (counter == 0){
             clearInterval(counter);
-            MILE.send('PlayerInfo', '');
+            MILE.send('playerInfo', '');
         }
     }, 1000);
 });
