@@ -20,7 +20,7 @@ $(document).on("pageshow", "#background", function(){
             // var parent = $(event.target).parent();
             // var index = $('img').index(parent);
             var content =
-            MILE.send('requestCardInfo', $(event.target).attr('src'));
+        MILE.send('requestCardInfo', $(event.target).attr('src'));
         }
     });
 });
@@ -47,26 +47,29 @@ $(document).on("pageshow", "#showCardInfo", function(){
 
 $(document).on("pageshow", "#cardToSelect", function(){
     var index = "";
+    var style = "style=\"border: 1px solid red;\"";
+    while($('#select').hasClass('ui-disabled')){
+        $('#select').removeClass('ui-disabled');
+    }
     $("#selectCardsList").off("tap").on('tap', function(){
+        while($('#select').hasClass('ui-disabled')){
+            $('#select').removeClass('ui-disabled');
+        }
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             var closest = $(event.target).parent();
-            if($('#selected').hasClass('ui-disabled')){
-                $('#selected').removeClass('ui-disabled');
-            }
             index = closest.parent().children('div').index(closest);
-            var able= $(event.target).parent().attr('able');
+            var able = closest.attr('able');
             if(!able){
-                $('#selected').addClass('ui-disabled');
+                $('#select').addClass('ui-disabled');
             }
         }
     });
     $('#select').off('tap').on('tap', function(){
         if(index!=""){
-            if(!$('#selected').hasClass('ui-disabled')){
-                $('#selected').addClass('ui-disabled');
-            }
+            alert(index);
             MILE.send("selectPlayingCard", index);
+            $.mobile.changePage('#waiting');
         }
     });
     $('#endTurn').off('tap').on('tap', function(){
@@ -149,46 +152,3 @@ $(document).on("pageshow", "#selectTargetCard", function(){
 });
 /* TODO: respond, select target/targetcard */
 
-//TODO: Battery api
-navigator.getBattery().then(function(battery) {
-  function updateAllBatteryInfo(){
-    updateChargeInfo();
-    updateLevelInfo();
-    updateChargingInfo();
-    updateDischargingInfo();
-  }
-  updateAllBatteryInfo();
-
-  battery.addEventListener('chargingchange', function(){
-    updateChargeInfo();
-  });
-  function updateChargeInfo(){
-    console.log("Battery charging? "
-                + (battery.charging ? "Yes" : "No"));
-  }
-
-  battery.addEventListener('levelchange', function(){
-    updateLevelInfo();
-  });
-  function updateLevelInfo(){
-    console.log("Battery level: " + battery.level * 100 + "%");
-    // document.write("Battery level: " + battery.level * 100 + "%");
-  }
-
-  battery.addEventListener('chargingtimechange', function(){
-    updateChargingInfo();
-  });
-  function updateChargingInfo(){
-    console.log("Battery charging time: "
-                 + battery.chargingTime + " seconds");
-  }
-
-  battery.addEventListener('dischargingtimechange', function(){
-    updateDischargingInfo();
-  });
-  function updateDischargingInfo(){
-    console.log("Battery discharging time: "
-                 + battery.dischargingTime + " seconds");
-  }
-
-});
