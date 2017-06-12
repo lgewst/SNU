@@ -141,16 +141,15 @@ public class HelpFunctions {
 
 	public void damagePlayer(Player damager, Player damagee, int damage, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {		
 		int health = damagee.getHealth() - damage;
-
+		userInterface.getWriteFunctions().writeLostLife(damagee, damage, health);
+		
 		// TODO: character ability
 		if (damagee.getCharacter().getName().equals("Bart Cassidy"))
 			damagee.getHand().add(this.peekDeck(deck, discard));
 		if (damagee.getCharacter().getName().equals("El Gringo"))
 			damagee.getHand().add(damager.getHand().removeRandom());
 		
-		if (health <= 0 && players.size() > 2) {
-			userInterface.getWriteFunctions().writeLostLife(damagee, damage, health);
-			
+		if (health <= 0 && players.size() > 2) {	
 			while (health <= 0 && damagee.getHand().hasBeer()) {
 				int index = userInterface.respondBeer(damagee);
 
