@@ -46,7 +46,7 @@ $(document).on("pageshow", "#showCardInfo", function(){
 });
 
 $(document).on("pageshow", "#cardToSelect", function(){
-    var index = "";
+    var index;
     var style = "style=\"border: 1px solid red;\"";
     while($('#select').hasClass('ui-disabled')){
         $('#select').removeClass('ui-disabled');
@@ -66,7 +66,7 @@ $(document).on("pageshow", "#cardToSelect", function(){
         }
     });
     $('#select').off('tap').on('tap', function(){
-        if(index!=""){
+        if(index != null){
             alert(index);
             MILE.send("selectPlayingCard", index);
             $.mobile.changePage('#waiting');
