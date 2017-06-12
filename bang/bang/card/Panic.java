@@ -32,10 +32,10 @@ public class Panic extends Card{
 		if (index == -3)
 			return false;
 		discard.add(this);
-		if (index == -2)	//Remove Hand
-			hand.add(targetPlayer.getHand().removeRandom());
-		else if (index == -1)	//Remove gun
+		if (index == -2)	//Remove gun
 			hand.add(targetPlayer.getMounting().removeGun());
+		else if (index == -1)	//Remove Hand
+			hand.add(targetPlayer.getHand().removeRandom());
 		else
 			hand.add(targetPlayer.getMounting().remove(index));
 		userInterface.getWriteFunctions().writePlayer(targetPlayer);

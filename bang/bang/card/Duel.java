@@ -35,7 +35,7 @@ public class Duel extends Card{
 
 			if (index == -1) {
 				userInterface.getWriteFunctions().writePlayer(targetPlayer);
-				HelpFunctions.damagePlayer(targetPlayer, currentPlayer, 1, players, deck, discard, userInterface);
+				HelpFunctions.damagePlayer(currentPlayer, currentPlayer, 1, players, deck, discard, userInterface);
 				break;
 			}
 			discard.add(currentPlayer.getHand().remove(index));

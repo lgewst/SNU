@@ -69,8 +69,8 @@ public class BangDeck {
 
 		cards.add(new Gatling("Gatling", "Heart", 10));
 
-		cards.add(new Generalstore("General store", "Club", 9));
-		cards.add(new Generalstore("General store", "Spade", 12));
+//		cards.add(new Generalstore("General store", "Club", 9));
+//		cards.add(new Generalstore("General store", "Spade", 12));
 
 		cards.add(new Indians("Indians", "Diamond", 13));
 		cards.add(new Indians("Indians", "Diamond", 1));

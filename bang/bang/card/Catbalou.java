@@ -32,10 +32,10 @@ public class Catbalou extends Card {
 			return false;
 
 		discard.add(this);
-		if (index == -2)	//Remove Hand
-			discard.add(targetPlayer.getHand().removeRandom());
-		else if (index == -1)	//Remove gun
+		if (index == -2)	//Remove gun
 			discard.add(targetPlayer.getMounting().removeGun());
+		else if (index == -1)	//Remove Hand
+			discard.add(targetPlayer.getHand().removeRandom()); 
 		else	//Remove mounting
 			discard.add(targetPlayer.getMounting().remove(index));
 		userInterface.getWriteFunctions().writePlayer(targetPlayer);
