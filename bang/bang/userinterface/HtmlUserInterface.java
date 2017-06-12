@@ -61,7 +61,7 @@ public class HtmlUserInterface extends UserInterface{
 	@Override
 	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
 		
-		writeFunctions.writeAskPlay(Player_index + 1, player, players);
+		writeFunctions.writeAskPlay(player, players);
 		Hand hand = player.getHand();
 		int index = -2;
 
@@ -234,10 +234,11 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int askTargetCard(Player player) {
+	public int askTargetCard(Player player, Player target) {
 		
-		Mounting mounting = player.getMounting();
-		Hand hand = player.getHand();
+		writeFunctions.writeAskTargetCard(player, target);
+		Mounting mounting = target.getMounting();
+		Hand hand = target.getHand();
 		int index = -2;
 
 		while(true) {
@@ -275,5 +276,10 @@ public class HtmlUserInterface extends UserInterface{
 			} catch (IOException e) {
 			}
 		}
+	}
+	
+	@Override
+	public WriteFunctions getWriteFunctions() {
+		return writeFunctions;
 	}
 }

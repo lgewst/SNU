@@ -157,7 +157,7 @@ public class Game {
 					phase2();
 					currentPlayer.setCanBang(false);
 					phase3();
-					writeFunctions.writePlayer(currentPlayer_index);;
+					writeFunctions.writePlayer(currentPlayer_index + 1);
 				}
 			} catch (EndofGameException e) {
 				String winner = HelpFunctions.getWinner(players);

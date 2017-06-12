@@ -47,6 +47,45 @@ public class WriteFunctions{
     } catch(IOException e) {
     }
   }
+  
+  public void writePlayer(Player player) {
+	    ArrayList<Player> players = game.getPlayers();
+	    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players);
+
+		int write_index = 0;
+		ArrayList<Player> players_Info = game.getPlayers_Info();
+		for(int i = 0; i < players_Info.size(); i++) {
+			if (players_Info.get(i) == player) {
+				write_index = i + 1;
+				break;
+			}
+		}
+	    JSONObject writer = new JSONObject();
+	    JSONObject json = new JSONObject();
+	    JSONArray others = new JSONArray();
+	    for(Player other: otherPlayers)
+	      others.add(other.getCharacter().getName());
+
+	    json.put("otherPlayers", others);
+	    json.put("job", player.getJob().toJsonKnown());
+	    json.put("character", player.getCharacter().toJson());
+	    json.put("curLife", player.getHealth());
+	    json.put("maxLife", player.getMaxHealth());
+	    json.put("mountedCards", player.getMounting().toJSONObject());
+	    if (write_index == game.getCurrentPlayer_index() + 1)
+	    	json.put("inHandCards", player.getHand().toJSONArray());
+	    else
+	    	json.put("inHandCards", player.getHand().toJSONArray());
+
+	    writer.put("type", "playerInfo");
+	    writer.put("data", json.toString());
+	    try {
+	      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+	      out.write(writer.toString());
+	      out.close();
+	    } catch(IOException e) {
+	    }
+	  }
 
   public void writeOtherPlyaer(int index, int write_index) {
 	Player player = game.getPlayers_Info().get(index-1);
@@ -73,7 +112,16 @@ public class WriteFunctions{
     }
   }
 
-  public void writeAskPlay(int write_index, Player player, ArrayList<Player> others) {
+  public void writeAskPlay(Player player, ArrayList<Player> others) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i + 1;
+			break;
+		}
+	}
+		
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
 
@@ -212,5 +260,64 @@ public class WriteFunctions{
       out.close();
     } catch(IOException e) {
     }
+  }
+  
+  public void writeAskTargetCard(Player player, Player target) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i + 1;
+			break;
+		}
+	}
+	
+    JSONObject writer = new JSONObject();
+    JSONObject json = new JSONObject();
+    JSONObject cardList = target.getMounting().toJSONObject();
+    JSONObject inHand = new JSONObject();
+    
+    inHand.put("image", "../cards/playing card(back).jpg");
+    inHand.put("num", target.getHand().size());
+    
+    cardList.put("inHand", inHand);
+    
+    json.put("targetCardList", cardList);
+    json.put("who", target.getCharacter().getName());
+    
+    writer.put("type", "askTargetCard");
+    writer.put("data", json.toString());
+    try {
+      out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+      out.write(writer.toString());
+      out.close();
+    } catch(IOException e) {
+    }
+  }
+
+  public void writeLostLife(Player player, int damage, int health) {
+	  int write_index = 0;
+	  ArrayList<Player> players_Info = game.getPlayers_Info();
+	  for(int i = 0; i < players_Info.size(); i++) {
+		  if (players_Info.get(i) == player) {
+			  write_index = i + 1;
+			  break;
+		  }
+	  }
+	  
+	  JSONObject writer = new JSONObject();
+	  JSONObject json = new JSONObject();
+	  
+	  json.put("much", damage);
+	  json.put("less", health);
+	    
+	  writer.put("type", "loseLife");
+	  writer.put("data", json.toString());
+	  try {
+	    out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+	    out.write(writer.toString());
+	    out.close();
+	  } catch(IOException e) {
+	  }
   }
 }

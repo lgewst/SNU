@@ -68,7 +68,7 @@ public class Mounting {
 		
 		JSONArray cond = new JSONArray();
 		for(Card card: mounting)
-			cond.add(card.getName());
+			cond.add(card.getImageName());
 		json.put("condition", cond);
 		
 		return json;

@@ -34,6 +34,7 @@ public class Duel extends Card{
 				index = userInterface.respondBang(currentPlayer, currentPlayer, "Duel", 1, true);
 
 			if (index == -1) {
+				userInterface.getWriteFunctions().writePlayer(targetPlayer);
 				HelpFunctions.damagePlayer(targetPlayer, currentPlayer, 1, players, deck, discard, userInterface);
 				break;
 			}
@@ -44,6 +45,7 @@ public class Duel extends Card{
 				index = userInterface.respondBang(targetPlayer, currentPlayer, "Duel", 1, true);
 
 			if (index == -1) {
+				userInterface.getWriteFunctions().writePlayer(currentPlayer);
 				HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userInterface);
 				break;
 			}

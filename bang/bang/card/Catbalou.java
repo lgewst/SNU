@@ -26,7 +26,7 @@ public class Catbalou extends Card {
 			return false;
 
 		Player targetPlayer = targets.get(index);
-		index = userInterface.askTargetCard(targetPlayer);	//TODO: ask card
+		index = userInterface.askTargetCard(currentPlayer, targetPlayer);	//TODO: ask card
 
 		if (index == -3)
 			return false;

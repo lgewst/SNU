@@ -38,6 +38,8 @@ public class Indians extends Card{
 
 			if (bang_count != 0)
 				HelpFunctions.damagePlayer(currentPlayer, player, 1, players, deck, discard, userInterface);
+			else
+				userInterface.getWriteFunctions().writePlayer(player);
 			}
 		return true;
 	}

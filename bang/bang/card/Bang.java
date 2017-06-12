@@ -55,7 +55,8 @@ public class Bang extends Card{
 
 		if (miss_count != 0)
 			HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userInterface);
-
+		else
+			userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;
 	}
 

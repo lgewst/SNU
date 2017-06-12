@@ -23,13 +23,27 @@ public class Wellsfargo extends Card{
 	}
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) {
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Wellsfargo");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
 		discard.add(this);
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Wellsfargo2");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		try {
 			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("askPlay");
+			debug.write("Wellsfargo3");
 			debug.newLine();
 			debug.close();
 		} catch (IOException e) {

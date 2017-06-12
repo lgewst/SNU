@@ -19,7 +19,9 @@ public abstract class UserInterface {
 
 	public abstract int askTarget(Player player, ArrayList<Player> players);
 
-	public abstract int askTargetCard(Player player);
+	public abstract int askTargetCard(Player player, Player target);
 
 	public abstract int chooseGeneralStore(ArrayList<Card> cards);
+
+	public abstract WriteFunctions getWriteFunctions();
 }
