@@ -57,14 +57,8 @@
 #inHandCards{
     clear:both;
     min-height: 90px;
-    display: inline;
 }
 #othersInHandCards{
     clear:both;
     min-height: 90px;
-    display: inline;
-}
-#pageName{
-    text-align:center;
-    display: inline;
 }

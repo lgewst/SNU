@@ -281,14 +281,56 @@ MILE.on('askTargetCard', function(data, from){
     }
 });
 MILE.on('loseLife', function(data, from){
-    $.mobile.changePage('#lifeLost');
+    $.mobile.changePage('#alert');
     var info = JSON.parse(data);
     var much = info.much;
     var remain = info.remain;
     var sentence = "<p> You lost "+ much + "life. Your remaining life is " + remain+".</p>";
-    var counter = 5;
-    $('#lifeLostMain').empty();
-    $('#lifeLostMain').append(sentence);
+    var counter = 3;
+    $('#alertMain').empty();
+    $('#alertMain').append(sentence);
+    setInterval(function(){
+        counter--;
+        if (counter >= 0){
+            span = document.getElementById("count");
+            span.innerHTML = counter;
+        }
+        if (counter == 0){
+            clearInterval(counter);
+            MILE.send('playerInfo', '');
+        }
+    }, 1000);
+});
+MILE.on('addLife', function(data, from){
+    $.mobile.changePage('#alert');
+    var info = JSON.parse(data);
+    var much = info.much;
+    var remain = info.remain;
+    var sentence = "<p> You gained "+ much + "life. Your remaining life is " + remain+".</p>";
+    var counter = 3;
+    $('#alertMain').empty();
+    $('#alertMain').append(sentence);
+    setInterval(function(){
+        counter--;
+        if (counter >= 0){
+            span = document.getElementById("count");
+            span.innerHTML = counter;
+        }
+        if (counter == 0){
+            clearInterval(counter);
+            MILE.send('playerInfo', '');
+        }
+    }, 1000);
+});
+MILE.on('loseCard', function(data, from){
+    $.mobile.changePage('#alert');
+    var info = JSON.parse(data);
+    var who = info.who;
+    var card = info.card;
+    var sentence = "<p> You lost "+ card + " card by " + who + ".</p>";
+    var counter = 3;
+    $('#alertMain').empty();
+    $('#alertMain').append(sentence);
     setInterval(function(){
         counter--;
         if (counter >= 0){

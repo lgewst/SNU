@@ -47,7 +47,6 @@ $(document).on("pageshow", "#showCardInfo", function(){
 
 $(document).on("pageshow", "#cardToSelect", function(){
     var index, able;
-    var style = "style=\"border: 1px solid red;\"";
     while($('#select').hasClass('ui-disabled')){
         $('#select').removeClass('ui-disabled');
     }
@@ -58,6 +57,9 @@ $(document).on("pageshow", "#cardToSelect", function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             var closest = $(event.target).parent();
+            closest.parent().children('div').removeAttr("style");
+            closest.parent().children('div').css("display", "inline");
+            closest.css("border-bottom", "2px solid red");
             index = closest.parent().children('div').index(closest);
             able = closest.attr('able');
             if(able == 'false'){
@@ -81,6 +83,9 @@ $(document).on("pageshow", "#cardToDiscard", function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             var closest = $(event.target).parent();
+            closest.parent().children('div').removeAttr("style");
+            closest.parent().children('div').css("display", "inline");
+            closest.css("border-bottom", "2px solid red");
             index = closest.parent().children('div').index(closest);
         }
     });
@@ -93,25 +98,31 @@ $(document).on("pageshow", "#cardToDiscard", function(){
 $(document).on("pageshow", "#willUseBang", function(){
     $('#bangYes').off("tap").on('tap', function(){
         MILE.send("bangRespond", true);
+        $.mobile.changePage('#waiting');
     });
     $('#bangNo').off("tap").on('tap', function(){
         MILE.send("bangRespond", false);
+        $.mobile.changePage('#waiting');
     });
 });
 $(document).on("pageshow", "#willUseMiss", function(){
     $('#missYes').off("tap").on('tap', function(){
         MILE.send("missRespond", true);
+        $.mobile.changePage('#waiting');
     });
     $('#missNo').off("tap").on('tap', function(){
         MILE.send("missRespond", false);
+        $.mobile.changePage('#waiting');
     });
 });
 $(document).on("pageshow", "#willUseBeer", function(){
     $('#beerYes').off("tap").on('tap', function(){
         MILE.send("beerRespond", true);
+        $.mobile.changePage('#waiting');
     });
     $('#beerNo').off("tap").on('tap', function(){
         MILE.send("beerRespond", false);
+        $.mobile.changePage('#waiting');
     });
 });
 $(document).on("pageshow", "#selectTarget", function(){
@@ -120,6 +131,8 @@ $(document).on("pageshow", "#selectTarget", function(){
         var id = event.target.id;
         if(tagName ==="P"){
             var selected = $(event.target);
+            selected.parent().children('p').removeAttr("style");
+            selected.css("border-right", "2px solid red");
             var index = selected.parent().children('p').index(selected);
             // alert(index);
             MILE.send("selectTargetRespond", index);
@@ -137,13 +150,17 @@ $(document).on("pageshow", "#selectTargetCard", function(){
     $('#targetConditionCardsList').off('tap').on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
-            MILE.send("selectTargetCardRespond", 0);
+            var selected = $(event.target);
+            var index = selected.parent().children('img').index(selected);
+            MILE.send("selectTargetCardRespond", index);
         }
+        $.mobile.changePage('#waiting');
     });
     $('#targetInHandCardsList').off('tap').on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
             MILE.send("selectTargetCardRespond", -1);
+            $.mobile.changePage('#waiting');
         }
     });
     $('#cancel').off('tap').on('tap', function(){
