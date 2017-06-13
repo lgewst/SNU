@@ -24,7 +24,6 @@ MILE.on('game_start', function(data, from) {
         }
         if (counter == 0){
             clearInterval(counter);
-            // $.mobile.changePage("#background");
             MILE.send('initPlayerInfo', '');
         }
     }, 1000);
@@ -98,9 +97,9 @@ MILE.on('otherPlayerInfo', function(data, from){
     var maxLife = info.maxLife;
     var mounted = info.mountedCards; // image array
     var inHand = info.inHandCards; //image, num
+    var isDead = info.dead;
     var weapon = mounted.weapon;
     var condition = mounted.condition;
-
     var jobImage = "<img src=\"" + job.image + "\" width=\"50\" height=\"100\">";
     var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
     var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
@@ -139,6 +138,11 @@ MILE.on('otherPlayerInfo', function(data, from){
     for(i = 0; i < inHandCardNum; i++){
         var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\">" + inHandCardBack + "</div>";
         $('#othersInHandCardsList').append(cardDiv);
+    }
+    if(dead){
+        $('#othersCards').remove();
+        $('#life').remove();
+        $('#othersStatus').append('<p style=\"font-size: 15px\">Dead player</p>');
     }
 });
 MILE.on('respondCardInfo', function(data, from){
@@ -342,4 +346,38 @@ MILE.on('loseCard', function(data, from){
             MILE.send('playerInfo', '');
         }
     }, 1000);
+});
+MILE.on('dead', function(data,from){
+    $.mobile.changePage('#background');
+    $('#myInfo').remove('#cards');
+    var info = JSON.parse(data);
+    var otherPlayers = info.otherPlayers; // str array
+    var job = info.job; // image, str(name), str(mission)
+    var character = info.character; // image, str(name), str(effect)
+
+    var jobImage = "<img src=\"" + job.image + "\" width=\"50\" height=\"100\">";
+    var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
+    var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
+
+    var characterImage = "<img src=\"" + character.image + "\" width=\"50\" height=\"100\">";
+    var charName = "<p id=\"charName\"> CHARARCTER: " + character.name + "</p>";
+    var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
+    $('#listContent').empty();
+    $('#images').empty();
+    $('#contents').empty();
+
+    for(i = 0; i < otherPlayers.length; i++){
+        var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
+        $('#listContent').append(playerN);
+    }
+    $('#otherPlayersList').trigger("collapse");
+
+    $('#images').append(jobImage);
+    $('#images').append(characterImage);
+
+    $('#contents').append(jobName);
+    $('#contents').append(jobMission);
+    $('#contents').append(charName);
+    $('#contents').append(charEffect);
+    $('#status').append("<p style=\"font-size: 15px;\"> Your character is dead.<p>");
 });
