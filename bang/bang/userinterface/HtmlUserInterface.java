@@ -13,6 +13,7 @@ public class HtmlUserInterface extends UserInterface{
 	BufferedReader[] in = new BufferedReader[8];
 	WriteFunctions writeFunctions;
 	BufferedWriter debug;
+	long lastPlayTime = -1;
 
 	public HtmlUserInterface(Game game) {
 		writeFunctions = new WriteFunctions(game);
@@ -35,6 +36,8 @@ public class HtmlUserInterface extends UserInterface{
 		debug.newLine();
 		debug.close();
 		while(true) {
+			if (lastPlayTime != -1 && System.currentTimeMillis() - lastPlayTime > 10000)
+				return "-2";
 			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
 
@@ -62,6 +65,8 @@ public class HtmlUserInterface extends UserInterface{
 	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
 
 		writeFunctions.writeAskPlay(player, players);
+		lastPlayTime = System.currentTimeMillis();
+		
 		Hand hand = player.getHand();
 		int index = -2;
 
@@ -75,10 +80,13 @@ public class HtmlUserInterface extends UserInterface{
 			}
 			try {
 				index = Integer.parseInt(readFile());
+				lastPlayTime = -1;
+				
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 				debug.write("use " + Integer.toString(index));
 				debug.newLine();
 				debug.close();
+				
 				if (index == -1)
 					return index;
 				if (index >= 0 && index < hand.size()) {

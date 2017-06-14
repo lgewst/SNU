@@ -21,6 +21,8 @@ public class Catbalou extends Card {
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) {
 		ArrayList<Player> targets = targets(currentPlayer, players);
+		Card removed_card = null;
+		
 		int index = userInterface.askTarget(currentPlayer, targets);	//TODO: ask target
 		if (index == -1)
 			return false;
@@ -33,12 +35,15 @@ public class Catbalou extends Card {
 
 		discard.add(this);
 		if (index == -2)	//Remove gun
-			discard.add(targetPlayer.getMounting().removeGun());
+			removed_card = targetPlayer.getMounting().removeGun();
 		else if (index == -1)	//Remove Hand
-			discard.add(targetPlayer.getHand().removeRandom()); 
+			removed_card = targetPlayer.getHand().removeRandom(); 
 		else	//Remove mounting
-			discard.add(targetPlayer.getMounting().remove(index));
-		userInterface.getWriteFunctions().writePlayer(targetPlayer);
+			removed_card = targetPlayer.getMounting().remove(index);
+		
+		discard.add(removed_card);
+		userInterface.getWriteFunctions().writeLoseCard(targetPlayer, currentPlayer, removed_card);
+//		userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;
 	}
 
