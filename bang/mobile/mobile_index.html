@@ -58,14 +58,11 @@
 </div>
 
 <div data-role="page" data-dialog="true" id="playerInfo">
-    <div data-role="header" id="pageName">
-        <!--<a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" data-rel="back" id="back">Back</a>-->
-        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="back">Back</a>
-    </div>
     <div data-role="main" class="ui-content">
+        <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-icon-back ui-btn-icon-left" id="back">Back</a>
         <div id="otherPlayerInfo">
             <div id="othersStatus">
-                <p> STATUS </p>
+                <p style="margin-top: 5px"> STATUS </p>
                 <div id="othersImages"></div>
                 <div id="othersContents"></div>
             </div>
@@ -98,8 +95,8 @@
 <div data-role="page" data-dialog="true" id="cardExplain">
     <!-- Show the explanation of the card when help is selected. -->
     <div data-role="main" id="explanation" class="ui-content">
-        <p id="helpStr"></p>
         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">close</a>
+        <p id="helpStr" style="position: relative; margin-top: 30px"></p>
     </div>
 </div>
 
