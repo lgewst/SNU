@@ -86,6 +86,10 @@ MILE.on('playerInfo', function(data, from) {
         var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\" >" + cardImageN + "</div>";
         $('#inHandCardsList').append(cardDiv);
     }
+    if(dead){
+        $('#cards').remove();
+        $('#life').remove();
+        $('#status').append('<p style=\"font-size: 15px\">Dead player</p>');
 });
 MILE.on('otherPlayerInfo', function(data, from){
     $.mobile.changePage('#playerInfo');
@@ -348,36 +352,22 @@ MILE.on('loseCard', function(data, from){
     }, 1000);
 });
 MILE.on('dead', function(data,from){
-    $.mobile.changePage('#background');
-    $('#myInfo').remove('#cards');
+    $.mobile.changePage('#alert');
     var info = JSON.parse(data);
-    var otherPlayers = info.otherPlayers; // str array
-    var job = info.job; // image, str(name), str(mission)
-    var character = info.character; // image, str(name), str(effect)
-
-    var jobImage = "<img src=\"" + job.image + "\" width=\"50\" height=\"100\">";
-    var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
-    var jobMission = "<p id=\"jobMission\"> MISSION: " + job.mission + "</p>";
-
-    var characterImage = "<img src=\"" + character.image + "\" width=\"50\" height=\"100\">";
-    var charName = "<p id=\"charName\"> CHARARCTER: " + character.name + "</p>";
-    var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
-    $('#listContent').empty();
-    $('#images').empty();
-    $('#contents').empty();
-
-    for(i = 0; i < otherPlayers.length; i++){
-        var playerN = "<p id=\"player" + i + "\" >" + otherPlayers[i] + "</p>";
-        $('#listContent').append(playerN);
-    }
-    $('#otherPlayersList').trigger("collapse");
-
-    $('#images').append(jobImage);
-    $('#images').append(characterImage);
-
-    $('#contents').append(jobName);
-    $('#contents').append(jobMission);
-    $('#contents').append(charName);
-    $('#contents').append(charEffect);
-    $('#status').append("<p style=\"font-size: 15px;\"> Your character is dead.<p>");
+    var who = info.who;
+    var sentence = "<p> Your character is now dead by" + who + ".</p>";
+    var counter = 3;
+    $('#alertMain').empty();
+    $('#alertMain').append(sentence);
+    setInterval(function(){
+        counter--;
+        if (counter >= 0){
+            span = document.getElementById("count");
+            span.innerHTML = counter;
+        }
+        if (counter == 0){
+            clearInterval(counter);
+            MILE.send('playerInfo', '');
+        }
+    }, 1000);
 });
