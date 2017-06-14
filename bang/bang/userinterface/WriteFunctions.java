@@ -57,7 +57,7 @@ public class WriteFunctions {
 			tmp.put("character", player.getCharacter().toJson());
 			tmp.put("curLife", player.getHealth());
 			tmp.put("maxLife", player.getMaxHealth());
-			tmp.put("mountedCards", player.getMounting().toJSONArray());
+			tmp.put("mounted", player.getMounting().toJSONArray());
 			tmp.put("dead", !players.contains(player));
 			tmp.put("inHand", player.getHand().size());
 			
@@ -66,7 +66,7 @@ public class WriteFunctions {
 		
 		connect.put("total", json);
 		writer.put("type", "gameScreen");
-		writer.put("data", connect);
+		writer.put("data", connect.toString());
 		try {
 			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
 			out.write(writer.toString());

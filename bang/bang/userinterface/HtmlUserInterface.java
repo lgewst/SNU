@@ -69,8 +69,6 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askPlay(Player player, ArrayList<Player> players) {
-
-		writeFunctions.writeAskPlay(player, players);
 		
 		Hand hand = player.getHand();
 		int index = -2;
@@ -78,12 +76,13 @@ public class HtmlUserInterface extends UserInterface{
 		while(true) {
 			try {
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-				debug.write("askPlay");
+				debug.write("askPlay for" + player.getCharacter().getName());
 				debug.newLine();
 				debug.close();
 			} catch (IOException e) {
 			}
 			try {
+				writeFunctions.writeAskPlay(player, players);
 				lastPlayTime = System.currentTimeMillis();
 				index = Integer.parseInt(readFile());
 				lastPlayTime = -1;
