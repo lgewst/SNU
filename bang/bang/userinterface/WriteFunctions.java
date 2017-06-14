@@ -52,9 +52,10 @@ public class WriteFunctions {
 			tmp = new JSONObject();
 
 			if (players.contains(player))
-				tmp.put("job", player.getJob().toJsonKnown());
-			else
 				tmp.put("job", player.getJob().toJsonUnknown());
+			else
+				tmp.put("job", player.getJob().toJsonKnown());
+			
 			tmp.put("character", player.getCharacter().toJson());
 			tmp.put("curLife", player.getHealth());
 			tmp.put("maxLife", player.getMaxHealth());
