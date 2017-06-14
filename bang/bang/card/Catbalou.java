@@ -23,12 +23,12 @@ public class Catbalou extends Card {
 		ArrayList<Player> targets = targets(currentPlayer, players);
 		Card removed_card = null;
 		
-		int index = userInterface.askTarget(currentPlayer, targets);	//TODO: ask target
+		int index = userInterface.askTarget(currentPlayer, targets);
 		if (index == -1)
 			return false;
 
 		Player targetPlayer = targets.get(index);
-		index = userInterface.askTargetCard(currentPlayer, targetPlayer);	//TODO: ask card
+		index = userInterface.askTargetCard(currentPlayer, targetPlayer);
 
 		if (index == -3)
 			return false;

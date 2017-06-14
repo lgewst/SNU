@@ -120,9 +120,8 @@ public class HelpFunctions {
 	public void deathPlayer(Player damager, Player damagee, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		damagee.setHealth(0);
 		players.remove(damagee);
-		//TODO:
-		userInterface.getWriteFunctions().writeDead(damager, damagee);
 		
+		userInterface.getWriteFunctions().writeDead(damagee, damager);
 		if (!isGameover(players)) {
 			//TODO: character ability
 			if(damager.getCharacter().equals("Vulture Sam"))
@@ -144,7 +143,6 @@ public class HelpFunctions {
 
 	public void damagePlayer(Player damager, Player damagee, int damage, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {		
 		int health = damagee.getHealth() - damage;
-		userInterface.getWriteFunctions().writeLostLife(damagee, damage, health);
 		
 		// TODO: character ability
 		if (damagee.getCharacter().getName().equals("Bart Cassidy"))
@@ -165,8 +163,10 @@ public class HelpFunctions {
 		}
 		if (health <= 0)
 			deathPlayer(damager, damagee, players, deck, discard, userInterface);
-		else
+		else {
+			userInterface.getWriteFunctions().writeLostLife(damagee, damage, health);			
 			damagee.setHealth(health);
+		}
 	}
 
 	public ArrayList<Player> getOthers(Player currentPlayer, ArrayList<Player> players) {

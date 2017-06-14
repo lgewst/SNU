@@ -1,8 +1,5 @@
 package bang.card;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import bang.Deck;
@@ -23,46 +20,10 @@ public class Wellsfargo extends Card{
 	}
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) {
-		try {
-			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("Wellsfargo");
-			debug.newLine();
-			debug.close();
-		} catch (IOException e) {
-		}
 		discard.add(this);
-		try {
-			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("Wellsfargo2");
-			debug.newLine();
-			debug.close();
-		} catch (IOException e) {
-		}
-		Card card = HelpFunctions.peekDeck(deck, discard);
-		try {
-			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("Wellsfargo3");
-			debug.newLine();
-			debug.close();
-		} catch (IOException e) {
-		}
-		currentPlayer.getHand().add(card);
-		try {
-			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("Wellsfargo4");
-			debug.newLine();
-			debug.close();
-		} catch (IOException e) {
-		}
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
-		try {
-			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-			debug.write("Wellsfargo5");
-			debug.newLine();
-			debug.close();
-		} catch (IOException e) {
-		}
+		currentPlayer.getHand().add(HelpFunctions.peekDeck(deck, discard));
 		return true;
 	}
 

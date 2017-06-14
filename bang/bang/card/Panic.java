@@ -27,9 +27,9 @@ public class Panic extends Card{
 		int index = userInterface.askTarget(currentPlayer, targets);
 		if (index == -1)
 			return false;
-		Player targetPlayer = targets.get(index);	//TODO: ask target
+		Player targetPlayer = targets.get(index);
 		Hand hand = currentPlayer.getHand();
-		index = userInterface.askTargetCard(currentPlayer, targetPlayer);	//TODO: ask card
+		index = userInterface.askTargetCard(currentPlayer, targetPlayer);
 
 		if (index == -3)
 			return false;
