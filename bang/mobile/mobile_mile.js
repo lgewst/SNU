@@ -374,3 +374,19 @@ MILE.on('dead', function(data,from){
         }
     }, 1000);
 });
+
+MILE.on('gameover', function(data, from){
+    $.mobile.changePage('#gameover');
+    var info = JSON.parse(data);
+    var winner = info.winner;
+    var amI = info.amI;
+    var win;
+    if(amI){
+        win = "Win.";
+    }
+    else{
+        win = "Lose.";
+    }
+    var gameOverStr = "<p>Game Over.</p><p>You " + win + "</p><p>Winner: " +winner + "\n</p>";
+    $('#overScreen').append(gameOverStr);
+});
