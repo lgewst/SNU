@@ -22,7 +22,7 @@ public class Bang extends Card{
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		ArrayList<Player> targets = targets(currentPlayer, players);
-		int index = userInterface.askTarget(currentPlayer, targets);	//TODO
+		int index = userInterface.askTarget(currentPlayer, targets);
 		if (index == -1)
 			return false;
 

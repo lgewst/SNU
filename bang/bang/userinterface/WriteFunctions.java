@@ -37,10 +37,7 @@ public class WriteFunctions{
     json.put("mountedCards", player.getMounting().toJSONObject());
 	json.put("dead", !players.contains(player));
 	
-    if (index == game.getCurrentPlayer_index() + 1)
-    	json.put("inHandCards", player.getHand().toJSONArray());
-    else
-    	json.put("inHandCards", player.getHand().toJSONArray());
+   	json.put("inHandCards", player.getHand().toJSONArray());
 
     writer.put("type", "playerInfo");
     writer.put("data", json.toString());
@@ -96,7 +93,11 @@ public class WriteFunctions{
     JSONObject json = new JSONObject();
     JSONObject hand = new JSONObject();
 
-    json.put("job", player.getJob().toJsonUnknown());
+    if (players.contains(player))
+    	json.put("job", player.getJob().toJsonUnknown());
+    else
+    	json.put("job", player.getJob().toJsonKnown());
+    
     json.put("character", player.getCharacter().toJson());
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
@@ -141,8 +142,16 @@ public class WriteFunctions{
     }
   }
 
-  public void writeAskDiscard(int write_index) {
-	Player player = game.getPlayers_Info().get(write_index-1);
+  public void writeAskDiscard(Player player) {
+	int write_index = 0;
+	ArrayList<Player> players_Info = game.getPlayers_Info();
+	for(int i = 0; i < players_Info.size(); i++) {
+		if (players_Info.get(i) == player) {
+			write_index = i + 1;
+			break;
+		}
+	}
+	
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
 

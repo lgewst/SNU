@@ -16,7 +16,6 @@ public class Game {
 	private ArrayList<Player> players_info;
 	private Deck deck;
 	private Discard discard;
-	private int currentPlayer_index;
 	private Player currentPlayer;
 	private HelpFunctions HelpFunctions = new HelpFunctions();
 	private UserInterface userInterface;
@@ -81,8 +80,8 @@ public class Game {
 			players_info.add(tmp_player);
 			if (roles.get(i).equals("Sheriff")) {
 				currentPlayer = tmp_player;
-				currentPlayer_index = i;
-				writeFunctions.writePlayer(currentPlayer_index + 1);
+//				currentPlayer_index = i;
+				writeFunctions.writePlayer(currentPlayer);
 			}
 		}
 	}
@@ -136,7 +135,7 @@ public class Game {
 			}
 			
 			Hand hand = currentPlayer.getHand();
-			int index = userInterface.askPlay(currentPlayer_index, currentPlayer, players);
+			int index = userInterface.askPlay(currentPlayer, players);
 			
 			if (index == -1)
 				break;
@@ -153,7 +152,7 @@ public class Game {
 	private void phase3() {
 		Hand hand = currentPlayer.getHand();
 		while (hand.size() > currentPlayer.getHealth()) {
-			int index = userInterface.askDiscard(currentPlayer_index, currentPlayer);
+			int index = userInterface.askDiscard(currentPlayer);
 			discard.add(hand.remove(index));
 		}
 	}
@@ -167,19 +166,13 @@ public class Game {
 					phase2();
 					currentPlayer.setCanBang(false);
 					phase3();
-					writeFunctions.writePlayer(currentPlayer_index + 1);
 				}
 			} catch (EndofGameException e) {
 				String winner = HelpFunctions.getWinner(players);
 				System.out.println(winner);
 			}
+			writeFunctions.writePlayer(currentPlayer);
 			currentPlayer = HelpFunctions.getNextPlayer(currentPlayer, players);
-			for (int i = 0; i < players.size(); i++) {
-				if (players.get(i) == currentPlayer) {
-					currentPlayer_index = i;
-					break;
-				}
-			}
 		}
 	}
 
@@ -189,9 +182,5 @@ public class Game {
 
 	public ArrayList<Player> getPlayers() {
 		return players;
-	}
-	
-	public int getCurrentPlayer_index() {
-		return currentPlayer_index;
 	}
 }

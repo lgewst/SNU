@@ -157,7 +157,6 @@ public class HelpFunctions {
 				if (index == -1)
 					break;
 				health++;
-				userInterface.getWriteFunctions().writeAddLife(damagee, 1, health);
 				Card card = damagee.getHand().remove(index);
 				discard.add(card);
 			}

@@ -68,7 +68,7 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
+	public int askPlay(Player player, ArrayList<Player> players) {
 
 		writeFunctions.writeAskPlay(player, players);
 		
@@ -105,8 +105,8 @@ public class HtmlUserInterface extends UserInterface{
 	}
 
 	@Override
-	public int askDiscard(int Player_index, Player player) {
-		writeFunctions.writeAskDiscard(Player_index + 1);
+	public int askDiscard(Player player) {
+		writeFunctions.writeAskDiscard(player);
 		Hand hand = player.getHand();
 		int index = -2;
 

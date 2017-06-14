@@ -28,7 +28,7 @@ public class Generalstore extends Card{
 
 		Player t_player = currentPlayer;
 		for (int i = 0; i < n; i++) {
-			int index = userInterface.chooseGeneralStore(cardList);	//TODO: ask card
+			int index = userInterface.chooseGeneralStore(cardList);
 			t_player.getHand().add(cardList.remove(index));
 			t_player = HelpFunctions.getNextPlayer(t_player, players);
 		}
