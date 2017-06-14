@@ -117,9 +117,12 @@ public class HelpFunctions {
 		}
 	}
 
-	public void deathPlayer(Player damager, Player damagee, ArrayList<Player> players, Deck deck, Discard discard) throws EndofGameException {
+	public void deathPlayer(Player damager, Player damagee, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		damagee.setHealth(0);
 		players.remove(damagee);
+		//TODO:
+		userInterface.getWriteFunctions().writeDead(damager, damagee);
+		
 		if (!isGameover(players)) {
 			//TODO: character ability
 			if(damager.getCharacter().equals("Vulture Sam"))
@@ -161,7 +164,7 @@ public class HelpFunctions {
 			}
 		}
 		if (health <= 0)
-			deathPlayer(damager, damagee, players, deck, discard);
+			deathPlayer(damager, damagee, players, deck, discard, userInterface);
 		else
 			damagee.setHealth(health);
 	}

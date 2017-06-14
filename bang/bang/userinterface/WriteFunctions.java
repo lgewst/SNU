@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import org.json.simple.*;
 import bang.Player;
+import bang.card.Card;
 import bang.Game;
 import bang.HelpFunctions;
 
@@ -33,6 +34,8 @@ public class WriteFunctions{
     json.put("curLife", player.getHealth());
     json.put("maxLife", player.getMaxHealth());
     json.put("mountedCards", player.getMounting().toJSONObject());
+	json.put("dead", !players.contains(player));
+	
     if (index == game.getCurrentPlayer_index() + 1)
     	json.put("inHandCards", player.getHand().toJSONArray());
     else
@@ -72,10 +75,8 @@ public class WriteFunctions{
 	    json.put("curLife", player.getHealth());
 	    json.put("maxLife", player.getMaxHealth());
 	    json.put("mountedCards", player.getMounting().toJSONObject());
-	    if (write_index == game.getCurrentPlayer_index() + 1)
-	    	json.put("inHandCards", player.getHand().toJSONArray());
-	    else
-	    	json.put("inHandCards", player.getHand().toJSONArray());
+    	json.put("inHandCards", player.getHand().toJSONArray());
+    	json.put("dead", !players.contains(player));
 
 	    writer.put("type", "playerInfo");
 	    writer.put("data", json.toString());
@@ -89,6 +90,7 @@ public class WriteFunctions{
 
   public void writeOtherPlyaer(int index, int write_index) {
 	Player player = game.getPlayers_Info().get(index-1);
+	ArrayList<Player> players = game.getPlayers();
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
     JSONObject hand = new JSONObject();
@@ -101,6 +103,7 @@ public class WriteFunctions{
     hand.put("image", "../cards/playing card(back).jpg");
     hand.put("num", player.getHand().size());
     json.put("inHandCards", hand);
+	json.put("dead", !players.contains(player));
 
     writer.put("type", "otherPlayerInfo");
     writer.put("data", json.toString());
@@ -339,6 +342,60 @@ public class WriteFunctions{
 	  json.put("remain", health);
 
 	  writer.put("type", "addLife");
+	  writer.put("data", json.toString());
+	  try {
+	    out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+	    out.write(writer.toString());
+	    out.close();
+	  } catch(IOException e) {
+	  }
+  }
+
+  public void writeLoseCard(Player target, Player attacker, Card card) {
+	  int write_index = 0;
+	  ArrayList<Player> players_Info = game.getPlayers_Info();
+	  for(int i = 0; i < players_Info.size(); i++) {
+		  if (players_Info.get(i) == target) {
+			  write_index = i + 1;
+			  break;
+		  }
+	  }
+
+	  JSONObject writer = new JSONObject();
+	  JSONObject json = new JSONObject();
+
+	  json.put("who", attacker.getCharacter().getName());
+	  json.put("card", card.getName());
+
+	  writer.put("type", "loseCard");
+	  writer.put("data", json.toString());
+	  try {
+	    out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
+	    out.write(writer.toString());
+	    out.close();
+	  } catch(IOException e) {
+	  }
+  }
+
+  public void writeDead(Player player, Player attacker) {
+	  int write_index = 0;
+	  ArrayList<Player> players_Info = game.getPlayers_Info();
+	  for(int i = 0; i < players_Info.size(); i++) {
+		  if (players_Info.get(i) == player) {
+			  write_index = i + 1;
+			  break;
+		  }
+	  }
+
+	  JSONObject writer = new JSONObject();
+	  JSONObject json = new JSONObject();
+
+	  if (attacker != null)
+		  json.put("who", attacker.getCharacter().getName());
+	  else
+		  json.put("who", "Dynamite");
+
+	  writer.put("type", "dead");
 	  writer.put("data", json.toString());
 	  try {
 	    out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(write_index) + ".txt"));
