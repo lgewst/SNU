@@ -36,8 +36,12 @@ public class HtmlUserInterface extends UserInterface{
 		debug.newLine();
 		debug.close();
 		while(true) {
-			if (lastPlayTime != -1 && System.currentTimeMillis() - lastPlayTime > 10000)
+			if (lastPlayTime != -1 && System.currentTimeMillis() - lastPlayTime > 10000) {
+				debug.write("last play time: " + Long.toString(lastPlayTime) + " now time: " + Long.toString(System.currentTimeMillis()));
+				debug.newLine();
+				lastPlayTime = System.currentTimeMillis();
 				return "-2";
+			}
 			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
 
