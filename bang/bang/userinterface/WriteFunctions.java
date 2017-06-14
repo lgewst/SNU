@@ -18,9 +18,10 @@ public class WriteFunctions{
   }
 
   public void writePlayer(int index) {
+    ArrayList<Player> players_Info = game.getPlayers_Info();
     ArrayList<Player> players = game.getPlayers();
-    Player player = game.getPlayers_Info().get(index - 1);
-    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players);
+    Player player = players_Info.get(index - 1);
+    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players_Info);
 
     JSONObject writer = new JSONObject();
     JSONObject json = new JSONObject();
@@ -53,10 +54,10 @@ public class WriteFunctions{
 
   public void writePlayer(Player player) {
 	    ArrayList<Player> players = game.getPlayers();
-	    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players);
-
 		int write_index = 0;
 		ArrayList<Player> players_Info = game.getPlayers_Info();
+	    ArrayList<Player> otherPlayers = HelpFunctions.getOthers(player, players_Info);
+
 		for(int i = 0; i < players_Info.size(); i++) {
 			if (players_Info.get(i) == player) {
 				write_index = i + 1;

@@ -1,5 +1,8 @@
 package bang.card;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import bang.Deck;
@@ -27,7 +30,15 @@ public class Duel extends Card{
 			return false;
 		discard.add(this);
 		Player targetPlayer = targets.get(index);
-
+		
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Duel 1");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		
 		while(true) {
 			index = -1;
 			if (currentPlayer.getHand().hasBang())
@@ -39,6 +50,14 @@ public class Duel extends Card{
 				break;
 			}
 			discard.add(currentPlayer.getHand().remove(index));
+			
+			try {
+				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("Duel 2");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
 
 			index = -1;
 			if (targetPlayer.getHand().hasBang())
@@ -50,6 +69,14 @@ public class Duel extends Card{
 				break;
 			}
 			discard.add(targetPlayer.getHand().remove(index));
+
+			try {
+				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("Duel 3");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
 		}
 		return true;
 	}

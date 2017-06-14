@@ -356,7 +356,7 @@ MILE.on('dead', function(data,from){
     $.mobile.changePage('#alert');
     var info = JSON.parse(data);
     var who = info.who;
-    var sentence = "<p> Your character is now dead by" + who + ".</p>";
+    var sentence = "<p> Your character is now dead by " + who + ".</p>";
     var counter = 3;
     $('#alertMain').empty();
     $('#alertMain').append(sentence);

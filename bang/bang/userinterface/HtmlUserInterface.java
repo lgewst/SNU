@@ -37,8 +37,10 @@ public class HtmlUserInterface extends UserInterface{
 		debug.close();
 		while(true) {
 			if (lastPlayTime != -1 && System.currentTimeMillis() - lastPlayTime > 10000) {
+				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 				debug.write("last play time: " + Long.toString(lastPlayTime) + " now time: " + Long.toString(System.currentTimeMillis()));
 				debug.newLine();
+				debug.close();
 				lastPlayTime = System.currentTimeMillis();
 				return "-2";
 			}
@@ -69,7 +71,6 @@ public class HtmlUserInterface extends UserInterface{
 	public int askPlay(int Player_index, Player player, ArrayList<Player> players) {
 
 		writeFunctions.writeAskPlay(player, players);
-		lastPlayTime = System.currentTimeMillis();
 		
 		Hand hand = player.getHand();
 		int index = -2;
@@ -83,6 +84,7 @@ public class HtmlUserInterface extends UserInterface{
 			} catch (IOException e) {
 			}
 			try {
+				lastPlayTime = System.currentTimeMillis();
 				index = Integer.parseInt(readFile());
 				lastPlayTime = -1;
 				
