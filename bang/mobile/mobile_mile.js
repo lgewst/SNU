@@ -90,7 +90,8 @@ MILE.on('playerInfo', function(data, from) {
     if(isDead){
         $('#cards').remove();
         $('#life').remove();
-        $('#status').append('<p style=\"font-size: 15px\">Dead player</p>');
+        $('#deadString').remove();
+        $('#status').append('<p id="deadString" style="font-size: 15px">Dead player</p>');
     }
 });
 MILE.on('otherPlayerInfo', function(data, from){
@@ -148,7 +149,8 @@ MILE.on('otherPlayerInfo', function(data, from){
     if(isDead){
         $('#othersCards').remove();
         $('#othersLife').remove();
-        $('#othersStatus').append('<p style=\"font-size: 15px\">Dead player</p>');
+        $('#deadString').remove();
+        $('#othersStatus').append('<p id="deadString" style=\"font-size: 15px\">Dead player</p>');
     }
 });
 MILE.on('respondCardInfo', function(data, from){
@@ -273,7 +275,7 @@ MILE.on('askTargetCard', function(data, from){
     var inHandNum = targetCardList.inHand.num;
     $('#selectTargetCardSentence').empty();
     $('#targetWeaponCardsList').empty();
-    $('#targetConditionCardslist').empty();
+    $('#targetConditionCardsList').empty();
     $('#targetInHandCardsList').empty();
     var helpStr = "You should choose target card from " + who +"." ;
     $('#selectTargetCardSentence').append();

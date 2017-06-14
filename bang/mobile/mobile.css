@@ -18,6 +18,9 @@
     display: inline;
     float: left;
 }
+#deadString{
+    margin-top: 150px;
+}
 #othersContents {
     font-size: 12px;
     max-width: 240px;
