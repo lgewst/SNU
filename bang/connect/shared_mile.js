@@ -3,6 +3,7 @@ MILE.on("gameScreen", function(data, from){
     var totalInfo = JSON.parse(data);
     var total = totalInfo.total;
     var numPlayer = total.length;
+    $('#mainPage').empty();
     for(i = 0; i < numPlayer; i ++){
         var playerN = "<div id=\"player" + i + "\">";
         var info = total[i];
@@ -19,7 +20,7 @@ MILE.on("gameScreen", function(data, from){
         var charEffect = character.effect;
         var jobName = job.name;
         var jobImage = job.image;
-        var information = "<div id='status" + i + "' <img src='" + charImage + "' width='50' heigth='100'> <img src='" + jobImage + "'width='50' height='100'> <p>" + charName + "</p><p>EFFECT: " + charEffect + "</p><p>LIFE(cur/max): " + curLife + "/" + maxLife + "</p><p> In Hand: " + inHand +"</p> </div>";
+        var information = "<div id='images'> <img src='" + charImage + "' width='50' heigth='100'> <img src='" + jobImage + "'width='50' height='100'></div> <div id='contents'> <p>" + charName + "</p><p>EFFECT: " + charEffect + "</p><p>LIFE(cur/max): " + curLife + "/" + maxLife + "</p><p> In Hand: " + inHand +"</p> </div> <div id='cards'>";
         playerN = playerN + information;
         if(!isDead){
             var totalImage = ""

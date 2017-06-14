@@ -30,6 +30,23 @@ img{
     font-family: bang;
     font-size: 64px;
 }
+#images{
+    display: inline;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#contents{
+    font-size: 12px;
+    max-width: 220px;
+    float: left;
+}
+#cards{
+    float: left;
+    margin-left: 10px;
+
+}
 
 #player0{
     position: absolute;
@@ -38,7 +55,7 @@ img{
     left: 100px;
     top: 20px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 #player1{
     position: absolute;
@@ -47,7 +64,7 @@ img{
     left: 100px;
     bottom: 20px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 #player2{
     position: absolute;
@@ -56,7 +73,7 @@ img{
     left: 900px;
     bottom: 20px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 #player3{
     position: absolute;
@@ -65,7 +82,7 @@ img{
     left: 900px;
     top: 20px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 #player4{
     position: absolute;
@@ -74,7 +91,7 @@ img{
     left: 20px;
     top: 40%;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 #player5{
     position: absolute;
@@ -83,7 +100,7 @@ img{
     left: 500px;
     top: 20px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 #player6{
     position: absolute;
@@ -92,5 +109,5 @@ img{
     left: 500px;
     bottom: 20px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 10px;
 }
