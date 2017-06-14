@@ -43,9 +43,9 @@ img{
     float: left;
 }
 #cards{
+    clear: both;
     float: left;
     margin-left: 10px;
-
 }
 
 #player0{
