@@ -41,6 +41,7 @@ MILE.on('playerInfo', function(data, from) {
     var inHand = info.inHandCards; //array
     var weapon = mounted.weapon;
     var condition = mounted.condition;
+    var isDead = info.dead;
 
     var jobImage = "<img src=\"" + job.image + "\" width=\"50\" height=\"100\">";
     var jobName = "<p id=\"jobName\"> JOB: " + job.name + "</p>";
@@ -86,7 +87,7 @@ MILE.on('playerInfo', function(data, from) {
         var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\" >" + cardImageN + "</div>";
         $('#inHandCardsList').append(cardDiv);
     }
-    if(dead){
+    if(isDead){
         $('#cards').remove();
         $('#life').remove();
         $('#status').append('<p style=\"font-size: 15px\">Dead player</p>');
@@ -144,7 +145,7 @@ MILE.on('otherPlayerInfo', function(data, from){
         var cardDiv = "<div id=\"inHandCard" + i + "\" style=\"display: inline;\">" + inHandCardBack + "</div>";
         $('#othersInHandCardsList').append(cardDiv);
     }
-    if(dead){
+    if(isDead){
         $('#othersCards').remove();
         $('#life').remove();
         $('#othersStatus').append('<p style=\"font-size: 15px\">Dead player</p>');

@@ -51,6 +51,7 @@ public class Game {
 				json.put("maxLife", player.getMaxHealth());
 				json.put("mountedCards", player.getMounting().toJSONObject());
 				json.put("inHandCards", player.getHand().toJSONArray());
+				json.put("dead", false);
 
 				outPlayers.write(json.toString()); outPlayers.newLine();
 			}
