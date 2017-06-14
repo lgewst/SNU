@@ -1,7 +1,6 @@
 MILE.on("gameScreen", function(data, from){
     $.mobile.changePage('#sharedMain');
     var totalInfo = JSON.parse(data);
-    console.log("asdf");
     var total = totalInfo.total;
     var numPlayer = total.length;
     for(i = 0; i < numPlayer; i ++){
