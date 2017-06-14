@@ -7,6 +7,7 @@ import bang.Player;
 import bang.card.Card;
 import bang.Game;
 import bang.HelpFunctions;
+import bang.Job;
 
 public class WriteFunctions {
 	BufferedWriter out;
@@ -521,6 +522,46 @@ public class WriteFunctions {
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
+		}
+	}
+
+	public void writeGameover(String winner) {
+		JSONObject connect = new JSONObject();
+
+		if (winner.equals("Sheriff"))
+			connect.put("winner", "Sheriff & Deputy");
+		else
+			connect.put("winner", winner);
+		connect.put("condition", new Job(winner).getGoal());
+		
+		JSONObject writer = new JSONObject();
+		writer.put("type", "gameover");
+		writer.put("data", connect.toString());
+		try {
+			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out.write(writer.toString());
+			out.close();
+		} catch (IOException e) {
+		}
+		
+		for(int i = 0; i < game.getPlayers_Info().size(); i++) {
+			JSONObject json = new JSONObject();
+			Player player = game.getPlayers_Info().get(i);
+			
+			json.put("amI", player.getCharacter().getName().equals(winner) ||
+					(player.getCharacter().getName().equals("Deputy") && winner.equals("Sheriff")));
+			if (winner.equals("Sheriff"))
+				json.put("winner", "Sheriff & Deputy");
+			
+			writer = new JSONObject();
+			writer.put("type", "gameover");
+			writer.put("data", json.toString());
+			try {
+				out = new BufferedWriter(new FileWriter("text/java2js_" + Integer.toString(i + 1) + ".txt"));
+				out.write(writer.toString());
+				out.close();
+			} catch (IOException e) {
+			}
 		}
 	}
 }

@@ -77,7 +77,6 @@ MILE.on('gameover', function(data, from){
     var info = JSON.parse(data);
     var winner = info.winner;
     var condition = info.condition;
-    var gameOverStr = "<p>Game Over.</p><p>Winner: " +winner + "</p><p>Condition: "+ condition + "</p> ;
+    var gameOverStr = "<p>Game Over.</p><p>Winner: " +winner + "</p><p>Condition: "+ condition + "</p>";
     $('#overScreen').append(gameOverStr);
-
 });

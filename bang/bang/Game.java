@@ -192,7 +192,7 @@ public class Game {
 				}
 			} catch (EndofGameException e) {
 				String winner = HelpFunctions.getWinner(players);
-				System.out.println(winner);
+				writeFunctions.writeGameover(winner);
 			}
 			writeFunctions.writePlayer(currentPlayer);
 			currentPlayer = HelpFunctions.getNextPlayer(currentPlayer, players);

@@ -71,7 +71,8 @@ public class HelpFunctions {
 			return "Renegade";
 		else if(deadJob(players, "Sheriff"))
 			return "Outlaw";
-		return "Sheriff & Deputy";
+		return "Sheriff";
+//		return "Sheriff & Deputy";
 	}
 
 	public boolean isGameover(ArrayList<Player> players) {
