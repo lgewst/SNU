@@ -22,7 +22,8 @@ public class Gatling extends Card{
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		discard.add(this);
-
+		userInterface.getWriteFunctions().writePublicAction(currentPlayer, "Gatling");
+		
 		for (Player player: HelpFunctions.getOthers(currentPlayer, players)) {
 			int miss_count = 1;
 			if (player.getMounting().hasCard("Barrel")) {

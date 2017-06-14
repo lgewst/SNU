@@ -42,6 +42,7 @@ public class Catbalou extends Card {
 			removed_card = targetPlayer.getMounting().remove(index);
 		
 		discard.add(removed_card);
+		userInterface.getWriteFunctions().writePersonalAction(currentPlayer, targetPlayer, "Cat balou");
 		userInterface.getWriteFunctions().writeLoseCard(targetPlayer, currentPlayer, removed_card);
 //		userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;

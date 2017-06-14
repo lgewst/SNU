@@ -23,7 +23,7 @@ public class Saloon extends Card{
 			if (health > player.getMaxHealth())
 				health = player.getMaxHealth();
 			else {
-				userInterface.getWriteFunctions().writeAddLife(player, 1, health);
+				userInterface.getWriteFunctions().writeAddLife(player, 1, health, currentPlayer);
 				player.setHealth(health);
 			}
 		}

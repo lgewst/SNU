@@ -164,7 +164,7 @@ public class HelpFunctions {
 		if (health <= 0)
 			deathPlayer(damager, damagee, players, deck, discard, userInterface);
 		else {
-			userInterface.getWriteFunctions().writeLostLife(damagee, damage, health);			
+			userInterface.getWriteFunctions().writeLostLife(damagee, damage, health, damager);			
 			damagee.setHealth(health);
 		}
 	}

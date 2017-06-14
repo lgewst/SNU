@@ -38,6 +38,7 @@ public class Bang extends Card{
 
 		discard.add(this);
 		Player targetPlayer = targets.get(index);
+		userInterface.getWriteFunctions().writePersonalAction(currentPlayer, targetPlayer, "Bang");
 		int miss_count = 1;
 		
 		//TODO: character ability

@@ -43,6 +43,7 @@ public class Panic extends Card{
 
 		hand.add(removed_card);
 		userInterface.getWriteFunctions().writeLoseCard(targetPlayer, currentPlayer, removed_card);
+		userInterface.getWriteFunctions().writePersonalAction(currentPlayer, targetPlayer, "Panic");
 //		userInterface.getWriteFunctions().writePlayer(targetPlayer);
 		return true;
 	}

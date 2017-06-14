@@ -22,6 +22,8 @@ public class Indians extends Card{
 
 	public boolean play(Player currentPlayer, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		discard.add(this);
+		userInterface.getWriteFunctions().writePublicAction(currentPlayer, "Indians");
+		
 		for (Player player: HelpFunctions.getOthers(currentPlayer, players)) {
 			int bang_count = 1;
 			int index = -1;

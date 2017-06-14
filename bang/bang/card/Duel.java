@@ -30,6 +30,7 @@ public class Duel extends Card{
 			return false;
 		discard.add(this);
 		Player targetPlayer = targets.get(index);
+		userInterface.getWriteFunctions().writePersonalAction(currentPlayer, targetPlayer, "Duel");
 		
 		try {
 			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
