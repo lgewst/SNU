@@ -90,6 +90,7 @@ MILE.on('playerInfo', function(data, from) {
         $('#cards').remove();
         $('#life').remove();
         $('#status').append('<p style=\"font-size: 15px\">Dead player</p>');
+    }
 });
 MILE.on('otherPlayerInfo', function(data, from){
     $.mobile.changePage('#playerInfo');
