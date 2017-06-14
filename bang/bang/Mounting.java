@@ -73,4 +73,16 @@ public class Mounting {
 		
 		return json;
 	}
+
+	public JSONArray toJSONArray() {
+		JSONArray json = new JSONArray();
+		
+		if(gun != null)
+			json.add(gun.getImageName());
+		
+		for(Card card: mounting)
+			json.add(card.getImageName());
+		
+		return json;
+	}
 }

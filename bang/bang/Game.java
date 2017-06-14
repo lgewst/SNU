@@ -80,7 +80,6 @@ public class Game {
 			players_info.add(tmp_player);
 			if (roles.get(i).equals("Sheriff")) {
 				currentPlayer = tmp_player;
-//				currentPlayer_index = i;
 				writeFunctions.writePlayer(currentPlayer);
 			}
 		}
@@ -125,6 +124,14 @@ public class Game {
 
 	private void phase2() throws EndofGameException {
 		while (true) {
+			try {
+				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write(currentPlayer.getCharacter().getName() + "turn");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
+		
 			//TODO: character ability
 			for (Player player: players) {
 				if(player.getCharacter().getName().equals("Suzy Lafayette")) {
@@ -144,8 +151,17 @@ public class Game {
 			if (playedCard.play(currentPlayer, players, deck, discard, userInterface))
 				hand.remove(index);
 
-			if (!players.contains(currentPlayer))
+			if (!players.contains(currentPlayer)) {
+				try {
+				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("Fucking");
+				debug.newLine();
+				debug.close();
+				} catch (IOException e) {
+				}
+			
 				break;
+			}
 		}
 	}
 
@@ -165,6 +181,13 @@ public class Game {
 					currentPlayer.setCanBang(true);
 					phase2();
 					currentPlayer.setCanBang(false);
+					try {
+						BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+						debug.write(currentPlayer.getCharacter().getName() + " turn end");
+						debug.newLine();
+						debug.close();
+					} catch (IOException e) {
+					}
 					phase3();
 				}
 			} catch (EndofGameException e) {

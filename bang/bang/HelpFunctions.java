@@ -1,5 +1,8 @@
 package bang;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import bang.userinterface.UserInterface;
@@ -119,7 +122,32 @@ public class HelpFunctions {
 
 	public void deathPlayer(Player damager, Player damagee, ArrayList<Player> players, Deck deck, Discard discard, UserInterface userInterface) throws EndofGameException {
 		damagee.setHealth(0);
+
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write(damagee.getCharacter().getName() + " is dead");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write(damager.getCharacter().getName() + " turn");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		
 		players.remove(damagee);
+		
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write(damagee.getCharacter().getName() + " is removed from players");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
+		}
+		
 		
 		userInterface.getWriteFunctions().writeDead(damagee, damager);
 		if (!isGameover(players)) {
@@ -136,6 +164,15 @@ public class HelpFunctions {
 					damager.getHand().add(peekDeck(deck, discard));
 				}
 			}
+			
+			try {
+				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+				debug.write("sucess");
+				debug.newLine();
+				debug.close();
+			} catch (IOException e) {
+			}
+			
 		} else {
 			throw new EndofGameException();
 		}

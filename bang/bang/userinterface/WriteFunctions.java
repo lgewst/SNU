@@ -44,13 +44,11 @@ public class WriteFunctions {
 		JSONObject connect = new JSONObject();
 		JSONArray json = new JSONArray();
 		JSONObject tmp;
-		JSONObject hand;
 		
 		ArrayList<Player> players = game.getPlayers();
 		ArrayList<Player> players_Info = game.getPlayers_Info();
 		for(Player player: players_Info) {
 			tmp = new JSONObject();
-			hand = new JSONObject();
 
 			if (players.contains(player))
 				tmp.put("job", player.getJob().toJsonKnown());
@@ -59,12 +57,9 @@ public class WriteFunctions {
 			tmp.put("character", player.getCharacter().toJson());
 			tmp.put("curLife", player.getHealth());
 			tmp.put("maxLife", player.getMaxHealth());
-			tmp.put("mountedCards", player.getMounting().toJSONObject());
+			tmp.put("mountedCards", player.getMounting().toJSONArray());
 			tmp.put("dead", !players.contains(player));
-
-			hand.put("image", "../cards/playing card(back).jpg");
-			hand.put("num", player.getHand().size());
-			tmp.put("inHandCards", hand);
+			tmp.put("inHand", player.getHand().size());
 			
 			json.add(tmp);
 		}

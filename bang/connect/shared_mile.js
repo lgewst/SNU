@@ -1,6 +1,7 @@
 MILE.on("gameScreen", function(data, from){
     $.mobile.changePage('#sharedMain');
     var totalInfo = JSON.parse(data);
+    console.log("asdf");
     var total = totalInfo.total;
     var numPlayer = total.length;
     for(i = 0; i < numPlayer; i ++){
@@ -43,27 +44,31 @@ MILE.on('personalAction', function(data, from){
     var from = info.from;
     var to = info.to;
     var used = info.used;
-}
+});
+
 MILE.on('publicAction', function(data, from){
     var info = JSON.parse(data);
     var who = info.who;
     var used = info.used;
-}
+});
+
 MILE.on('loseLife', function(data, from){
     var info = JSON.parse(data);
     var who = info.who;
     var much = info.much;
     var by = info.by;
-}
+});
+
 MILE.on('gainLife', function(data, from){
     var info = JSON.parse(data);
     var who = info.who;
     var much = info.much;
     var by = info.by;
-}
+});
+
 MILE.on('dead', function(data, from){
     var info = JSON.parse(data);
     var who = info.who;
     var by = info.by;
     var job = info.job;
-}
+});
