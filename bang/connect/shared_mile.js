@@ -1,5 +1,41 @@
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+// navigator.serviceWorker.register('sw.js');
+Notification.requestPermission(function(result) {
+  if (result === 'granted') {
+    navigator.serviceWorker.ready.then(function(registration) {
+      registration.showNotification('Welcome to "Bang!" Board Game!', {
+          timeout: 3000
+      });
+      setTimeout(function () {
+          registration.close.bind(registration);
+      }, 3000);
+    });
+  }
+});
+
 MILE.on('game_start', function(data, from) {
     document.getElementById("$mile_status").setAttribute("hidden",true);
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Game Start!', {
+              body: '',
+              timeout: 3000
+          });
+        });
+      }
+    });
 });
 
 MILE.on("gameScreen", function(data, from){
@@ -48,14 +84,15 @@ MILE.on('personalAction', function(data, from){
     var _from = info.from;
     var to = info.to;
     var used = info.used;
-    Push.create(used, {
-        body: _from + " used " + used + " to " + to,
-        icon: '',
-        timeout: 3000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(used, {
+              body: _from + " used " + used + " to " + to,
+              timeout: 3000
+          });
+        });
+      }
     });
 });
 
@@ -63,15 +100,22 @@ MILE.on('publicAction', function(data, from){
     var info = JSON.parse(data);
     var who = info.who;
     var used = info.used;
-    Push.create(used, {
-        body: who + " used " + used,
-        icon: '',
-        timeout: 3000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
+
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(used, {
+              body: who + " used " + used,
+              timeout: 3000
+          });
+        });
+      }
     });
+    // self.registration.showNotification(used, {
+    //     body: who + " used " + used,
+    //     // tag: 'simple-push-demo-notification',
+    //     timeout: 3000
+    // });
 });
 
 MILE.on('loseLife', function(data, from){
@@ -79,15 +123,37 @@ MILE.on('loseLife', function(data, from){
     var who = info.who;
     var much = info.much;
     var by = info.by;
-    Push.create("Life changes", {
-        body: who + " loses life " + much +  " by " + by,
-        icon: '',
-        timeout: 3000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
+    var title = "Life changes";
+    var message = who + " loses life " + much + " by " + by;
+
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(title, {
+              body: message,
+              timeout: 3000
+          });
+        });
+      }
     });
+    // self.registration.showNotification(title, {
+    //     body: message,
+    //     tag: 'simple-push-demo-notification',
+    //     timeout: 3000
+    // });
+    // self.addEventListener('push', function() {
+    //     if (!(self.Notification && self.Notification.permission === 'granted')) {
+    //         console.log('ssibal');
+    //         return;
+    //     }
+    //     var title = "Life changes";
+    //     var message = who + " loses life " + much + " by " + by;
+    //     var notification = new self.registration.Notification(title, {
+    //         body: message,
+    //         tag: 'simple-push-demo-notification',
+    //         timeout: 3000
+    //     });
+    // });
 });
 
 MILE.on('gainLife', function(data, from){
@@ -95,14 +161,18 @@ MILE.on('gainLife', function(data, from){
     var who = info.who;
     var much = info.much;
     var by = info.by;
-    Push.create("Life changes", {
-        body: who + " gains life " + much +  " by " + by,
-        icon: '',
-        timeout: 3000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
+    var title = "Life changes";
+    var message = who + " gains life " + much + " by " + by;
+
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(title, {
+              body: message,
+              timeout: 3000
+          });
+        });
+      }
     });
 });
 
@@ -111,14 +181,16 @@ MILE.on('dead', function(data, from){
     var who = info.who;
     var by = info.by;
     var job = info.job;
-    Push.create("Player Dead", {
-        body: "Job: " + job + "\n" + who + " Dead " +  " by " + by,
-        icon: '',
-        timeout: 3000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
+
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Dead Player', {
+              body: 'Job: ' + job + '\n' + who + ' dead by ' + by,
+              timeout: 3000
+          });
+        });
+      }
     });
 });
 
@@ -128,14 +200,15 @@ MILE.on('gameover', function(data, from){
     var winner = info.winner;
     var condition = info.condition;
     var gameOverStr = "<p>Game Over.</p><p>Winner: " +winner + "</p><p>Condition: "+ condition + "</p>";
-    Push.create("Game Over", {
-        body: "The winner is " + winner,
-        icon: '',
-        timeout: 3000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Game over', {
+              body: 'The winner is ' + winner,
+              timeout: 3000
+          });
+        });
+      }
     });
     $('#overScreen').append(gameOverStr);
 });
