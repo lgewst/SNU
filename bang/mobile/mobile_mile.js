@@ -112,7 +112,7 @@ MILE.on('otherPlayerInfo', function(data, from){
     var characterImage = "<img src=\"" + character.image + "\" width=\"50\" height=\"100\">";
     var charName = "<p id=\"charName\"> CHARARCTER: " + character.name + "</p>";
     var charEffect = "<p id=\"charEffect\"> EFFECT: " + character.effect + "</p>";
-    var life = "<p id=\"life\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
+    var life = "<p id=\"othersLife\"> LIFE(cur/max): " + curLife + "/" + maxLife +"</p>"
 
     var inHandCardBack = "<img src=\"" + inHand.image + "\" width=\"50\" height=\"90\" >";
     var inHandCardNum = inHand.num;
@@ -146,7 +146,7 @@ MILE.on('otherPlayerInfo', function(data, from){
     }
     if(dead){
         $('#othersCards').remove();
-        $('#life').remove();
+        $('#othersLife').remove();
         $('#othersStatus').append('<p style=\"font-size: 15px\">Dead player</p>');
     }
 });
@@ -165,7 +165,6 @@ MILE.on('help', function(data, from){
     $.mobile.changePage('#cardExplain');
     $('#helpStr').empty();
     $('#helpStr').append(data);
-
 });
 MILE.on('askPlay', function(data, from){
     //my turn started, what card are you going to use?
