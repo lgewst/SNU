@@ -19,7 +19,7 @@ MILE.on("gameScreen", function(data, from){
         var charEffect = character.effect;
         var jobName = job.name;
         var jobImage = job.image;
-        var information = "<div id='status" + i + "' <img src='" + charImage + "' width='50' heigth='100'> <img src='" + jobImage + "'width='50' height='100'> <p>" + charName + "\nEFFECT: " + charEffect + "\nLIFE(cur/max): " + curLife + "/" + maxLife + "\n In Hand: " + inHand +"</p> </div>";
+        var information = "<div id='status" + i + "' <img src='" + charImage + "' width='50' heigth='100'> <img src='" + jobImage + "'width='50' height='100'> <p>" + charName + "</p><p>EFFECT: " + charEffect + "</p><p>LIFE(cur/max): " + curLife + "/" + maxLife + "</p><p> In Hand: " + inHand +"</p> </div>";
         playerN = playerN + information;
         if(!isDead){
             var totalImage = ""
@@ -30,7 +30,7 @@ MILE.on("gameScreen", function(data, from){
             playerN = playerN + totalImage;
         }
         else{
-            var dead = "<p style='font-size: 15px;'>Dead player\nJOB: " + job + "</p>";
+            var dead = "<p style='font-size: 15px;'>Dead player</p><p>JOB: " + job + "</p>";
             playerN = playerN + dead;
         }
         playerN = playerN + "</div>"
