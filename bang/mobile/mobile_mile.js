@@ -15,6 +15,7 @@ MILE.on('game_start', function(data, from) {
     console.log("From server considering ready: " + data);
     $('#willStart').empty();
     $('#willStart').append("Game will start in <span id=\"count\">5</span> seconds.");
+    document.getElementById("$mile_status").setAttribute("hidden",true);
     var counter = 5;
     setInterval(function(){
         counter--;

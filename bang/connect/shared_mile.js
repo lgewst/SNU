@@ -1,3 +1,7 @@
+MILE.on('game_start', function(data, from) {
+    document.getElementById("$mile_status").setAttribute("hidden",true);
+});
+
 MILE.on("gameScreen", function(data, from){
     $.mobile.changePage('#sharedMain');
     var totalInfo = JSON.parse(data);
@@ -41,15 +45,33 @@ MILE.on("gameScreen", function(data, from){
 
 MILE.on('personalAction', function(data, from){
     var info = JSON.parse(data);
-    var from = info.from;
+    var _from = info.from;
     var to = info.to;
     var used = info.used;
+    Push.create(used, {
+        body: _from + " used " + used + " to " + to,
+        icon: '',
+        timeout: 3000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 });
 
 MILE.on('publicAction', function(data, from){
     var info = JSON.parse(data);
     var who = info.who;
     var used = info.used;
+    Push.create(used, {
+        body: who + " used " + used,
+        icon: '',
+        timeout: 3000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 });
 
 MILE.on('loseLife', function(data, from){
@@ -57,6 +79,15 @@ MILE.on('loseLife', function(data, from){
     var who = info.who;
     var much = info.much;
     var by = info.by;
+    Push.create("Life changes", {
+        body: who + " loses life " + much +  " by " + by,
+        icon: '',
+        timeout: 3000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 });
 
 MILE.on('gainLife', function(data, from){
@@ -64,6 +95,15 @@ MILE.on('gainLife', function(data, from){
     var who = info.who;
     var much = info.much;
     var by = info.by;
+    Push.create("Life changes", {
+        body: who + " gains life " + much +  " by " + by,
+        icon: '',
+        timeout: 3000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 });
 
 MILE.on('dead', function(data, from){
@@ -71,6 +111,15 @@ MILE.on('dead', function(data, from){
     var who = info.who;
     var by = info.by;
     var job = info.job;
+    Push.create("Player Dead", {
+        body: "Job: " + job + "\n" + who + " Dead " +  " by " + by,
+        icon: '',
+        timeout: 3000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 });
 
 MILE.on('gameover', function(data, from){
@@ -79,5 +128,14 @@ MILE.on('gameover', function(data, from){
     var winner = info.winner;
     var condition = info.condition;
     var gameOverStr = "<p>Game Over.</p><p>Winner: " +winner + "</p><p>Condition: "+ condition + "</p>";
+    Push.create("Game Over", {
+        body: "The winner is " + winner,
+        icon: '',
+        timeout: 3000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
     $('#overScreen').append(gameOverStr);
 });

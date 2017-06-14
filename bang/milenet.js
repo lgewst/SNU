@@ -190,7 +190,7 @@ io.on('connection', function(socket){
         }
 
         //TODO: Setting gameStart Originally connections.length >= 5
-        if(connections.length >= 3 && connections.length <= 8) {
+        if(connections.length >= 5 && connections.length <= 8) {
             var tmpGameStart = true;
             for (var i = 1; i < connections.length; i++) {
                 if(connections[i].ready == false) {

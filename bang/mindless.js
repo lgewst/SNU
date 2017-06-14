@@ -168,6 +168,7 @@ var MILE = {
     var myidElm = document.createElement("span");
     var myidElmStyle = "position: absolute; left: 20px;";
     myidElm.setAttribute("style", myidElmStyle);
+    myidElm.setAttribute("hidden", true);
     myidElm.innerHTML = "ID: " + MILE.mileid;
     statusPanel.appendChild(myidElm);
     // show connected web apps on right side of the status panel
@@ -177,6 +178,7 @@ var MILE = {
         connElm = document.createElement("span");
         connElmStyle = "position: absolute; right: " + (connPos++ * 100 + 30) + "px;";
         connElm.setAttribute("style", connElmStyle);
+        connElm.setAttribute("hidden", true);
         connElm.innerHTML = MILE.connections[i];
         statusPanel.appendChild(connElm);
       }
