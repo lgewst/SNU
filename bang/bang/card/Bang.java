@@ -64,7 +64,8 @@ public class Bang extends Card{
 			}
 			if (index == -1)
 				break;
-			discard.add(targetPlayer.getHand().remove(index));
+			Card missed = targetPlayer.getHand().peek(index);
+			discard.add(targetPlayer.getHand().remove(missed));
 			miss_count--;
 		}
 

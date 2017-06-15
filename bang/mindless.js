@@ -24,10 +24,8 @@ var MILE = {
   },
   init: function() {
     // Web Socket Init
-    // socket = new io.connect("ws://mile.cafe24app.com?id=" + MILE.appid + "&author=" + MILE.author + "&version=" + MILE.version + "&appurl=" + MILE.appurl);
-    // socket = new io.connect("http://147.47.249.199:29494?id=" + MILE.appid + "&author=" + MILE.author + "&version=" + MILE.version + "&appurl=" + MILE.appurl);
-    // socket = new io.connect("http://maro.io:29494?id=" + MILE.appid + "&author=" + MILE.author + "&version=" + MILE.version + "&appurl=" + MILE.appurl);
-    socket = new io.connect("http://localhost:8001?id=" + MILE.appid + "&author=" + MILE.author + "&version=" + MILE.version + "&appurl=" + MILE.appurl);
+    socket = new io.connect("http://maro.io:29494?id=" + MILE.appid + "&author=" + MILE.author + "&version=" + MILE.version + "&appurl=" + MILE.appurl);
+    // socket = new io.connect("http://localhost:8001?id=" + MILE.appid + "&author=" + MILE.author + "&version=" + MILE.version + "&appurl=" + MILE.appurl);
     socket.on("connect", function() {
       MILE.log("$mile_init", "success");
     });

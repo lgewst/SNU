@@ -11,8 +11,9 @@ public class Hand {
 		hand.add(card);
 	}
 
-	public Card remove(int index) {
-		return hand.remove(index);
+	public Card remove(Card card) {
+		hand.remove(card);
+		return card;
 	}
 
 	public Card peek(int index) {

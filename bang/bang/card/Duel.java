@@ -31,7 +31,7 @@ public class Duel extends Card{
 		discard.add(this);
 		Player targetPlayer = targets.get(index);
 		userInterface.getWriteFunctions().writePersonalAction(currentPlayer, targetPlayer, "Duel");
-		
+
 		try {
 			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 			debug.write("Duel 1");
@@ -39,7 +39,7 @@ public class Duel extends Card{
 			debug.close();
 		} catch (IOException e) {
 		}
-		
+
 		while(true) {
 			index = -1;
 			if (currentPlayer.getHand().hasBang())
@@ -48,13 +48,22 @@ public class Duel extends Card{
 			if (index == -1) {
 				userInterface.getWriteFunctions().writePlayer(targetPlayer);
 				HelpFunctions.damagePlayer(currentPlayer, currentPlayer, 1, players, deck, discard, userInterface);
+				try {
+					BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+					debug.write("Duel 2");
+					debug.newLine();
+					debug.close();
+				} catch (IOException e) {
+				}
 				break;
 			}
-			discard.add(currentPlayer.getHand().remove(index));
-			
+			Card bang = targetPlayer.getHand().peek(index);
+			targetPlayer.getHand().remove(bang);
+			discard.add(bang);
+
 			try {
 				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-				debug.write("Duel 2");
+				debug.write("Duel 3");
 				debug.newLine();
 				debug.close();
 			} catch (IOException e) {
@@ -67,17 +76,33 @@ public class Duel extends Card{
 			if (index == -1) {
 				userInterface.getWriteFunctions().writePlayer(currentPlayer);
 				HelpFunctions.damagePlayer(currentPlayer, targetPlayer, 1, players, deck, discard, userInterface);
+				try {
+					BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+					debug.write("Duel 4");
+					debug.newLine();
+					debug.close();
+				} catch (IOException e) {
+				}
 				break;
 			}
-			discard.add(targetPlayer.getHand().remove(index));
+			bang = targetPlayer.getHand().peek(index);
+			targetPlayer.getHand().remove(bang);
+			discard.add(bang);
 
 			try {
 				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-				debug.write("Duel 3");
+				debug.write("Duel 5");
 				debug.newLine();
 				debug.close();
 			} catch (IOException e) {
 			}
+		}
+		try {
+			BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
+			debug.write("Duel Finish");
+			debug.newLine();
+			debug.close();
+		} catch (IOException e) {
 		}
 		return true;
 	}

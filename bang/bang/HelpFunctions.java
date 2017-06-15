@@ -82,7 +82,8 @@ public class HelpFunctions {
 	public void discardAll(Player player, Discard discard) {
 		Hand hand = player.getHand();
 		while (hand.size() > 0) {
-			Card card = hand.remove(0);
+			Card card = hand.peek(0);
+			hand.remove(card);
 			discard.add(card);
 		}
 
@@ -102,7 +103,8 @@ public class HelpFunctions {
 		Hand damager_hand = damager.getHand();
 		Hand hand = damagee.getHand();
 		while (hand.size() > 0) {
-			Card card = hand.remove(0);
+			Card card = hand.peek(0);
+			hand.remove(card);
 			damager_hand.add(card);
 		}
 
@@ -159,7 +161,8 @@ public class HelpFunctions {
 				if (index == -1)
 					break;
 				health++;
-				Card card = damagee.getHand().remove(index);
+				Card card = damagee.getHand().peek(index);
+				damagee.getHand().remove(card);
 				discard.add(card);
 			}
 		}

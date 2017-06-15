@@ -150,7 +150,7 @@ public class Game {
 
 			Card playedCard = hand.peek(index);
 			if (playedCard.play(currentPlayer, players, deck, discard, userInterface))
-				hand.remove(index);
+				hand.remove(playedCard);
 
 			if (!players.contains(currentPlayer)) {
 				try {
@@ -170,7 +170,7 @@ public class Game {
 		Hand hand = currentPlayer.getHand();
 		while (hand.size() > currentPlayer.getHealth()) {
 			int index = userInterface.askDiscard(currentPlayer);
-			discard.add(hand.remove(index));
+			discard.add(hand.remove(hand.peek(index)));
 		}
 	}
 

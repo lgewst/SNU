@@ -34,7 +34,9 @@ public class Indians extends Card{
 					index = userInterface.respondBang(player, currentPlayer, "Indians", 1, false);
 				if (index == -1)
 					break;
-				discard.add(player.getHand().remove(index));
+				Card bang = player.getHand().peek(index);
+				player.getHand().remove(bang);
+				discard.add(bang);
 				bang_count--;
 			}
 
