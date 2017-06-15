@@ -57,8 +57,8 @@ app.use(express.static('.'));
 // process /
   // console.log(req.query);
   app.get('/', function (req, res) {
-  // res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:8001/'</h3>");
-  res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://localhost:8001/'</h3>");
+  // res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://147.47.249.199:29494/'</h3>");
+  res.send("<h2>MILE platform is running now</h2><h3>Please input the specified mile number after 'http://maro.io:29494/'</h3>");
   console.log("This is main page");
   // res.sendFile(/*__dirname + */ "/connect/index.html");
 });
@@ -94,7 +94,7 @@ app.get('/observer', function (req, res) {
 // process /mobile
 app.get('/mobile', function (req, res) {
     console.log("You can't access here directly!");
-    res.redirect("http://localhost:8001/admin");
+    res.redirect("http://maro.io:29494/admin");
 });
 
 // process websocket server
@@ -104,9 +104,9 @@ io.on('connection', function(socket){
   var identifier = socket.handshake.query.id + socket.handshake.query.author + socket.handshake.query.version;
   if (mileNumbers[identifier]) {
 
-    // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
-    mileurl = "http://localhost:8001/" + mileNumbers[identifier];
-    // console.log("http://147.47.249.199:8001/" + mileNumbers[identifier]);
+    // mileurl = "http://147.47.249.199:29494/" + mileNumbers[identifier];
+    mileurl = "http://maro.io:29494/" + mileNumbers[identifier];
+    // console.log("http://147.47.249.199:29494/" + mileNumbers[identifier]);
 
   } else {
 
@@ -129,14 +129,14 @@ io.on('connection', function(socket){
       // register the generated number only if it doesn't exist in mileNumbers
       if (pass) {
         mileNumbers[identifier] = number;
-        // mileurl = "http://147.47.249.199:8001/" + mileNumbers[identifier];
-        mileurl = "http://localhost:8001/" + mileNumbers[identifier];
+        // mileurl = "http://147.47.249.199:29494/" + mileNumbers[identifier];
+        mileurl = "http://maro.io:29494/" + mileNumbers[identifier];
 
         // bind the mileurl to web server
         app.get("/" + number, function(req, res){
             if(gameStart) {
                 console.log("You can't join while game is running");
-                res.redirect("http://localhost:8001/observer");
+                res.redirect("http://maro.io:29494/observer");
             }
             else if(connections.length < 8) {
                 console.log("Connections length is " + String(connections.length));
@@ -146,7 +146,7 @@ io.on('connection', function(socket){
                 res.sendFile(__dirname + "/mobile/mobile_index.html");
             } else {
                 //TODO: Make Observer html additional!
-                res.redirect("http://localhost:8001/observer");
+                res.redirect("http://maro.io:29494/observer");
         }
         });
         break;
@@ -575,8 +575,8 @@ io.on('connection', function(socket){
 
 
 // Start HTTP Server
-http.listen(8001, function(){
-    // console.log("Server running at http://147.47.249.199:8001");
-  console.log("listening on *: 8001");
+http.listen(29494, '0.0.0.0', function(){
+    // console.log("Server running at http://147.47.249.199:29494");
+  console.log("listening on *: 29494");
 });
-  console.log("Server running at localhost:8001");
+  console.log("Server running at maro.io:29494");
