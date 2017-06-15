@@ -554,6 +554,8 @@ public class WriteFunctions {
 					(player.getCharacter().getName().equals("Deputy") && winner.equals("Sheriff")));
 			if (winner.equals("Sheriff"))
 				json.put("winner", "Sheriff & Deputy");
+			else
+				json.put("winner", winner);
 
 			writer = new JSONObject();
 			writer.put("type", "gameover");

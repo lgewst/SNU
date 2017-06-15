@@ -67,7 +67,7 @@ public class HelpFunctions {
 	}
 
 	public String getWinner(ArrayList<Player> players) {
-		if (deadJob(players, "Sheriff") && deadJob(players, "Outlaw") && deadJob(players, "deputy"))
+		if (deadJob(players, "Sheriff") && deadJob(players, "Outlaw") && deadJob(players, "Deputy"))
 			return "Renegade";
 		else if(deadJob(players, "Sheriff"))
 			return "Outlaw";

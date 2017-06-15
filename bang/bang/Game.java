@@ -194,6 +194,7 @@ public class Game {
 			} catch (EndofGameException e) {
 				String winner = HelpFunctions.getWinner(players);
 				writeFunctions.writeGameover(winner);
+				break;	
 			}
 			writeFunctions.writePlayer(currentPlayer);
 			currentPlayer = HelpFunctions.getNextPlayer(currentPlayer, players);
