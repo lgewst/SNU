@@ -63,9 +63,9 @@ public class BangDeck {
 		cards.add(new Catbalou("Cat balou", "Diamond", 11));
 		cards.add(new Catbalou("Cat balou", "Heart", 13));
 
-		cards.add(new Duel("Duel", "Club", 8));
-		cards.add(new Duel("Duel", "Diamond", 12));
-		cards.add(new Duel("Duel", "Spade", 11));
+//		cards.add(new Duel("Duel", "Club", 8));
+//		cards.add(new Duel("Duel", "Diamond", 12));
+//		cards.add(new Duel("Duel", "Spade", 11));
 
 		cards.add(new Gatling("Gatling", "Heart", 10));
 
