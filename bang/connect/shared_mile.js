@@ -61,12 +61,12 @@ MILE.on("gameScreen", function(data, from){
         var charEffect = character.effect;
         var jobName = job.name;
         var jobImage = job.image;
-        var information = "<div id='images'> <img src='" + charImage + "' width='50' heigth='100'> <img src='" + jobImage + "'width='50' height='100'></div> <div id='contents'> <p>" + charName + "</p><p>EFFECT: " + charEffect + "</p><p>LIFE(cur/max): " + curLife + "/" + maxLife + "</p><p> In Hand: " + inHand +"</p> </div> <div id='cards'>";
+        var information = "<div id='images'> <img src='" + charImage + "' width='50' height='100'> <img src='" + jobImage + "'width='50' height='100'></div> <div id='contents'> <p>" + charName + "</p><p>EFFECT: " + charEffect + "</p><p>LIFE(cur/max): " + curLife + "/" + maxLife + "</p><p> In Hand: " + inHand +"</p> </div> <div id='cards'>";
         playerN = playerN + information;
         if(!isDead){
             var totalImage = ""
             for(j = 0; j < mounted.length; j ++){
-                var imageN = "<img src='" + mounted[j] + "' width='50' heigth='100'>";
+                var imageN = "<img src='" + mounted[j] + "' width='50' height='100'>";
                 totalImage = totalImage + imageN;
             }
             playerN = playerN + totalImage;
@@ -78,6 +78,7 @@ MILE.on("gameScreen", function(data, from){
         playerN = playerN + "</div>"
         $('#mainPage').append(playerN);
         if(turn){
+            alert(i);
             $('#player' + i).css('border', '1px solid red');
         }
         else{
