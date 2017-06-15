@@ -550,8 +550,8 @@ public class WriteFunctions {
 			JSONObject json = new JSONObject();
 			Player player = game.getPlayers_Info().get(i);
 
-			json.put("amI", player.getCharacter().getName().equals(winner) ||
-					(player.getCharacter().getName().equals("Deputy") && winner.equals("Sheriff")));
+			json.put("amI", player.getJob().getJob().equals(winner) ||
+					(player.getJob().getJob().equals("Deputy") && winner.equals("Sheriff")));
 			if (winner.equals("Sheriff"))
 				json.put("winner", "Sheriff & Deputy");
 			else

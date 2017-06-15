@@ -36,7 +36,7 @@ public class HtmlUserInterface extends UserInterface{
 		debug.newLine();
 		debug.close();
 		while(true) {
-			if (lastAskTime != -1 && System.currentTimeMillis() - lastAskTime > 10000) {
+			if (lastAskTime != -1 && System.currentTimeMillis() - lastAskTime > 5000) {
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 				debug.write("last play time: " + Long.toString(lastAskTime) + " now time: " + Long.toString(System.currentTimeMillis()));
 				debug.newLine();
