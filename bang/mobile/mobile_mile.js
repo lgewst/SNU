@@ -2,7 +2,8 @@ window.addEventListener("load", function(){
     MILE.setAppID("connect");
     MILE.setAuthor("snu");
     MILE.setVersion("0.1");
-    MILE.setAppURL("http://maro.io:29494/mobile/");
+    // MILE.setAppURL("http://maro.io:29494/mobile/");
+    MILE.setAppURL("http://localhost:8001/mobile/");
     MILE.showMileURL(true);
     MILE.showDebug(false);
     MILE.init();
