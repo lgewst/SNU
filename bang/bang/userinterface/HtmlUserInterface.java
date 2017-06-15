@@ -13,7 +13,7 @@ public class HtmlUserInterface extends UserInterface{
 	BufferedReader[] in = new BufferedReader[8];
 	WriteFunctions writeFunctions;
 	BufferedWriter debug;
-	long lastPlayTime = -1;
+	long lastAskTime = -1;
 
 	public HtmlUserInterface(Game game) {
 		writeFunctions = new WriteFunctions(game);
@@ -36,13 +36,13 @@ public class HtmlUserInterface extends UserInterface{
 		debug.newLine();
 		debug.close();
 		while(true) {
-			if (lastPlayTime != -1 && System.currentTimeMillis() - lastPlayTime > 10000) {
+			if (lastAskTime != -1 && System.currentTimeMillis() - lastAskTime > 10000) {
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
-				debug.write("last play time: " + Long.toString(lastPlayTime) + " now time: " + Long.toString(System.currentTimeMillis()));
+				debug.write("last play time: " + Long.toString(lastAskTime) + " now time: " + Long.toString(System.currentTimeMillis()));
 				debug.newLine();
 				debug.close();
-				lastPlayTime = System.currentTimeMillis();
-				return "-2";
+				lastAskTime = System.currentTimeMillis();
+				return "-10";
 			}
 			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
@@ -71,7 +71,7 @@ public class HtmlUserInterface extends UserInterface{
 	public int askPlay(Player player, ArrayList<Player> players) {
 		
 		Hand hand = player.getHand();
-		int index = -2;
+		int index = -10;
 
 		while(true) {
 			try {
@@ -83,9 +83,9 @@ public class HtmlUserInterface extends UserInterface{
 			}
 			try {
 				writeFunctions.writeAskPlay(player, players);
-				lastPlayTime = System.currentTimeMillis();
+				lastAskTime = System.currentTimeMillis();
 				index = Integer.parseInt(readFile());
-				lastPlayTime = -1;
+				lastAskTime = -1;
 				
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 				debug.write("use " + Integer.toString(index));
@@ -118,7 +118,11 @@ public class HtmlUserInterface extends UserInterface{
 			} catch (IOException e) {
 			}
 			try {
+				writeFunctions.writeAskDiscard(player);
+				lastAskTime = System.currentTimeMillis();
 				index = Integer.parseInt(readFile());
+				lastAskTime = -1;
+				
 				if (index >= 0 && index < hand.size())
 					return index;
 			} catch (IOException e) {
@@ -129,9 +133,9 @@ public class HtmlUserInterface extends UserInterface{
 	@Override
 	public int respondBang(Player player, Player attacker, String card, int num, boolean t) {
 
-		writeFunctions.writeRespondeBang(player, attacker, card, num, t);
 		Hand hand = player.getHand();
 		int index = -2;
+		boolean b;
 
 		while(true) {
 			try {
@@ -142,7 +146,12 @@ public class HtmlUserInterface extends UserInterface{
 					debug.close();
 				} catch (IOException e) {
 				}
-				if (!Boolean.valueOf(readFile()))
+				writeFunctions.writeRespondeBang(player, attacker, card, num, t);
+				lastAskTime = System.currentTimeMillis();
+				b = Boolean.valueOf(readFile());
+				lastAskTime = -1;
+				
+				if (!b)
 					return -1;
 				index = player.getHand().getBang();
 				if (index == -1)
@@ -158,10 +167,10 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondMiss(Player player, Player attacker, String card, int num, boolean t) {
-		writeFunctions.writeRespondeMiss(player, attacker, card, num, t);
 		Hand hand = player.getHand();
 		int index = -2;
-
+		boolean b;
+		
 		while(true) {
 			try {
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
@@ -172,7 +181,12 @@ public class HtmlUserInterface extends UserInterface{
 			}
 
 			try {
-				if (!Boolean.valueOf(readFile()))
+				writeFunctions.writeRespondeMiss(player, attacker, card, num, t);
+				lastAskTime = System.currentTimeMillis();
+				b = Boolean.valueOf(readFile());
+				lastAskTime = -1;
+				
+				if (!b)
 					return -1;
 				index = player.getHand().getMiss();
 				if (index == -1)
@@ -188,11 +202,10 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int respondBeer(Player player) {
-
-		writeFunctions.writeRespondeBeer(player);
 		Hand hand = player.getHand();
 		int index = -2;
-
+		boolean b;
+		
 		while(true) {
 			try {
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
@@ -202,7 +215,12 @@ public class HtmlUserInterface extends UserInterface{
 			} catch (IOException e) {
 			}
 			try {
-				if (!Boolean.valueOf(readFile()))
+				writeFunctions.writeRespondeBeer(player);
+				lastAskTime = System.currentTimeMillis();
+				b = Boolean.valueOf(readFile());
+				lastAskTime = -1;
+				
+				if (!b)
 					return -1;
 				index = player.getHand().getBeer();
 				if (index == -1)
@@ -218,8 +236,6 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTarget(Player player, ArrayList<Player> players) {
-
-		writeFunctions.writeAskTarget(player, players);
 		int index = -2;
 
 		while(true) {
@@ -231,7 +247,11 @@ public class HtmlUserInterface extends UserInterface{
 			} catch (IOException e) {
 			}
 			try {
+				writeFunctions.writeAskTarget(player, players);
+				lastAskTime = System.currentTimeMillis();
 				index = Integer.parseInt(readFile());
+				lastAskTime = -1;
+				
 				if (index >= -1 && index < players.size())
 					return index;
 			} catch (IOException e) {
@@ -241,8 +261,6 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTargetCard(Player player, Player target) {
-
-		writeFunctions.writeAskTargetCard(player, target);
 		Mounting mounting = target.getMounting();
 		Hand hand = target.getHand();
 		int index = -4;
@@ -256,6 +274,11 @@ public class HtmlUserInterface extends UserInterface{
 			} catch (IOException e) {
 			}
 			try {
+				writeFunctions.writeAskTargetCard(player, target);
+				lastAskTime = System.currentTimeMillis();
+				index = Integer.parseInt(readFile());
+				lastAskTime = -1;
+				
 				index = Integer.parseInt(readFile());
 				if (index == -3)
 					return index;
