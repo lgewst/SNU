@@ -78,7 +78,7 @@ $(document).on("pageshow", "#cardToSelect", function(){
     });
 });
 $(document).on("pageshow", "#cardToDiscard", function(){
-    var index="";
+    var index;
     $("#discardCardsList").off("tap").on('tap', function(){
         var tagName = event.target.tagName;
         if(tagName === "IMG"){
@@ -90,7 +90,7 @@ $(document).on("pageshow", "#cardToDiscard", function(){
         }
     });
     $('#discard').off('tap').on('tap', function(){
-        if(index!=""){
+        if(index != null){
             MILE.send("discardPlayingCard", index);
         }
     });
