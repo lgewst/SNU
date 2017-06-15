@@ -107,7 +107,7 @@ public class HtmlUserInterface extends UserInterface{
 	public int askDiscard(Player player) {
 		writeFunctions.writeAskDiscard(player);
 		Hand hand = player.getHand();
-		int index = -2;
+		int index = -10;
 
 		while(true) {
 			try {
@@ -134,7 +134,7 @@ public class HtmlUserInterface extends UserInterface{
 	public int respondBang(Player player, Player attacker, String card, int num, boolean t) {
 
 		Hand hand = player.getHand();
-		int index = -2;
+		int index = -10;
 		boolean b;
 
 		while(true) {
@@ -168,7 +168,7 @@ public class HtmlUserInterface extends UserInterface{
 	@Override
 	public int respondMiss(Player player, Player attacker, String card, int num, boolean t) {
 		Hand hand = player.getHand();
-		int index = -2;
+		int index = -10;
 		boolean b;
 		
 		while(true) {
@@ -203,7 +203,7 @@ public class HtmlUserInterface extends UserInterface{
 	@Override
 	public int respondBeer(Player player) {
 		Hand hand = player.getHand();
-		int index = -2;
+		int index = -10;
 		boolean b;
 		
 		while(true) {
@@ -236,7 +236,7 @@ public class HtmlUserInterface extends UserInterface{
 
 	@Override
 	public int askTarget(Player player, ArrayList<Player> players) {
-		int index = -2;
+		int index = -10;
 
 		while(true) {
 			try {
@@ -263,7 +263,7 @@ public class HtmlUserInterface extends UserInterface{
 	public int askTargetCard(Player player, Player target) {
 		Mounting mounting = target.getMounting();
 		Hand hand = target.getHand();
-		int index = -4;
+		int index = -10;
 
 		while(true) {
 			try {
@@ -278,8 +278,7 @@ public class HtmlUserInterface extends UserInterface{
 				lastAskTime = System.currentTimeMillis();
 				index = Integer.parseInt(readFile());
 				lastAskTime = -1;
-				
-				index = Integer.parseInt(readFile());
+
 				if (index == -3)
 					return index;
 				if (index == -2 && mounting.hasGun())
