@@ -42,7 +42,7 @@ public class HtmlUserInterface extends UserInterface{
 				debug.newLine();
 				debug.close();
 				lastAskTime = System.currentTimeMillis();
-				return "-10";
+				return "FAIL";
 			}
 			for (int i = 0; i < 8; i++) {
 				String s = in[i].readLine();
@@ -84,7 +84,10 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				writeFunctions.writeAskPlay(player, players);
 				lastAskTime = System.currentTimeMillis();
-				index = Integer.parseInt(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				index = Integer.parseInt(s);
 				lastAskTime = -1;
 				
 				debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
@@ -120,7 +123,10 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				writeFunctions.writeAskDiscard(player);
 				lastAskTime = System.currentTimeMillis();
-				index = Integer.parseInt(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				index = Integer.parseInt(s);
 				lastAskTime = -1;
 				
 				if (index >= 0 && index < hand.size())
@@ -148,7 +154,10 @@ public class HtmlUserInterface extends UserInterface{
 				}
 				writeFunctions.writeRespondeBang(player, attacker, card, num, t);
 				lastAskTime = System.currentTimeMillis();
-				b = Boolean.valueOf(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				b = Boolean.valueOf(s);
 				lastAskTime = -1;
 				
 				if (!b)
@@ -183,7 +192,10 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				writeFunctions.writeRespondeMiss(player, attacker, card, num, t);
 				lastAskTime = System.currentTimeMillis();
-				b = Boolean.valueOf(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				b = Boolean.valueOf(s);
 				lastAskTime = -1;
 				
 				if (!b)
@@ -217,7 +229,10 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				writeFunctions.writeRespondeBeer(player);
 				lastAskTime = System.currentTimeMillis();
-				b = Boolean.valueOf(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				b = Boolean.valueOf(s);
 				lastAskTime = -1;
 				
 				if (!b)
@@ -249,7 +264,10 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				writeFunctions.writeAskTarget(player, players);
 				lastAskTime = System.currentTimeMillis();
-				index = Integer.parseInt(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				index = Integer.parseInt(s);
 				lastAskTime = -1;
 				
 				if (index >= -1 && index < players.size())
@@ -276,7 +294,10 @@ public class HtmlUserInterface extends UserInterface{
 			try {
 				writeFunctions.writeAskTargetCard(player, target);
 				lastAskTime = System.currentTimeMillis();
-				index = Integer.parseInt(readFile());
+				String s = readFile();
+				if (s.equals("FAIL"))
+					continue;
+				index = Integer.parseInt(s);
 				lastAskTime = -1;
 
 				if (index == -3)
