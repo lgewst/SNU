@@ -72,14 +72,14 @@ MILE.on("gameScreen", function(data, from){
             playerN = playerN + totalImage;
         }
         else{
-            var dead = "<p style='font-size: 15px;'>Dead player</p><p>JOB: " + job + "</p>";
+            var dead = "<p style='font-size: 15px;'>Dead player</p><p>JOB: " + job.name + "</p>";
             playerN = playerN + dead;
         }
         playerN = playerN + "</div>"
         $('#mainPage').append(playerN);
         if(turn){
             $('#player' + i).css('border', '1px solid red');
-        }
+}
         else{
             $('#player' + i).css('border', '1px solid black');
         }
