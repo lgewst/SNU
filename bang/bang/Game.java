@@ -80,9 +80,9 @@ public class Game {
 			players_info.add(tmp_player);
 			if (roles.get(i).equals("Sheriff")) {
 				currentPlayer = tmp_player;
-				writeFunctions.writePlayer(currentPlayer);
 			}
 		}
+		writeFunctions.writePlayer(currentPlayer);
 	}
 
 	private boolean phase0() throws EndofGameException {
@@ -124,6 +124,7 @@ public class Game {
 
 	private void phase2() throws EndofGameException {
 		while (true) {
+			writeFunctions.writeGameScreen();
 			try {
 				BufferedWriter debug = new BufferedWriter(new FileWriter("text/debug.txt", true));
 				debug.write(currentPlayer.getCharacter().getName() + "turn");
@@ -131,7 +132,7 @@ public class Game {
 				debug.close();
 			} catch (IOException e) {
 			}
-		
+
 			//TODO: character ability
 			for (Player player: players) {
 				if(player.getCharacter().getName().equals("Suzy Lafayette")) {
@@ -140,10 +141,10 @@ public class Game {
 					break;
 				}
 			}
-			
+
 			Hand hand = currentPlayer.getHand();
 			int index = userInterface.askPlay(currentPlayer, players);
-			
+
 			if (index == -1)
 				break;
 
@@ -159,7 +160,7 @@ public class Game {
 				debug.close();
 				} catch (IOException e) {
 				}
-			
+
 				break;
 			}
 		}
@@ -205,5 +206,9 @@ public class Game {
 
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 }

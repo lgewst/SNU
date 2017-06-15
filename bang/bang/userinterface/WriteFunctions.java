@@ -45,7 +45,7 @@ public class WriteFunctions {
 		JSONObject connect = new JSONObject();
 		JSONArray json = new JSONArray();
 		JSONObject tmp;
-		
+
 		ArrayList<Player> players = game.getPlayers();
 		ArrayList<Player> players_Info = game.getPlayers_Info();
 		for(Player player: players_Info) {
@@ -55,17 +55,18 @@ public class WriteFunctions {
 				tmp.put("job", player.getJob().toJsonUnknown());
 			else
 				tmp.put("job", player.getJob().toJsonKnown());
-			
+
 			tmp.put("character", player.getCharacter().toJson());
 			tmp.put("curLife", player.getHealth());
 			tmp.put("maxLife", player.getMaxHealth());
 			tmp.put("mounted", player.getMounting().toJSONArray());
 			tmp.put("dead", !players.contains(player));
 			tmp.put("inHand", player.getHand().size());
-			
+			tmp.put("turn", player.equals(game.getCurrentPlayer()));
+
 			json.add(tmp);
 		}
-		
+
 		connect.put("total", json);
 		writer.put("type", "gameScreen");
 		writer.put("data", connect.toString());
@@ -76,7 +77,7 @@ public class WriteFunctions {
 		} catch (IOException e) {
 		}
 	}
-	
+
 	public void writePlayer(int index) {
 		ArrayList<Player> players_Info = game.getPlayers_Info();
 		Player player = players_Info.get(index - 1);
@@ -372,7 +373,7 @@ public class WriteFunctions {
 		writer.put("type", "loseLife");
 		writer.put("data", connect.toString());
 		try {
-			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out = new BufferedWriter(new FileWriter("text/java2js_-1.txt"));
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
@@ -413,7 +414,7 @@ public class WriteFunctions {
 		writer.put("type", "gainLife");
 		writer.put("data", connect.toString());
 		try {
-			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out = new BufferedWriter(new FileWriter("text/java2js_-1.txt"));
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
@@ -484,7 +485,7 @@ public class WriteFunctions {
 		writer.put("type", "dead");
 		writer.put("data", connect.toString());
 		try {
-			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out = new BufferedWriter(new FileWriter("text/java2js_-1.txt"));
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
@@ -493,33 +494,33 @@ public class WriteFunctions {
 
 	public void writePersonalAction(Player currentPlayer, Player targetPlayer, String card_name) {
 		JSONObject connect = new JSONObject();
-		
+
 		connect.put("from", currentPlayer.getCharacter().getName());
 		connect.put("to", targetPlayer.getCharacter().getName());
 		connect.put("used", card_name);
 
 		JSONObject writer = new JSONObject();
-		writer.put("type", "dead");
+		writer.put("type", "personalAction");
 		writer.put("data", connect.toString());
 		try {
-			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out = new BufferedWriter(new FileWriter("text/java2js_-1.txt"));
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
 		}
 	}
-	
+
 	public void writePublicAction(Player currentPlayer, String card_name) {
 		JSONObject connect = new JSONObject();
-		
+
 		connect.put("who", currentPlayer.getCharacter().getName());
 		connect.put("used", card_name);
 
 		JSONObject writer = new JSONObject();
-		writer.put("type", "dead");
+		writer.put("type", "publicAction");
 		writer.put("data", connect.toString());
 		try {
-			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out = new BufferedWriter(new FileWriter("text/java2js_-1.txt"));
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
@@ -534,26 +535,26 @@ public class WriteFunctions {
 		else
 			connect.put("winner", winner);
 		connect.put("condition", new Job(winner).getGoal());
-		
+
 		JSONObject writer = new JSONObject();
 		writer.put("type", "gameover");
 		writer.put("data", connect.toString());
 		try {
-			out = new BufferedWriter(new FileWriter("text/java2js_0.txt"));
+			out = new BufferedWriter(new FileWriter("text/java2js_-1.txt"));
 			out.write(writer.toString());
 			out.close();
 		} catch (IOException e) {
 		}
-		
+
 		for(int i = 0; i < game.getPlayers_Info().size(); i++) {
 			JSONObject json = new JSONObject();
 			Player player = game.getPlayers_Info().get(i);
-			
+
 			json.put("amI", player.getCharacter().getName().equals(winner) ||
 					(player.getCharacter().getName().equals("Deputy") && winner.equals("Sheriff")));
 			if (winner.equals("Sheriff"))
 				json.put("winner", "Sheriff & Deputy");
-			
+
 			writer = new JSONObject();
 			writer.put("type", "gameover");
 			writer.put("data", json.toString());
