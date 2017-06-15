@@ -54,6 +54,7 @@ MILE.on("gameScreen", function(data, from){
         var isDead = info.dead;
         var mounted = info.mounted;
         var inHand = info.inHand;
+        var turn = info.turn;
 
         var charName = character.name;
         var charImage = character.image;
@@ -76,6 +77,12 @@ MILE.on("gameScreen", function(data, from){
         }
         playerN = playerN + "</div>"
         $('#mainPage').append(playerN);
+        if(turn){
+            $('#player' + i).css('border', '1px solid red');
+        }
+        else{
+            $('#player' + i).css('border', '1px solid black');
+        }
     }
 });
 
