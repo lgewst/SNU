@@ -1,4 +1,3 @@
-//TODO: Battery api
 navigator.getBattery().then(function(battery) {
     function updateAllBatteryInfo(){
         updateChargeInfo();
@@ -40,4 +39,16 @@ navigator.getBattery().then(function(battery) {
                 + battery.dischargingTime + " seconds");
     }
 
+});
+
+window.addEventListener('devicemotion', function(event){
+    var x = event.acceleration.x;
+    var y = event.acceleration.y;
+    var z = event.acceleration.z;
+    var options = {
+        canvas: '#canvas'
+    }
+    if(x > 6){
+        alert("shake");
+    }
 });
