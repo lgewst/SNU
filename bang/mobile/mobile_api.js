@@ -40,24 +40,21 @@ navigator.getBattery().then(function(battery) {
     }
 
 });
-
+var i = 0;
 window.addEventListener('devicemotion', function(event){
     var x = event.acceleration.x;
-    var y = event.acceleration.y;
-    var z = event.acceleration.z;
-    var options = {
-        canvas: '#canvas'
-    }
     if(x > 6){
-        alert("shake");
         capture();
+        //alert("Screen captured!");
+        i ++;
     }
 });
 
 function capture() {
-  html2canvas(document.body, {
-    onrendered: function(canvas) {
-      document.body.appendChild(canvas);
-    }
-  });
+    html2canvas(document.body, {
+        onrendered: function(canvas) {
+            Canvas2Image.saveAsPNG(canvas);
+        }
+    });
 }
+
