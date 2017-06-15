@@ -318,6 +318,13 @@ io.on('connection', function(socket){
                   }
                   console.log("players.txt FILE INITIALIZED");
                 });
+
+                fs.writeFile('text/java2js_-1.txt', '', function(err) {
+                  if(err) {
+                    return console.log("Error while writing on file: js2java.txt");
+                  }
+                  console.log("java2js_-1.txt FILE INITIALIZED");
+                });
                 //TODO: Send msg to clients to make the buttons disable
                 // child = spawn('java', ['Test', connections.length - 1]);
                 child = require('child_process').spawn('java', ['Test', connections.length - 1]);
@@ -480,6 +487,9 @@ io.on('connection', function(socket){
           return;
     }
     setTimeout(function(){
+      if(idx === -1)
+            io.to(connections[0].id).emit('message',{type:parse.type, data: parse.data});
+      else
             io.to(connections[idx].id).emit('message',{type:parse.type, data: parse.data});
     },300);
     fs.writeFile('text/java2js_'+idx+'.txt', '', function(err) {
@@ -544,6 +554,13 @@ io.on('connection', function(socket){
           var Texts = fs.readFileSync('text/java2js_0.txt','utf-8');
           if(Texts != '')
             tmpFunc(0);
+    }
+  },500);
+  setInterval(function() {
+      if(gameStart) {
+          var Texts = fs.readFileSync('text/java2js_-1.txt','utf-8');
+          if(Texts != '')
+            tmpFunc(-1);
     }
   },500);
 
