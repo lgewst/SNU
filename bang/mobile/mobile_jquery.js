@@ -154,7 +154,6 @@ $(document).on("pageshow", "#selectTargetCard", function(){
             var index = selected.parent().children('img').index(selected);
             MILE.send("selectTargetCardRespond", index);
         }
-        $.mobile.changePage('#waiting');
     });
     $('#targetInHandCardsList').off('tap').on('tap', function(){
         var tagName = event.target.tagName;
