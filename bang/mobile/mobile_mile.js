@@ -90,10 +90,8 @@ MILE.on('playerInfo', function(data, from) {
         $('#inHandCardsList').append(cardDiv);
     }
     if(isDead){
-        $('#cards').remove();
-        $('#life').remove();
-        $('#deadString').remove();
-        $('#status').append('<p id="deadString" style="font-size: 15px">Dead player</p>');
+        $('#cards').empty();
+        $('#cards').append('<p id="deadString" style="font-size: 15px; font-weight: bold">Dead player</p>');
     }
 });
 MILE.on('otherPlayerInfo', function(data, from){
@@ -150,9 +148,7 @@ MILE.on('otherPlayerInfo', function(data, from){
     }
     if(isDead){
         $('#othersCards').remove();
-        $('#othersLife').remove();
-        $('#deadString').remove();
-        $('#othersStatus').append('<p id="deadString" style=\"font-size: 15px\">Dead player</p>');
+        $('#OthersCards').append('<p id="deadString" style="font-size: 15px; font-weight: bold">Dead player</p>');
     }
 });
 MILE.on('respondCardInfo', function(data, from){
