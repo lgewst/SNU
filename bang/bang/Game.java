@@ -208,7 +208,7 @@ public class Game {
 		return players;
 	}
 
-	public Playe> getCurrentPlayers() {
+	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 }
