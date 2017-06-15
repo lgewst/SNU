@@ -5,9 +5,9 @@ import org.json.simple.*;
 public class Character {
 	// public static String[] CHARACTERS = { "Bart Cassidy", "Black Jack", "Calamity Janet", "El Gringo", "Jesse Jones", "Jourdonnais", "Kit Carlson", "Lucky Duke",
 	// 		"Paul Regret", "Pedro Ramirez", "Rose Doolan", "Sid Ketchum", "Slab the Killer", "Suzy Lafayette", "Vulture Sam", "Willy the Kid" };
-	public static String[] CHARACTERS = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
-//	public static String[] CHARACTERS = { "Bart Cassidy", "El Gringo", "Jourdonnais",
-//			"Paul Regret", "Rose Doolan", "Slab the Killer", "Suzy Lafayette", "Vulture Sam", "Willy the Kid" };
+	// public static String[] CHARACTERS = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
+	public static String[] CHARACTERS = { "Bart Cassidy", "El Gringo", "Jourdonnais",
+			"Paul Regret", "Rose Doolan", "Slab the Killer", "Suzy Lafayette", "Vulture Sam", "Willy the Kid" };
 
 	private String name;
 
