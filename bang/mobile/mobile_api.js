@@ -50,5 +50,14 @@ window.addEventListener('devicemotion', function(event){
     }
     if(x > 6){
         alert("shake");
+        capture();
     }
 });
+
+function capture() {
+  html2canvas(document.body, {
+    onrendered: function(canvas) {
+      document.body.appendChild(canvas);
+    }
+  });
+}
