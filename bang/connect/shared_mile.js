@@ -80,6 +80,9 @@ MILE.on("gameScreen", function(data, from){
         if(turn){
             $('#player' + i).css('border', '1px solid red');
         }
+        else{
+            $('#player' + i).css('border', '1px solid black');
+        }
     }
 });
 
